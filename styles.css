@@ -1,0 +1,88 @@
+:root {
+    --size: 1.2;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0d1117;
+    font-family: 'Fira Code', monospace;
+    height: 100vh;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom right, #0d1117, #161b22);
+}
+
+#terminal-container {
+    height: 100vh;
+    width: 100%;
+    padding: 10px;
+}
+
+.terminal {
+    --color: rgba(131, 255, 131, 0.99);
+    --background: rgba(13, 17, 23, 0.95);
+    --link-color: #58a6ff;
+    --size: 1.2;
+    --font: 'Fira Code', monospace;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+.terminal .terminal-output div span {
+    display: inline-block;
+}
+
+.terminal .cmd {
+    border-top: 2px solid #30363d;
+}
+
+.terminal a {
+    text-decoration: underline;
+}
+
+.terminal a:hover {
+    color: #00FFFF !important;
+    text-decoration: underline;
+}
+
+/* Bold text styling */
+.terminal .terminal-output div span[style*="font-weight: bold"],
+.terminal .terminal-output div span[style*="font-weight:bold"] {
+    color: #00FFFF;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0d1117;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #484f58;
+}
+
+/* Animation for the prompt */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.terminal .cmd .cursor.blink {
+    animation: blink 1s infinite;
+    color: #FF00FF;
+}
