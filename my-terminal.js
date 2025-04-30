@@ -6,8 +6,10 @@ ____   ____.__                       ____  __.     .__              .__
    \\___/   |__|___|  (____  / ____| |____|__ \\____/|__||__|  (____  /____(____  /
                    \\/     \\/\\/              \\/                    \\/          \\/
 
-🧑‍💻 Vinay Koirala 🎭
-💻 Tech Enthusiast | 🎭 Theater Performer
++----------------------------------+
+|        VINAY KOIRALA             |
+| Tech Enthusiast & Theater Artist |
++----------------------------------+
 
 Welcome to my terminal portfolio! Type 'help' to see available commands.
 `;
@@ -30,7 +32,9 @@ Available commands:
     },
     about: function() {
         return `
-\x1b[1m🧑‍💻 About Me\x1b[0m
+\x1b[1m+-------------+\x1b[0m
+\x1b[1m|  ABOUT ME   |\x1b[0m
+\x1b[1m+-------------+\x1b[0m
 
 Versatile technology enthusiast with a unique blend of technical expertise and creative expression.
 My background in computer science engineering and business administration provides me with a
@@ -39,28 +43,30 @@ you'll find me on stage, where I channel my passion for theatrical arts.
 
 "At the intersection of logic and creativity lies true innovation."
 
-- 💻 Computer Science Engineer with an MBA
-- 🎭 Theater performer exploring the art of expression
-- 🌱 Constantly exploring emerging technologies
-- 💬 Ask me about the parallels between coding and performing arts
+- [>] Computer Science Engineer with an MBA
+- [>] Theater performer exploring the art of expression
+- [>] Constantly exploring emerging technologies
+- [>] Ask me about the parallels between coding and performing arts
 `;
     },
     skills: function() {
         return `
-\x1b[1m💻 Tech Arsenal - Core Skills\x1b[0m
+\x1b[1m+----------------------+\x1b[0m
+\x1b[1m| TECH ARSENAL - SKILLS |\x1b[0m
+\x1b[1m+----------------------+\x1b[0m
 
-🧠 Languages:
+[*] Languages:
 - C#, Python, JavaScript, TypeScript, Java, C++, Dart
 
-🌐 Web Development:
+[*] Web Development:
 - Frontend: HTML5, CSS3, SASS, Bootstrap, Tailwind CSS, jQuery
 - Frontend Frameworks: React, Next.js, Angular, Vue.js, Redux, Blazor
 - Backend: Node.js, Express.js, Django, Flask, Spring, ASP.NET, .NET
 
-📱 Mobile Development:
+[*] Mobile Development:
 - Flutter, React Native, Xamarin, Android, MAUI
 
-🗄️ Databases & Data:
+[*] Databases & Data:
 - MySQL, PostgreSQL, SQL Server, MongoDB, Firebase, Redis, GraphQL
 
 Type 'tech' for my complete tech stack.
@@ -68,12 +74,14 @@ Type 'tech' for my complete tech stack.
     },
     tech: function() {
         return `
-\x1b[1m🧠 Complete Tech Stack\x1b[0m
+\x1b[1m+-------------------+\x1b[0m
+\x1b[1m| COMPLETE TECH STACK |\x1b[0m
+\x1b[1m+-------------------+\x1b[0m
 
-\x1b[1m🧠 Languages\x1b[0m
+\x1b[1m[*] Languages\x1b[0m
 - C#, Python, JavaScript, TypeScript, Java, C++, Dart
 
-\x1b[1m🌐 Web Development\x1b[0m
+\x1b[1m[*] Web Development\x1b[0m
 Frontend:
 - HTML5, CSS3, SASS, Bootstrap, Tailwind CSS, jQuery
 
@@ -83,28 +91,30 @@ Frontend Frameworks:
 Backend:
 - Node.js, Express.js, Django, Flask, Spring, ASP.NET, .NET
 
-\x1b[1m📱 Mobile Development\x1b[0m
+\x1b[1m[*] Mobile Development\x1b[0m
 - Flutter, React Native, Xamarin, Android, MAUI
 
-\x1b[1m🗄️ Databases & Data\x1b[0m
+\x1b[1m[*] Databases & Data\x1b[0m
 - MySQL, PostgreSQL, SQL Server, MongoDB, Firebase, Redis, GraphQL
 
-\x1b[1m☁️ DevOps & Cloud\x1b[0m
+\x1b[1m[*] DevOps & Cloud\x1b[0m
 - Git, GitHub, Docker, Kubernetes, AWS, Azure
 
-\x1b[1m🛠️ Development Tools\x1b[0m
+\x1b[1m[*] Development Tools\x1b[0m
 - VS Code, Visual Studio, IntelliJ, Android Studio, Postman
 
-\x1b[1m🎨 Design Tools\x1b[0m
+\x1b[1m[*] Design Tools\x1b[0m
 - Figma, Adobe Photoshop, Adobe Illustrator, Canva
 
-\x1b[1m🌱 Currently Exploring\x1b[0m
+\x1b[1m[*] Currently Exploring\x1b[0m
 - TensorFlow, PyTorch, Blockchain, Web3.js, Rust, Go
 `;
     },
     projects: function() {
         return `
-\x1b[1m🚀 My Projects\x1b[0m
+\x1b[1m+-------------+\x1b[0m
+\x1b[1m| MY PROJECTS |\x1b[0m
+\x1b[1m+-------------+\x1b[0m
 
 1. Terminal Portfolio - This interactive terminal-based portfolio
 2. [Project 2] - Description of project 2
@@ -115,7 +125,9 @@ Type 'project 1', 'project 2', etc. for more details.
     },
     theater: function() {
         return `
-\x1b[1m🎭 The Stage & The Screen\x1b[0m
+\x1b[1m+----------------------+\x1b[0m
+\x1b[1m| THE STAGE & THE SCREEN |\x1b[0m
+\x1b[1m+----------------------+\x1b[0m
 
 My background in theater has enhanced my professional capabilities, particularly in
 communication, presentation, and audience engagement - skills that are invaluable
@@ -131,14 +143,16 @@ require structured creativity and meticulous attention to detail.
     },
     stats: function() {
         return `
-\x1b[1m📊 GitHub Stats & Achievements\x1b[0m
+\x1b[1m+-------------------------+\x1b[0m
+\x1b[1m| GITHUB STATS & ACHIEVEMENTS |\x1b[0m
+\x1b[1m+-------------------------+\x1b[0m
 
 GitHub Profile: https://github.com/v-eenay
 
-🏆 GitHub Trophies
+[*] GitHub Trophies
 - Multiple achievements and recognitions for contributions
 
-📊 Contribution Metrics
+[*] Contribution Metrics
 - Active contributor with consistent activity
 - Diverse language usage across repositories
 - Strong streak of daily contributions
@@ -148,7 +162,9 @@ Visit my GitHub profile for detailed statistics and contribution graphs.
     },
     contact: function() {
         return `
-\x1b[1m📫 Contact Information\x1b[0m
+\x1b[1m+---------------------+\x1b[0m
+\x1b[1m| CONTACT INFORMATION |\x1b[0m
+\x1b[1m+---------------------+\x1b[0m
 
 - Email: koiralavinay@gmail.com
 - GitHub: github.com/v-eenay
@@ -160,7 +176,9 @@ Let's collaborate and build something extraordinary together."
     },
     'project 1': function() {
         return `
-\x1b[1mTerminal Portfolio\x1b[0m
+\x1b[1m+-------------------+\x1b[0m
+\x1b[1m| TERMINAL PORTFOLIO |\x1b[0m
+\x1b[1m+-------------------+\x1b[0m
 
 An interactive terminal-based portfolio showcasing my skills, projects, and background.
 Built using HTML, CSS, and JavaScript with jQuery Terminal.
