@@ -2,9 +2,12 @@ const greetings = `[[;#7dcfff;]Welcome to my terminal portfolio!] Type '[[;#bb9a
 
 // Function to display SVG headers
 function displayHeader(term, command) {
-    const headerPath = `assets/images/headers/${command}.svg`;
-    const headerHTML = `<img src="${headerPath}" alt="${command} header" style="width: 100%; max-width: 500px; margin: 10px 0;">`;
-    term.echo(headerHTML, {raw: true});
+    // Only display header if term is provided
+    if (term) {
+        const headerPath = `assets/images/headers/${command}.svg`;
+        const headerHTML = `<img src="${headerPath}" alt="${command} header" style="width: 100%; max-width: 500px; margin: 10px 0;">`;
+        term.echo(headerHTML, {raw: true});
+    }
 }
 
 // Define commands
@@ -200,7 +203,20 @@ Built using HTML, CSS, and JavaScript with jQuery Terminal.
 
 // Initialize terminal
 $(function() {
-    $('#terminal-container').terminal(commands, {
+    $('#terminal-container').terminal(function(command, term) {
+        // Split the command to handle arguments
+        const parts = command.trim().split(/\s+/);
+        const cmd = parts[0];
+        const args = parts.slice(1);
+
+        // Check if the command exists
+        if (cmd in commands) {
+            return commands[cmd].call(this, args, term);
+        } else {
+            return `[[;#f7768e;]Command not found: ${cmd}]
+Type '[[;#bb9af7;]help]' to see available commands.`;
+        }
+    }, {
         greetings: greetings,
         height: '100%',
         prompt: '[[;#bb9af7;]vinay@portfolio]:[[;#7aa2f7;]~]$ ',
