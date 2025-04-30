@@ -1,12 +1,17 @@
 const greetings = `[[;#7dcfff;]Welcome to my terminal portfolio!] Type '[[;#bb9af7;]help]' to see available commands.`;
 
+// Function to display SVG headers
+function displayHeader(term, command) {
+    const headerPath = `assets/images/headers/${command}.svg`;
+    const headerHTML = `<img src="${headerPath}" alt="${command} header" style="width: 100%; max-width: 500px; margin: 10px 0;">`;
+    term.echo(headerHTML, {raw: true});
+}
+
 // Define commands
 const commands = {
-    help: function() {
+    help: function(arg, term) {
+        displayHeader(term, 'help');
         return `
-[[;#7dcfff;]╭─────────────────────────────╮
-│     Available Commands    │
-╰─────────────────────────────╯]
 
 [[;#bb9af7;]❯] [[;#7aa2f7;]about]: Learn about me
 [[;#bb9af7;]❯] [[;#7aa2f7;]skills]: See my technical skills
@@ -19,11 +24,9 @@ const commands = {
 [[;#bb9af7;]❯] [[;#7aa2f7;]help]: Show this help message
 `;
     },
-    about: function() {
+    about: function(arg, term) {
+        displayHeader(term, 'about');
         return `
-[[;#7dcfff;]╭─────────────────╮
-│    ABOUT ME    │
-╰─────────────────╯]
 
 Versatile technology enthusiast with a unique blend of technical expertise and creative expression.
 My background in computer science engineering and business administration provides me with a
@@ -38,11 +41,9 @@ you'll find me on stage, where I channel my passion for theatrical arts.
 [[;#bb9af7;]❯] Ask me about the parallels between coding and performing arts
 `;
     },
-    skills: function() {
+    skills: function(arg, term) {
+        displayHeader(term, 'skills');
         return `
-[[;#7dcfff;]╭──────────────────────────╮
-│  TECH ARSENAL - SKILLS │
-╰──────────────────────────╯]
 
 [[;#9ece6a;]◆ Languages:]
   C#, Python, JavaScript, TypeScript, Java, C++, Dart
@@ -61,11 +62,9 @@ you'll find me on stage, where I channel my passion for theatrical arts.
 Type '[[;#bb9af7;]tech]' for my complete tech stack.
 `;
     },
-    tech: function() {
+    tech: function(arg, term) {
+        displayHeader(term, 'tech');
         return `
-[[;#7dcfff;]╭─────────────────────────╮
-│   COMPLETE TECH STACK │
-╰─────────────────────────╯]
 
 [[;#9ece6a;]◆ Languages]
   C#, Python, JavaScript, TypeScript, Java, C++, Dart
@@ -99,11 +98,9 @@ Type '[[;#bb9af7;]tech]' for my complete tech stack.
   TensorFlow, PyTorch, Blockchain, Web3.js, Rust, Go
 `;
     },
-    projects: function() {
+    projects: function(arg, term) {
+        displayHeader(term, 'projects');
         return `
-[[;#7dcfff;]╭─────────────────╮
-│   MY PROJECTS  │
-╰─────────────────╯]
 
 [[;#e0af68;]1.] [[;#7aa2f7;]Terminal Portfolio] - This interactive terminal-based portfolio
 [[;#e0af68;]2.] [[;#7aa2f7;][Project 2]] - Description of project 2
@@ -112,11 +109,9 @@ Type '[[;#bb9af7;]tech]' for my complete tech stack.
 Type '[[;#bb9af7;]project 1]', '[[;#bb9af7;]project 2]', etc. for more details.
 `;
     },
-    theater: function() {
+    theater: function(arg, term) {
+        displayHeader(term, 'theater');
         return `
-[[;#7dcfff;]╭───────────────────────────╮
-│  THE STAGE & THE SCREEN │
-╰───────────────────────────╯]
 
 My background in theater has enhanced my professional capabilities, particularly in
 communication, presentation, and audience engagement - skills that are invaluable
@@ -130,11 +125,13 @@ practices, emphasizing precision, iteration, and team coordination. Both discipl
 require structured creativity and meticulous attention to detail.
 `;
     },
-    stats: function() {
+    stats: function(arg, term) {
+        displayHeader(term, 'stats');
+
         // Create a full-screen overlay to display GitHub stats
         const $overlay = $('<div>').addClass('stats-overlay').appendTo('body');
         const $closeBtn = $('<button>').addClass('close-btn').html('&times;').appendTo($overlay);
-        const $iframe = $('<iframe>').attr({
+        $('<iframe>').attr({
             src: 'assets/templates/github-stats.html',
             frameborder: '0',
             title: 'GitHub Stats'
@@ -161,9 +158,6 @@ require structured creativity and meticulous attention to detail.
         $overlay.hide().fadeIn(300);
 
         return `
-[[;#7dcfff;]╭────────────────────────────────╮
-│ GITHUB STATS & ACHIEVEMENTS│
-╰────────────────────────────────╯]
 
 [[;#9ece6a;]Displaying GitHub stats in a visual dashboard...]]
 
@@ -176,11 +170,9 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/v-eenay]
 [[i;#e0af68;]"Code is like humor. When you have to explain it, it's bad."] [[;#bb9af7;]- Cory House]
 `;
     },
-    contact: function() {
+    contact: function(arg, term) {
+        displayHeader(term, 'contact');
         return `
-[[;#7dcfff;]╭──────────────────────────╮
-│   CONTACT INFORMATION  │
-╰──────────────────────────╯]
 
 [[;#bb9af7;]•] Email: [[;#7aa2f7;]koiralavinay@gmail.com]
 [[;#bb9af7;]•] GitHub: [[u;#7aa2f7;]github.com/v-eenay]
@@ -190,11 +182,9 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/v-eenay]
 Let's collaborate and build something extraordinary together."]
 `;
     },
-    'project 1': function() {
+    'project 1': function(arg, term) {
+        displayHeader(term, 'project1');
         return `
-[[;#7dcfff;]╭─────────────────────────╮
-│   TERMINAL PORTFOLIO │
-╰─────────────────────────╯]
 
 An interactive terminal-based portfolio showcasing my skills, projects, and background.
 Built using HTML, CSS, and JavaScript with jQuery Terminal.
