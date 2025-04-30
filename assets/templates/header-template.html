@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinay Koirala - Header</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .header-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .header-logo {
+            max-width: 95%;
+            max-height: 95%;
+            filter: drop-shadow(0 0 10px rgba(187, 154, 247, 0.3));
+            transition: all 0.3s ease;
+        }
+        
+        .header-logo:hover {
+            filter: drop-shadow(0 0 15px rgba(187, 154, 247, 0.5));
+            transform: scale(1.02);
+        }
+        
+        @media (max-width: 768px) {
+            .header-logo {
+                max-width: 98%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <img src="../images/header-logo.svg" alt="Vinay Koirala - Tech Enthusiast & Theater Artist" class="header-logo">
+    </div>
+</body>
+</html>
