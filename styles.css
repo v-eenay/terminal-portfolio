@@ -34,6 +34,7 @@ body {
 
 .container {
     display: flex;
+    flex-direction: row;
     height: 100vh;
     width: 100%;
 }
@@ -95,8 +96,46 @@ body {
     border: none;
     overflow: hidden;
     background-color: transparent;
-    transform: scale(0.85); /* Make the image smaller to fit properly */
     filter: drop-shadow(0 0 8px rgba(122, 162, 247, 0.3));
+}
+
+/* Media queries for responsive design */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-section, #image-container {
+        width: 100%;
+        height: 50vh;
+    }
+
+    #image-container {
+        border-left: none;
+        border-top: 2px solid var(--border-color);
+    }
+
+    #header-container {
+        height: 30%;
+    }
+
+    #terminal-container {
+        height: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    #ascii-name {
+        font-size: 0.5rem;
+    }
+
+    #header-container {
+        height: 20%;
+    }
+
+    #terminal-container {
+        height: 80%;
+    }
 }
 
 .terminal {
