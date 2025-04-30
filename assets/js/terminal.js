@@ -5,7 +5,7 @@ const commands = {
     help: function() {
         return `
 [[;#7dcfff;]╭─────────────────────────────╮
-│     Available Commands      │
+│     Available Commands    │
 ╰─────────────────────────────╯]
 
 [[;#bb9af7;]❯] [[;#7aa2f7;]about]: Learn about me
@@ -22,7 +22,7 @@ const commands = {
     about: function() {
         return `
 [[;#7dcfff;]╭─────────────────╮
-│    ABOUT ME     │
+│    ABOUT ME    │
 ╰─────────────────╯]
 
 Versatile technology enthusiast with a unique blend of technical expertise and creative expression.
@@ -41,7 +41,7 @@ you'll find me on stage, where I channel my passion for theatrical arts.
     skills: function() {
         return `
 [[;#7dcfff;]╭──────────────────────────╮
-│  TECH ARSENAL - SKILLS   │
+│  TECH ARSENAL - SKILLS │
 ╰──────────────────────────╯]
 
 [[;#9ece6a;]◆ Languages:]
@@ -64,7 +64,7 @@ Type '[[;#bb9af7;]tech]' for my complete tech stack.
     tech: function() {
         return `
 [[;#7dcfff;]╭─────────────────────────╮
-│   COMPLETE TECH STACK   │
+│   COMPLETE TECH STACK │
 ╰─────────────────────────╯]
 
 [[;#9ece6a;]◆ Languages]
@@ -102,7 +102,7 @@ Type '[[;#bb9af7;]tech]' for my complete tech stack.
     projects: function() {
         return `
 [[;#7dcfff;]╭─────────────────╮
-│   MY PROJECTS   │
+│   MY PROJECTS  │
 ╰─────────────────╯]
 
 [[;#e0af68;]1.] [[;#7aa2f7;]Terminal Portfolio] - This interactive terminal-based portfolio
@@ -115,7 +115,7 @@ Type '[[;#bb9af7;]project 1]', '[[;#bb9af7;]project 2]', etc. for more details.
     theater: function() {
         return `
 [[;#7dcfff;]╭───────────────────────────╮
-│  THE STAGE & THE SCREEN   │
+│  THE STAGE & THE SCREEN │
 ╰───────────────────────────╯]
 
 My background in theater has enhanced my professional capabilities, particularly in
@@ -131,28 +131,55 @@ require structured creativity and meticulous attention to detail.
 `;
     },
     stats: function() {
+        // Create a full-screen overlay to display GitHub stats
+        const $overlay = $('<div>').addClass('stats-overlay').appendTo('body');
+        const $closeBtn = $('<button>').addClass('close-btn').html('&times;').appendTo($overlay);
+        const $iframe = $('<iframe>').attr({
+            src: 'assets/templates/github-stats.html',
+            frameborder: '0',
+            title: 'GitHub Stats'
+        }).appendTo($overlay);
+
+        // Add event listener to close button
+        $closeBtn.on('click', function() {
+            $overlay.fadeOut(300, function() {
+                $(this).remove();
+            });
+        });
+
+        // Add escape key listener
+        $(document).on('keydown.stats', function(e) {
+            if (e.key === 'Escape') {
+                $overlay.fadeOut(300, function() {
+                    $(this).remove();
+                });
+                $(document).off('keydown.stats');
+            }
+        });
+
+        // Show the overlay with a fade-in effect
+        $overlay.hide().fadeIn(300);
+
         return `
 [[;#7dcfff;]╭────────────────────────────────╮
-│   GITHUB STATS & ACHIEVEMENTS  │
+│ GITHUB STATS & ACHIEVEMENTS│
 ╰────────────────────────────────╯]
+
+[[;#9ece6a;]Displaying GitHub stats in a visual dashboard...]]
 
 GitHub Profile: [[u;#7aa2f7;]https://github.com/v-eenay]
 
-[[;#9ece6a;]◆ GitHub Trophies]
-  Multiple achievements and recognitions for contributions
+[[;#bb9af7;]•] Press ESC or click the X button to close the stats view
+[[;#bb9af7;]•] The dashboard shows real-time GitHub statistics
+[[;#bb9af7;]•] Stats include: contributions, streak, languages, and trophies
 
-[[;#9ece6a;]◆ Contribution Metrics]
-  [[;#bb9af7;]•] Active contributor with consistent activity
-  [[;#bb9af7;]•] Diverse language usage across repositories
-  [[;#bb9af7;]•] Strong streak of daily contributions
-
-Visit my GitHub profile for detailed statistics and contribution graphs.
+[[i;#e0af68;]"Code is like humor. When you have to explain it, it's bad."] [[;#bb9af7;]- Cory House]
 `;
     },
     contact: function() {
         return `
 [[;#7dcfff;]╭──────────────────────────╮
-│   CONTACT INFORMATION    │
+│   CONTACT INFORMATION  │
 ╰──────────────────────────╯]
 
 [[;#bb9af7;]•] Email: [[;#7aa2f7;]koiralavinay@gmail.com]
@@ -166,7 +193,7 @@ Let's collaborate and build something extraordinary together."]
     'project 1': function() {
         return `
 [[;#7dcfff;]╭─────────────────────────╮
-│   TERMINAL PORTFOLIO    │
+│   TERMINAL PORTFOLIO │
 ╰─────────────────────────╯]
 
 An interactive terminal-based portfolio showcasing my skills, projects, and background.
