@@ -1,11 +1,4 @@
-const greetings = `
-+----------------------------------+
-|          VINAY KOIRALA           |
-| Tech Enthusiast & Theater Artist |
-+----------------------------------+
-
-Welcome to my terminal portfolio! Type 'help' to see available commands.
-`;
+const greetings = `Welcome to my terminal portfolio! Type 'help' to see available commands.`;
 
 // Define commands
 const commands = {

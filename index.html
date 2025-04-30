@@ -10,15 +10,28 @@
     </head>
     <body>
         <div class="container">
+            <div class="left-section">
+                <div id="header-container">
+                    <pre id="ascii-name"></pre>
+                </div>
+                <div id="terminal-container"></div>
+            </div>
             <div id="image-container">
                 <!-- Image content will be loaded here -->
                 <iframe src="vinay-image.html" id="vinay-image-frame"></iframe>
             </div>
-            <div id="terminal-container"></div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
+        <script>
+            // Load ASCII art for the name
+            fetch('ascii-name.txt')
+                .then(response => response.text())
+                .then(text => {
+                    document.getElementById('ascii-name').textContent = text;
+                });
+        </script>
         <script src="my-terminal.js"></script>
     </body>
 </html>
