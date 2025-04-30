@@ -11,19 +11,19 @@
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  
+
   <!-- Background -->
   <rect x="10" y="10" width="580" height="130" rx="10" fill="#1a1b26" stroke="url(#headerGradient)" stroke-width="2" />
-  
+
   <!-- Main Text -->
-  <text x="300" y="55" font-family="'JetBrains Mono', monospace" font-size="32" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">VINAY KOIRALA</text>
-  
+  <text x="300" y="65" font-family="'JetBrains Mono', monospace" font-size="32" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">VINAY KOIRALA</text>
+
   <!-- Subtitle -->
-  <text x="300" y="90" font-family="'JetBrains Mono', monospace" font-size="18" text-anchor="middle" fill="#a9b1d6">TECH ENTHUSIAST &amp; THEATER ARTIST</text>
-  
+  <text x="300" y="100" font-family="'JetBrains Mono', monospace" font-size="18" text-anchor="middle" fill="#a9b1d6">TECH ENTHUSIAST &amp; THEATER ARTIST</text>
+
   <!-- Decorative Elements -->
   <path d="M30,30 L50,30 M30,120 L50,120 M550,30 L570,30 M550,120 L570,120" stroke="url(#headerGradient)" stroke-width="3" />
-  
+
   <!-- Terminal Symbols -->
   <text x="30" y="75" font-family="'JetBrains Mono', monospace" font-size="24" fill="#9ece6a">❯</text>
   <text x="570" y="75" font-family="'JetBrains Mono', monospace" font-size="24" fill="#9ece6a" text-anchor="end">❮</text>
