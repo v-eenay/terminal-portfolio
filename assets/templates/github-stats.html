@@ -7,106 +7,123 @@
     <style>
         body {
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             background-color: #1a1b26;
             color: #a9b1d6;
             font-family: 'JetBrains Mono', monospace;
-            overflow-x: hidden;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        
+
         .stats-container {
             width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 10px;
         }
-        
+
         .stats-header {
             text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
             border-bottom: 2px solid #3b4261;
         }
-        
+
         .stats-header h1 {
             color: #7dcfff;
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin: 0 0 5px 0;
         }
-        
+
         .stats-header p {
             color: #a9b1d6;
-            font-size: 16px;
+            font-size: 14px;
+            margin: 0;
         }
-        
+
         .stats-header a {
             color: #7aa2f7;
             text-decoration: none;
             transition: color 0.3s ease;
         }
-        
+
         .stats-header a:hover {
             color: #bb9af7;
             text-decoration: underline;
         }
-        
-        .stats-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            height: calc(100vh - 80px);
         }
-        
+
         .stats-card {
             background-color: #1a1b26;
             border: 1px solid #3b4261;
             border-radius: 10px;
-            padding: 15px;
+            padding: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             overflow: hidden;
-            flex: 1;
-            min-width: 300px;
-            max-width: 100%;
+            display: flex;
+            flex-direction: column;
         }
-        
+
         .stats-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
             border-color: #7aa2f7;
         }
-        
+
         .stats-card h2 {
             color: #9ece6a;
-            font-size: 18px;
-            margin-top: 0;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            font-size: 16px;
+            margin: 0 0 5px 0;
+            padding-bottom: 5px;
             border-bottom: 1px solid #3b4261;
         }
-        
+
         .stats-content {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 200px;
+            overflow: hidden;
         }
-        
+
         .stats-content img {
             max-width: 100%;
-            height: auto;
+            max-height: 100%;
+            object-fit: contain;
             border-radius: 5px;
         }
-        
+
+        /* Custom parameters for GitHub API calls to make them smaller */
+        .github-stats-img {
+            width: 100%;
+            height: 100%;
+        }
+
         @media (max-width: 768px) {
-            .stats-row {
-                flex-direction: column;
+            .stats-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+                height: calc(100vh - 60px);
             }
-            
-            .stats-card {
-                min-width: 100%;
+
+            .stats-card h2 {
+                font-size: 14px;
+            }
+
+            .stats-header h1 {
+                font-size: 18px;
             }
         }
     </style>
@@ -115,53 +132,35 @@
     <div class="stats-container">
         <div class="stats-header">
             <h1>GitHub Stats & Achievements</h1>
-            <p>GitHub Profile: <a href="https://github.com/v-eenay" target="_blank">github.com/v-eenay</a></p>
+            <p>GitHub Profile: <a href="https://github.com/v-eenay" target="_blank" rel="noopener noreferrer">github.com/v-eenay</a></p>
         </div>
-        
-        <div class="stats-row">
+
+        <div class="stats-grid">
             <div class="stats-card">
                 <h2>📊 GitHub Stats</h2>
                 <div class="stats-content">
-                    <img src="https://github-readme-stats.vercel.app/api?username=v-eenay&show_icons=true&theme=tokyonight&hide_border=true" alt="GitHub Stats">
+                    <img class="github-stats-img" src="https://github-readme-stats.vercel.app/api?username=v-eenay&show_icons=true&theme=tokyonight&hide_border=true&hide_title=true&card_width=300" alt="GitHub Stats">
                 </div>
             </div>
-            
+
             <div class="stats-card">
                 <h2>🔥 Streak Stats</h2>
                 <div class="stats-content">
-                    <img src="https://github-readme-streak-stats.herokuapp.com/?user=v-eenay&theme=tokyonight&hide_border=true" alt="GitHub Streak Stats">
+                    <img class="github-stats-img" src="https://github-readme-streak-stats.herokuapp.com/?user=v-eenay&theme=tokyonight&hide_border=true&card_width=300" alt="GitHub Streak Stats">
                 </div>
             </div>
-        </div>
-        
-        <div class="stats-row">
+
             <div class="stats-card">
                 <h2>🏆 GitHub Trophies</h2>
                 <div class="stats-content">
-                    <img src="https://github-profile-trophy.vercel.app/?username=v-eenay&theme=nord&no-frame=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophies">
+                    <img class="github-stats-img" src="https://github-profile-trophy.vercel.app/?username=v-eenay&theme=nord&no-frame=true&column=3&margin-w=5&margin-h=5&no-bg=true" alt="GitHub Trophies">
                 </div>
             </div>
-            
+
             <div class="stats-card">
                 <h2>📈 Top Languages</h2>
                 <div class="stats-content">
-                    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=v-eenay&layout=compact&theme=tokyonight&hide_border=true" alt="Top Languages">
-                </div>
-            </div>
-        </div>
-        
-        <div class="stats-row">
-            <div class="stats-card">
-                <h2>📌 Pinned Repositories</h2>
-                <div class="stats-content">
-                    <img src="https://github-readme-stats.vercel.app/api/pin/?username=v-eenay&repo=terminal-portfolio&theme=tokyonight&hide_border=true" alt="Pinned Repository">
-                </div>
-            </div>
-            
-            <div class="stats-card">
-                <h2>🔍 Contribution Graph</h2>
-                <div class="stats-content">
-                    <img src="https://activity-graph.herokuapp.com/graph?username=v-eenay&theme=tokyo-night&hide_border=true" alt="Contribution Graph">
+                    <img class="github-stats-img" src="https://github-readme-stats.vercel.app/api/top-langs/?username=v-eenay&layout=compact&theme=tokyonight&hide_border=true&hide_title=true&card_width=300" alt="Top Languages">
                 </div>
             </div>
         </div>
