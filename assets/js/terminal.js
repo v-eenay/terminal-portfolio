@@ -223,11 +223,8 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         completion: Object.keys(commands),
         exit: false,
         clear: function() {
-            // Clear the terminal but keep the greeting
+            // Just clear the terminal without re-displaying the greeting
             this.clear();
-
-            // Re-display the greeting
-            this.echo(greetings);
         },
         onInit: function() {
             // Add a typing effect to the initial message
