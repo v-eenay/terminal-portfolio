@@ -11,19 +11,15 @@
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  
-  <!-- Terminal Window Frame -->
+
   <rect x="10" y="10" width="480" height="60" rx="5" fill="#1a1b26" stroke="url(#headerGradient)" stroke-width="2" />
-  
-  <!-- Terminal Icon -->
+
   <rect x="25" y="25" width="40" height="30" rx="3" fill="none" stroke="#bb9af7" stroke-width="2" />
   <path d="M30,35 L40,45 L30,55" stroke="#bb9af7" stroke-width="2" fill="none" />
   <path d="M45,55 L60,55" stroke="#bb9af7" stroke-width="2" fill="none" />
-  
-  <!-- Title Text -->
+
   <text x="250" y="45" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">TERMINAL PORTFOLIO</text>
-  
-  <!-- Decorative Elements -->
+
   <path d="M430,25 L450,25 M430,45 L450,45" stroke="#7aa2f7" stroke-width="2" />
   <text x="470" y="45" font-family="'JetBrains Mono', monospace" font-size="18" fill="#bb9af7">$_</text>
 </svg>

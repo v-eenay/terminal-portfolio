@@ -10,7 +10,6 @@
       <feGaussianBlur stdDeviation="3" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
-    <!-- Subtle texture pattern -->
     <pattern id="subtlePattern" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="scale(0.5)">
       <rect width="100" height="100" fill="#0d0e14" />
       <path d="M0,0 L10,10 M20,0 L30,10 M40,0 L50,10 M60,0 L70,10 M80,0 L90,10" stroke="#1f2335" stroke-width="0.5" />
@@ -21,25 +20,18 @@
     </pattern>
   </defs>
 
-  <!-- Background with subtle pattern -->
   <rect x="10" y="10" width="580" height="130" rx="10" fill="url(#subtlePattern)" stroke="url(#headerGradient)" stroke-width="2" />
 
-  <!-- Subtle inner shadow -->
   <rect x="12" y="12" width="576" height="126" rx="8" fill="none" stroke="#0d0e14" stroke-width="1" opacity="0.5" />
 
-  <!-- Main Text with enhanced glow -->
   <text x="300" y="65" font-family="'JetBrains Mono', monospace" font-size="32" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">VINAY KOIRALA</text>
 
-  <!-- Subtitle with slightly improved contrast -->
   <text x="300" y="100" font-family="'JetBrains Mono', monospace" font-size="18" text-anchor="middle" fill="#c0caf5">TECH ENTHUSIAST &amp; THEATER ARTIST</text>
 
-  <!-- Enhanced Decorative Elements -->
   <path d="M30,30 L50,30 M30,120 L50,120 M550,30 L570,30 M550,120 L570,120" stroke="url(#headerGradient)" stroke-width="2.5" />
 
-  <!-- Additional subtle decorative elements -->
   <path d="M70,30 L80,30 M70,120 L80,120 M520,30 L530,30 M520,120 L530,120" stroke="url(#headerGradient)" stroke-width="1.5" opacity="0.7" />
 
-  <!-- Terminal Symbols with improved styling -->
   <svg x="20" y="65" width="20" height="20" viewBox="0 0 24 24" fill="#73aa56">
     <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
   </svg>

@@ -11,19 +11,15 @@
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  
-  <!-- Terminal Window Frame -->
+
   <rect x="10" y="10" width="480" height="60" rx="5" fill="#1a1b26" stroke="url(#headerGradient)" stroke-width="2" />
-  
-  <!-- Tech Stack Icon -->
+
   <path d="M30,50 L45,25 L60,50 Z" fill="none" stroke="#9ece6a" stroke-width="2" />
   <path d="M35,50 L50,25 L65,50 Z" fill="none" stroke="#7aa2f7" stroke-width="2" />
   <path d="M40,50 L55,25 L70,50 Z" fill="none" stroke="#bb9af7" stroke-width="2" />
-  
-  <!-- Title Text -->
+
   <text x="250" y="45" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">COMPLETE TECH STACK</text>
-  
-  <!-- Decorative Elements -->
+
   <path d="M430,25 L450,25 M430,45 L450,45" stroke="#7aa2f7" stroke-width="2" />
   <text x="470" y="45" font-family="'JetBrains Mono', monospace" font-size="18" fill="#9ece6a">&lt;/&gt;</text>
 </svg>

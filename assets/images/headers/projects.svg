@@ -11,19 +11,15 @@
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  
-  <!-- Terminal Window Frame -->
+
   <rect x="10" y="10" width="480" height="60" rx="5" fill="#1a1b26" stroke="url(#headerGradient)" stroke-width="2" />
-  
-  <!-- Projects Icon -->
+
   <rect x="25" y="25" width="20" height="20" fill="none" stroke="#e0af68" stroke-width="2" />
   <rect x="35" y="35" width="20" height="20" fill="none" stroke="#7aa2f7" stroke-width="2" />
   <rect x="45" y="45" width="20" height="20" fill="none" stroke="#bb9af7" stroke-width="2" />
-  
-  <!-- Title Text -->
+
   <text x="250" y="45" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">MY PROJECTS</text>
-  
-  <!-- Decorative Elements -->
+
   <path d="M430,25 L450,25 M430,45 L450,45" stroke="#7aa2f7" stroke-width="2" />
   <text x="470" y="45" font-family="'JetBrains Mono', monospace" font-size="18" fill="#e0af68">📂</text>
 </svg>
