@@ -2,20 +2,20 @@
 
 :root {
     --size: 1.2;
-    /* Tokyo Night Theme Colors */
-    --bg-dark: #1a1b26;
-    --bg-darker: #16161e;
-    --bg-highlight: #292e42;
+    /* Darker Tokyo Night Theme Colors */
+    --bg-dark: #13141c;
+    --bg-darker: #0d0e14;
+    --bg-highlight: #1f2335;
     --fg: #a9b1d6;
     --fg-bright: #c0caf5;
-    --accent-purple: #bb9af7;
-    --accent-blue: #7aa2f7;
-    --accent-cyan: #7dcfff;
-    --accent-green: #9ece6a;
-    --accent-yellow: #e0af68;
-    --accent-orange: #ff9e64;
-    --accent-red: #f7768e;
-    --border-color: #3b4261;
+    --accent-purple: #9d7cd8;
+    --accent-blue: #5d86e2;
+    --accent-cyan: #5fb3d9;
+    --accent-green: #73aa56;
+    --accent-yellow: #c99451;
+    --accent-orange: #e68a50;
+    --accent-red: #db5d79;
+    --border-color: #2a2f45;
 }
 
 * {

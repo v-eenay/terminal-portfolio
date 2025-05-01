@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 10px;
-            background-color: #1a1b26;
+            background-color: #13141c;
             color: #a9b1d6;
             font-family: 'JetBrains Mono', monospace;
             overflow: hidden;
@@ -16,6 +16,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background-image: linear-gradient(to bottom right, #13141c, #0d0e14);
         }
 
         .stats-container {
@@ -30,13 +31,14 @@
             text-align: center;
             margin-bottom: 5px;
             padding-bottom: 5px;
-            border-bottom: 2px solid #3b4261;
+            border-bottom: 2px solid #2a2f45;
         }
 
         .stats-header h1 {
-            color: #7dcfff;
+            color: #5fb3d9;
             font-size: 20px;
             margin: 0 0 5px 0;
+            text-shadow: 0 0 5px rgba(95, 179, 217, 0.3);
         }
 
         .stats-header p {
@@ -46,13 +48,13 @@
         }
 
         .stats-header a {
-            color: #7aa2f7;
+            color: #5d86e2;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .stats-header a:hover {
-            color: #bb9af7;
+            color: #9d7cd8;
             text-decoration: underline;
         }
 
@@ -65,11 +67,11 @@
         }
 
         .stats-card {
-            background-color: #1a1b26;
-            border: 1px solid #3b4261;
+            background-color: #0d0e14;
+            border: 1px solid #2a2f45;
             border-radius: 10px;
             padding: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             overflow: hidden;
             display: flex;
@@ -78,16 +80,16 @@
 
         .stats-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            border-color: #7aa2f7;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+            border-color: #5d86e2;
         }
 
         .stats-card h2 {
-            color: #9ece6a;
+            color: #73aa56;
             font-size: 16px;
             margin: 0 0 5px 0;
             padding-bottom: 5px;
-            border-bottom: 1px solid #3b4261;
+            border-bottom: 1px solid #2a2f45;
         }
 
         .stats-content {

@@ -2,36 +2,49 @@
 <svg width="500" height="80" viewBox="0 0 500 80" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7aa2f7" />
-      <stop offset="50%" stop-color="#7dcfff" />
-      <stop offset="100%" stop-color="#bb9af7" />
+      <stop offset="0%" stop-color="#5d86e2" />
+      <stop offset="50%" stop-color="#5fb3d9" />
+      <stop offset="100%" stop-color="#9d7cd8" />
     </linearGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="2" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
+    <!-- Subtle texture pattern -->
+    <pattern id="subtlePattern" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="scale(0.5)">
+      <rect width="100" height="100" fill="#0d0e14" />
+      <path d="M0,0 L10,10 M20,0 L30,10 M40,0 L50,10 M60,0 L70,10 M80,0 L90,10" stroke="#1f2335" stroke-width="0.5" />
+      <path d="M0,20 L10,30 M20,20 L30,30 M40,20 L50,30 M60,20 L70,30 M80,20 L90,30" stroke="#1f2335" stroke-width="0.5" />
+      <path d="M0,40 L10,50 M20,40 L30,50 M40,40 L50,50 M60,40 L70,50 M80,40 L90,50" stroke="#1f2335" stroke-width="0.5" />
+      <path d="M0,60 L10,70 M20,60 L30,70 M40,60 L50,70 M60,60 L70,70 M80,60 L90,70" stroke="#1f2335" stroke-width="0.5" />
+      <path d="M0,80 L10,90 M20,80 L30,90 M40,80 L50,90 M60,80 L70,90 M80,80 L90,90" stroke="#1f2335" stroke-width="0.5" />
+    </pattern>
   </defs>
 
-  <!-- Terminal Window Frame -->
-  <rect x="10" y="10" width="480" height="60" rx="5" fill="#1a1b26" stroke="url(#headerGradient)" stroke-width="2" />
+  <!-- Terminal Window Frame with subtle pattern -->
+  <rect x="10" y="10" width="480" height="60" rx="5" fill="url(#subtlePattern)" stroke="url(#headerGradient)" stroke-width="2" />
 
-  <!-- Stats/Chart Icon -->
-  <rect x="25" y="50" width="10" height="10" fill="#7aa2f7" />
-  <rect x="40" y="40" width="10" height="20" fill="#bb9af7" />
-  <rect x="55" y="30" width="10" height="30" fill="#7dcfff" />
-  <rect x="70" y="20" width="10" height="40" fill="#9ece6a" />
-  <path d="M25,20 L80,20" stroke="#3b4261" stroke-width="1" stroke-dasharray="2,2" />
-  <path d="M25,30 L80,30" stroke="#3b4261" stroke-width="1" stroke-dasharray="2,2" />
-  <path d="M25,40 L80,40" stroke="#3b4261" stroke-width="1" stroke-dasharray="2,2" />
-  <path d="M25,50 L80,50" stroke="#3b4261" stroke-width="1" stroke-dasharray="2,2" />
+  <!-- Subtle inner shadow -->
+  <rect x="12" y="12" width="476" height="56" rx="4" fill="none" stroke="#0d0e14" stroke-width="1" opacity="0.5" />
 
-  <!-- Title Text -->
+  <!-- Stats/Chart Icon with improved styling -->
+  <rect x="25" y="50" width="10" height="10" fill="#5d86e2" rx="1" />
+  <rect x="40" y="40" width="10" height="20" fill="#9d7cd8" rx="1" />
+  <rect x="55" y="30" width="10" height="30" fill="#5fb3d9" rx="1" />
+  <rect x="70" y="20" width="10" height="40" fill="#73aa56" rx="1" />
+  <path d="M25,20 L80,20" stroke="#2a2f45" stroke-width="1" stroke-dasharray="2,2" />
+  <path d="M25,30 L80,30" stroke="#2a2f45" stroke-width="1" stroke-dasharray="2,2" />
+  <path d="M25,40 L80,40" stroke="#2a2f45" stroke-width="1" stroke-dasharray="2,2" />
+  <path d="M25,50 L80,50" stroke="#2a2f45" stroke-width="1" stroke-dasharray="2,2" />
+
+  <!-- Title Text with enhanced styling -->
   <text x="250" y="45" font-family="'JetBrains Mono', monospace" font-size="22" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">GITHUB STATS &amp; ACHIEVEMENTS</text>
 
-  <!-- Decorative Elements -->
-  <path d="M430,25 L450,25 M430,45 L450,45" stroke="#7aa2f7" stroke-width="2" />
-  <!-- SVG Chart Icon -->
-  <svg x="460" y="30" width="30" height="30" viewBox="0 0 16 16" fill="#9ece6a" xmlns="http://www.w3.org/2000/svg">
+  <!-- Enhanced Decorative Elements -->
+  <path d="M430,25 L450,25 M430,45 L450,45" stroke="url(#headerGradient)" stroke-width="2" />
+
+  <!-- SVG Chart Icon with improved styling -->
+  <svg x="460" y="30" width="30" height="30" viewBox="0 0 16 16" fill="#73aa56" xmlns="http://www.w3.org/2000/svg">
     <path d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z"/>
   </svg>
 </svg>

@@ -2,29 +2,48 @@
 <svg width="600" height="150" viewBox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7aa2f7" />
-      <stop offset="50%" stop-color="#bb9af7" />
-      <stop offset="100%" stop-color="#7dcfff" />
+      <stop offset="0%" stop-color="#5d86e2" />
+      <stop offset="50%" stop-color="#9d7cd8" />
+      <stop offset="100%" stop-color="#5fb3d9" />
     </linearGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feGaussianBlur stdDeviation="3" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
+    <!-- Subtle texture pattern -->
+    <pattern id="subtlePattern" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="scale(0.5)">
+      <rect width="100" height="100" fill="#0d0e14" />
+      <path d="M0,0 L10,10 M20,0 L30,10 M40,0 L50,10 M60,0 L70,10 M80,0 L90,10" stroke="#1f2335" stroke-width="0.5" />
+      <path d="M0,20 L10,30 M20,20 L30,30 M40,20 L50,30 M60,20 L70,30 M80,20 L90,30" stroke="#1f2335" stroke-width="0.5" />
+      <path d="M0,40 L10,50 M20,40 L30,50 M40,40 L50,50 M60,40 L70,50 M80,40 L90,50" stroke="#1f2335" stroke-width="0.5" />
+      <path d="M0,60 L10,70 M20,60 L30,70 M40,60 L50,70 M60,60 L70,70 M80,60 L90,70" stroke="#1f2335" stroke-width="0.5" />
+      <path d="M0,80 L10,90 M20,80 L30,90 M40,80 L50,90 M60,80 L70,90 M80,80 L90,90" stroke="#1f2335" stroke-width="0.5" />
+    </pattern>
   </defs>
 
-  <!-- Background -->
-  <rect x="10" y="10" width="580" height="130" rx="10" fill="#1a1b26" stroke="url(#headerGradient)" stroke-width="2" />
+  <!-- Background with subtle pattern -->
+  <rect x="10" y="10" width="580" height="130" rx="10" fill="url(#subtlePattern)" stroke="url(#headerGradient)" stroke-width="2" />
 
-  <!-- Main Text -->
+  <!-- Subtle inner shadow -->
+  <rect x="12" y="12" width="576" height="126" rx="8" fill="none" stroke="#0d0e14" stroke-width="1" opacity="0.5" />
+
+  <!-- Main Text with enhanced glow -->
   <text x="300" y="65" font-family="'JetBrains Mono', monospace" font-size="32" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">VINAY KOIRALA</text>
 
-  <!-- Subtitle -->
-  <text x="300" y="100" font-family="'JetBrains Mono', monospace" font-size="18" text-anchor="middle" fill="#a9b1d6">TECH ENTHUSIAST &amp; THEATER ARTIST</text>
+  <!-- Subtitle with slightly improved contrast -->
+  <text x="300" y="100" font-family="'JetBrains Mono', monospace" font-size="18" text-anchor="middle" fill="#c0caf5">TECH ENTHUSIAST &amp; THEATER ARTIST</text>
 
-  <!-- Decorative Elements -->
-  <path d="M30,30 L50,30 M30,120 L50,120 M550,30 L570,30 M550,120 L570,120" stroke="url(#headerGradient)" stroke-width="3" />
+  <!-- Enhanced Decorative Elements -->
+  <path d="M30,30 L50,30 M30,120 L50,120 M550,30 L570,30 M550,120 L570,120" stroke="url(#headerGradient)" stroke-width="2.5" />
 
-  <!-- Terminal Symbols -->
-  <text x="30" y="75" font-family="'JetBrains Mono', monospace" font-size="24" fill="#9ece6a">❯</text>
-  <text x="570" y="75" font-family="'JetBrains Mono', monospace" font-size="24" fill="#9ece6a" text-anchor="end">❮</text>
+  <!-- Additional subtle decorative elements -->
+  <path d="M70,30 L80,30 M70,120 L80,120 M520,30 L530,30 M520,120 L530,120" stroke="url(#headerGradient)" stroke-width="1.5" opacity="0.7" />
+
+  <!-- Terminal Symbols with improved styling -->
+  <svg x="20" y="65" width="20" height="20" viewBox="0 0 24 24" fill="#73aa56">
+    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+  </svg>
+  <svg x="560" y="65" width="20" height="20" viewBox="0 0 24 24" fill="#73aa56">
+    <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+  </svg>
 </svg>
