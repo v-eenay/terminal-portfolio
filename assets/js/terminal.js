@@ -20,7 +20,6 @@ const commands = {
 [[;#bb9af7;]❯] [[;#7aa2f7;]skills]: See my technical skills
 [[;#bb9af7;]❯] [[;#7aa2f7;]tech]: View my complete tech stack
 [[;#bb9af7;]❯] [[;#7aa2f7;]projects]: View my projects
-[[;#bb9af7;]❯] [[;#7aa2f7;]stats]: View my GitHub stats
 [[;#bb9af7;]❯] [[;#7aa2f7;]theater]: Learn about my theater background
 [[;#bb9af7;]❯] [[;#7aa2f7;]contact]: Get my contact information
 [[;#bb9af7;]❯] [[;#7aa2f7;]clear]: Clear the terminal
