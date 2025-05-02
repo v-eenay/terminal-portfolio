@@ -156,11 +156,11 @@ body {
 
 @media (max-width: 768px) {
     .left-section {
-        height: 60vh;
+        height: 65vh;
     }
 
     .right-section {
-        height: 40vh;
+        height: 35vh;
         flex-direction: column;
     }
 
@@ -180,6 +180,49 @@ body {
 
     #terminal-container {
         height: 80%;
+    }
+}
+
+/* Additional media queries for smaller mobile devices */
+@media (max-width: 480px) {
+    .left-section {
+        height: 70vh;
+    }
+
+    .right-section {
+        height: 30vh;
+    }
+
+    #header-container {
+        height: 15%;
+    }
+
+    #terminal-container {
+        height: 85%;
+    }
+
+    .terminal {
+        --size: 1;
+        padding: 10px;
+    }
+}
+
+/* For very small screens */
+@media (max-width: 360px) {
+    .left-section {
+        height: 75vh;
+    }
+
+    .right-section {
+        height: 25vh;
+    }
+
+    #header-container {
+        height: 12%;
+    }
+
+    #terminal-container {
+        height: 88%;
     }
 }
 
