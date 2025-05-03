@@ -70,6 +70,10 @@
   },
   "commands": [
     {
+      "name": "help",
+      "description": "Show this help message"
+    },
+    {
       "name": "about",
       "description": "Learn about me"
     },
@@ -96,10 +100,6 @@
     {
       "name": "clear",
       "description": "Clear the terminal"
-    },
-    {
-      "name": "help",
-      "description": "Show this help message"
     }
   ],
   "github": {

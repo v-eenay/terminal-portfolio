@@ -226,7 +226,7 @@ const commands = {
         // Create a full-screen overlay to display GitHub stats
         const $overlay = $('<div>').addClass('stats-overlay').appendTo('body');
         const $closeBtn = $('<button>').addClass('close-btn').html('&times;').appendTo($overlay);
-        $('<iframe>').attr({
+        const $iframe = $('<iframe>').attr({
             src: 'assets/templates/github-stats-embed.html',
             frameborder: '0',
             title: 'GitHub Stats'
@@ -234,23 +234,33 @@ const commands = {
 
         // Add event listener to close button
         $closeBtn.on('click', function() {
-            $overlay.fadeOut(300, function() {
-                $(this).remove();
-            });
+            $overlay.removeClass('visible');
+
+            // Remove overlay after animation completes
+            setTimeout(function() {
+                $overlay.remove();
+                $(document).off('keydown.stats');
+            }, 500); // Match the transition duration
         });
 
         // Add escape key listener
         $(document).on('keydown.stats', function(e) {
             if (e.key === 'Escape') {
-                $overlay.fadeOut(300, function() {
-                    $(this).remove();
-                });
-                $(document).off('keydown.stats');
+                $overlay.removeClass('visible');
+
+                // Remove overlay after animation completes
+                setTimeout(function() {
+                    $overlay.remove();
+                    $(document).off('keydown.stats');
+                }, 500); // Match the transition duration
             }
         });
 
-        // Show the overlay with a fade-in effect
-        $overlay.hide().fadeIn(300);
+        // Show the overlay with animations
+        // Small delay to ensure the overlay is in the DOM
+        setTimeout(function() {
+            $overlay.addClass('visible');
+        }, 10);
 
         // Get GitHub username from portfolio data
         const username = portfolioData.github ? portfolioData.github.username : 'v-eenay';
