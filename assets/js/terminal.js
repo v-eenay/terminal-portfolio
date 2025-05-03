@@ -347,8 +347,29 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
     }
 };
 
+// Theme management
+function initThemeToggle() {
+    // Check for saved theme preference or use default (dark)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-mode');
+    }
+
+    // Theme toggle functionality
+    $('#theme-toggle-btn').on('click', function() {
+        document.documentElement.classList.toggle('light-mode');
+
+        // Save preference to localStorage
+        const currentTheme = document.documentElement.classList.contains('light-mode') ? 'light' : 'dark';
+        localStorage.setItem('theme', currentTheme);
+    });
+}
+
 // Initialize terminal
 $(async function() {
+    // Initialize theme toggle
+    initThemeToggle();
+
     // Load portfolio data before initializing the terminal
     await loadPortfolioData();
 

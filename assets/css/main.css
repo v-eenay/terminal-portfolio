@@ -2,7 +2,23 @@
 
 :root {
     --size: 1.2;
-    /* Modern Minimalist Color Scheme */
+
+    /* Animation Speeds */
+    --transition-fast: 0.15s;
+    --transition-medium: 0.3s;
+    --transition-slow: 0.5s;
+
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+}
+
+/* Dark Mode (Default) */
+:root {
+    /* Modern Minimalist Color Scheme - Dark */
     --bg-dark: #0f0f12;
     --bg-darker: #080809;
     --bg-highlight: #1a1a20;
@@ -16,23 +32,44 @@
     --accent-quinary: #ef4444;
     --border-color: #2a2a35;
 
-    /* Animation Speeds */
-    --transition-fast: 0.15s;
-    --transition-medium: 0.3s;
-    --transition-slow: 0.5s;
-
-    /* Shadows */
+    /* Shadows - Dark */
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
     --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
 
-    /* Border Radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --radius-full: 9999px;
+    /* Theme-specific variables */
+    --theme-bg-pattern-color: rgba(255, 255, 255, 0.01);
+    --theme-overlay-bg: rgba(8, 8, 9, 0.85);
+    --theme-glow-color: rgba(110, 86, 207, 0.2);
+}
+
+/* Light Mode */
+:root.light-mode {
+    /* Modern Minimalist Color Scheme - Light */
+    --bg-dark: #f5f5f7;
+    --bg-darker: #e8e8ec;
+    --bg-highlight: #ffffff;
+    --fg: #1f1f23;
+    --fg-bright: #000000;
+    --fg-muted: #6e6e76;
+    --accent-primary: #6e56cf;
+    --accent-secondary: #3e63dd;
+    --accent-tertiary: #10b981;
+    --accent-quaternary: #f59e0b;
+    --accent-quinary: #ef4444;
+    --border-color: #d1d1d8;
+
+    /* Shadows - Light */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.04), 0 4px 6px rgba(0, 0, 0, 0.02);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.03), 0 10px 10px rgba(0, 0, 0, 0.02);
+
+    /* Theme-specific variables */
+    --theme-bg-pattern-color: rgba(0, 0, 0, 0.01);
+    --theme-overlay-bg: rgba(245, 245, 247, 0.85);
+    --theme-glow-color: rgba(110, 86, 207, 0.1);
 }
 
 * {
@@ -60,11 +97,12 @@ body::before {
     width: 100%;
     height: 100%;
     background-image:
-        radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-        radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+        radial-gradient(circle at 25% 25%, var(--theme-bg-pattern-color) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, var(--theme-bg-pattern-color) 1px, transparent 1px);
     background-size: 50px 50px;
     pointer-events: none;
     z-index: -1;
+    transition: background-image var(--transition-medium) ease;
 }
 
 .container {
@@ -335,8 +373,16 @@ body::before {
     padding: 20px;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    transition: all var(--transition-medium) ease;
+    transition: all var(--transition-medium) ease,
+                --color var(--transition-medium) ease,
+                --background var(--transition-medium) ease;
     opacity: 0.97;
+}
+
+/* Terminal light mode adjustments */
+:root.light-mode .terminal {
+    --color: var(--fg);
+    --background: rgba(245, 245, 247, 0.85);
 }
 
 .terminal:hover {
@@ -414,14 +460,36 @@ body::before {
     letter-spacing: -0.02em;
 }
 
-/* Add a subtle glow effect to the terminal */
-@keyframes subtle-glow {
-    0%, 100% { box-shadow: var(--shadow-lg), 0 0 20px rgba(110, 86, 207, 0.1); }
-    50% { box-shadow: var(--shadow-lg), 0 0 30px rgba(110, 86, 207, 0.2); }
+/* Add a subtle glow effect to the terminal using a pseudo-element for better performance */
+.terminal {
+    position: relative;
 }
 
-.terminal {
-    animation: subtle-glow 8s infinite ease-in-out;
+.terminal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.5;
+    animation: pulse-glow 8s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+:root:not(.light-mode) .terminal::after {
+    box-shadow: 0 0 30px var(--theme-glow-color);
+}
+
+:root.light-mode .terminal::after {
+    box-shadow: 0 0 20px var(--theme-glow-color);
 }
 
 /* GitHub Stats Overlay */
@@ -431,7 +499,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(8, 8, 9, 0.85);
+    background-color: var(--theme-overlay-bg);
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -439,7 +507,9 @@ body::before {
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-medium) ease, visibility var(--transition-medium) ease;
+    transition: opacity var(--transition-medium) ease,
+                visibility var(--transition-medium) ease,
+                background-color var(--transition-medium) ease;
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
 }
@@ -552,4 +622,65 @@ body::before {
 .stats-hint code:hover {
     background-color: rgba(8, 8, 9, 0.7);
     color: var(--accent-quaternary);
+}
+
+/* Theme Toggle Button */
+#theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#theme-toggle-btn {
+    background-color: var(--bg-highlight);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--fg);
+    transition: all var(--transition-medium) ease;
+    box-shadow: var(--shadow-md);
+    outline: none;
+    padding: 0;
+}
+
+#theme-toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+#theme-toggle-btn:active {
+    transform: translateY(0);
+}
+
+#sun-icon, #moon-icon {
+    position: absolute;
+    transition: all var(--transition-medium) ease;
+}
+
+:root.light-mode #sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+:root.light-mode #moon-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.5);
+}
+
+:root:not(.light-mode) #sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+:root:not(.light-mode) #moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
 }
