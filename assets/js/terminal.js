@@ -328,6 +328,109 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
             return `\n[[;#f7768e;]Error loading contact data. Please refresh the page.]`;
         }
     },
+    cv: function(_, term) {
+        displayHeader(term, 'cv');
+
+        if (portfolioData.cv) {
+            const cv = portfolioData.cv;
+            let cvText = `\n`;
+
+            // Add summary
+            if (cv.summary) {
+                cvText += `[[;#9ece6a;]◆ Summary]\n${cv.summary}\n\n`;
+            }
+
+            // Add experience
+            if (cv.experience && cv.experience.length > 0) {
+                cvText += `[[;#9ece6a;]◆ Professional Experience]\n`;
+                cv.experience.forEach(exp => {
+                    cvText += `  [[;#7aa2f7;]${exp.title}] - ${exp.company}, ${exp.location}\n`;
+                    cvText += `  [[;#bb9af7;]${exp.period}]\n`;
+                    cvText += `  ${exp.description}\n\n`;
+                });
+            }
+
+            // Add education
+            if (cv.education && cv.education.length > 0) {
+                cvText += `[[;#9ece6a;]◆ Education]\n`;
+                cv.education.forEach(edu => {
+                    cvText += `  [[;#7aa2f7;]${edu.degree}] - ${edu.institution}\n`;
+                    cvText += `  [[;#bb9af7;]${edu.field}] | ${edu.period}\n\n`;
+                });
+            }
+
+            // Add research
+            if (cv.research && cv.research.length > 0) {
+                cvText += `[[;#9ece6a;]◆ Research & Publications]\n`;
+                cv.research.forEach(res => {
+                    cvText += `  [[;#7aa2f7;]${res.title}] (${res.year})\n`;
+                    cvText += `  ${res.description}\n\n`;
+                });
+            }
+
+            cvText += `Type '[[;#bb9af7;]teaching]' to view my teaching experience.\n`;
+            cvText += `Type '[[;#bb9af7;]achievements]' to view my awards and achievements.\n`;
+            cvText += `Type '[[;#bb9af7;]projects]' to view my projects.\n`;
+
+            return cvText;
+        } else {
+            return `\n[[;#f7768e;]Error loading CV data. Please refresh the page.]`;
+        }
+    },
+    teaching: function(_, term) {
+        displayHeader(term, 'teaching');
+
+        if (portfolioData.cv && portfolioData.cv.teaching) {
+            const teaching = portfolioData.cv.teaching;
+            let teachingText = `\n`;
+
+            // Add teaching experience
+            if (teaching.length > 0) {
+                teachingText += `[[;#9ece6a;]◆ Teaching Experience]\n\n`;
+                teaching.forEach(course => {
+                    teachingText += `  [[;#7aa2f7;]${course.course}]\n`;
+                    teachingText += `  ${course.institution}\n`;
+                    teachingText += `  ${course.description}\n\n`;
+                });
+            }
+
+            // Add professional development
+            if (portfolioData.cv.professional_development && portfolioData.cv.professional_development.length > 0) {
+                teachingText += `[[;#9ece6a;]◆ Professional Development]\n\n`;
+                portfolioData.cv.professional_development.forEach(dev => {
+                    teachingText += `  [[;#7aa2f7;]${dev.title}] (${dev.year})\n`;
+                    teachingText += `  ${dev.provider}\n`;
+                    teachingText += `  ${dev.description}\n\n`;
+                });
+            }
+
+            return teachingText;
+        } else {
+            return `\n[[;#f7768e;]Error loading teaching data. Please refresh the page.]`;
+        }
+    },
+    achievements: function(_, term) {
+        displayHeader(term, 'achievements');
+
+        if (portfolioData.cv && portfolioData.cv.achievements) {
+            const achievements = portfolioData.cv.achievements;
+            let achievementsText = `\n`;
+
+            // Add achievements
+            if (achievements.length > 0) {
+                achievementsText += `[[;#9ece6a;]◆ Awards & Achievements]\n\n`;
+                achievements.forEach(achievement => {
+                    achievementsText += `  [[;#7aa2f7;]${achievement.title}] (${achievement.year})\n`;
+                    achievementsText += `  ${achievement.issuer}\n`;
+                    achievementsText += `  ${achievement.description}\n\n`;
+                });
+            }
+
+            return achievementsText;
+        } else {
+            return `\n[[;#f7768e;]Error loading achievements data. Please refresh the page.]`;
+        }
+    },
     'project 1': function(_, term) {
         displayHeader(term, 'project1');
 

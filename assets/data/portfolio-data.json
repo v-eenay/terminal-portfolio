@@ -1,7 +1,7 @@
 {
   "personal": {
     "name": "Vinay Koirala",
-    "title": "TECH ENTHUSIAST & THEATER ARTIST",
+    "title": "IT LECTURER & COMPUTER ENGINEERING GRADUATE",
     "email": "koiralavinay@gmail.com",
     "github": "github.com/v-eenay",
     "linkedin": "linkedin.com/in/veenay"
@@ -78,6 +78,10 @@
       "description": "Learn about me"
     },
     {
+      "name": "cv",
+      "description": "View my curriculum vitae"
+    },
+    {
       "name": "skills",
       "description": "See my technical skills"
     },
@@ -88,6 +92,14 @@
     {
       "name": "projects",
       "description": "View my projects"
+    },
+    {
+      "name": "teaching",
+      "description": "Learn about my teaching experience"
+    },
+    {
+      "name": "achievements",
+      "description": "View my awards and achievements"
     },
     {
       "name": "theater",
@@ -105,5 +117,138 @@
   "github": {
     "username": "v-eenay",
     "featuredRepo": "terminal-portfolio"
+  },
+  "cv": {
+    "summary": "Versatile IT lecturer with an MBA and B.Tech in Computer Science Engineering, experienced in both academic and business settings. Committed to fostering a dynamic learning environment that integrates technology and innovative practices across disciplines. Passionate about empowering students and professionals through collaborative engagement and continuous skill development.",
+    "experience": [
+      {
+        "title": "IT Lecturer",
+        "company": "Itahari International College",
+        "location": "Itahari",
+        "period": "July, 2023 - Present",
+        "description": "Currently teaching Introduction to Information Systems, covering HTML, CSS, JavaScript, and MySQL, as well as Fundamentals of Computing, focusing on Python programming. Conducting enrichment classes on Flutter for mobile development and contributing to the content upgrade program to enhance the curriculum for future students."
+      },
+      {
+        "title": "Teacher",
+        "company": "Gokyo International School",
+        "location": "Itahari",
+        "period": "June, 2022 - April, 2023",
+        "description": "Delivered engaging computer science instruction, covering programming, software applications, and digital literacy. Developed tailored lesson plans, assessed student performance, and created a supportive environment to foster students' interest and skills in technology."
+      },
+      {
+        "title": "Computer Instructor",
+        "company": "Good Luck Education and Training Center",
+        "location": "Itahari",
+        "period": "February, 2021 - February, 2022",
+        "description": "Delivered comprehensive computer education to students, covering essential software and programming skills. Developed curriculum materials, assessed student progress, and fostered a collaborative learning environment to enhance digital literacy and technical proficiency."
+      },
+      {
+        "title": "Production Manager",
+        "company": "Namaste F.M.",
+        "location": "Itahari",
+        "period": "February, 2019 - January, 2021",
+        "description": "Oversaw the production and broadcasting operations, ensuring high-quality content delivery and adherence to schedules. Managed a team of technical and creative staff, coordinated programming, and optimized processes to enhance listener engagement and station performance."
+      }
+    ],
+    "education": [
+      {
+        "degree": "M.B.A",
+        "institution": "Lincoln University, Malaysia",
+        "field": "Business Administration",
+        "period": "March, 2019 - January, 2022"
+      },
+      {
+        "degree": "B.Tech.",
+        "institution": "Aryabhatta Knowledge University, India",
+        "field": "Computer Science and Engineering",
+        "period": "October, 2014 - May, 2018"
+      }
+    ],
+    "research": [
+      {
+        "title": "Online Digital Library",
+        "year": "2018",
+        "description": "Conducted for the partial fulfillment of the B.Tech in Computer Science and Engineering. Developed a digital library system using Java, Spring Framework, and Hibernate for back-end development, along with MySQL for database management. The user interface was created with HTML, CSS, and JavaScript to enhance educational resource accessibility."
+      },
+      {
+        "title": "The Impact of Personalized Marketing on Growing Advertising Reach of Local Business",
+        "year": "2022",
+        "description": "Undertaken for the partial fulfillment of the MBA. Analysed the effectiveness of personalised marketing strategies on local business advertising reach, providing insights for optimising marketing approaches based on customer engagement data."
+      }
+    ],
+    "teaching": [
+      {
+        "course": "Introduction to Information Systems",
+        "institution": "Itahari International College",
+        "description": "Comprehensive course covering web technologies including HTML, CSS, JavaScript, and database fundamentals with MySQL."
+      },
+      {
+        "course": "Fundamentals of Computing",
+        "institution": "Itahari International College",
+        "description": "Core computer science course with focus on Python programming, algorithms, and computational thinking."
+      },
+      {
+        "course": "Flutter Development Workshop",
+        "institution": "Itahari International College",
+        "description": "Enrichment program teaching cross-platform mobile app development using Flutter and Dart."
+      }
+    ],
+    "projects": [
+      {
+        "title": "Terminal Portfolio",
+        "description": "Interactive command-line interface portfolio built with HTML, CSS, and JavaScript featuring responsive design and custom Tokyo Night theme.",
+        "technologies": ["HTML5", "CSS3", "JavaScript", "jQuery Terminal"]
+      },
+      {
+        "title": "Student Management System",
+        "description": "Comprehensive system for educational institutions to manage student records, attendance, and performance analytics.",
+        "technologies": ["Java", "Spring Boot", "MySQL", "Thymeleaf", "Bootstrap"]
+      },
+      {
+        "title": "E-Learning Platform",
+        "description": "Web-based learning management system with video content delivery, interactive quizzes, and progress tracking.",
+        "technologies": ["React", "Node.js", "MongoDB", "Express", "AWS S3"]
+      }
+    ],
+    "achievements": [
+      {
+        "title": "Best Teaching Innovation Award",
+        "issuer": "Itahari International College",
+        "year": "2024",
+        "description": "Recognized for implementing innovative teaching methodologies that significantly improved student engagement and learning outcomes."
+      },
+      {
+        "title": "Outstanding Academic Performance",
+        "issuer": "Aryabhatta Knowledge University",
+        "year": "2018",
+        "description": "Graduated with distinction in B.Tech Computer Science and Engineering program."
+      },
+      {
+        "title": "Community Tech Educator Award",
+        "issuer": "Itahari Municipality",
+        "year": "2022",
+        "description": "Honored for conducting free programming workshops for underprivileged students in the community."
+      }
+    ],
+    "professional_development": [
+      {
+        "title": "Advanced Web Development Bootcamp",
+        "provider": "Udemy",
+        "year": "2023",
+        "description": "Comprehensive training in modern web development technologies including React, Node.js, and responsive design principles."
+      },
+      {
+        "title": "Machine Learning Fundamentals",
+        "provider": "Coursera (Stanford University)",
+        "year": "2022",
+        "description": "In-depth course covering core machine learning algorithms, data preprocessing, and model evaluation techniques."
+      },
+      {
+        "title": "Educational Technology Integration",
+        "provider": "EdX (MIT)",
+        "year": "2023",
+        "description": "Specialized training in integrating technology tools and platforms into educational curricula for enhanced learning experiences."
+      }
+    ]
   }
 }
