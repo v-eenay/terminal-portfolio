@@ -322,7 +322,7 @@ require structured creativity and meticulous attention to detail.
         const $overlay = $('<div>').addClass('stats-overlay').appendTo('body');
         const $closeBtn = $('<button>').addClass('close-btn').html('&times;').appendTo($overlay);
         $('<iframe>').attr({
-            src: 'assets/templates/github-stats.html',
+            src: 'assets/templates/github-stats-embed.html',
             frameborder: '0',
             title: 'GitHub Stats'
         }).appendTo($overlay);
