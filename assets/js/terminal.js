@@ -39,6 +39,11 @@ const commands = {
             portfolioData.commands.forEach(cmd => {
                 helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}]: ${cmd.description}\n`;
             });
+
+            // Check if we're on a mobile device and add stats command
+            if (window.innerWidth <= 768) {
+                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]stats]: View GitHub statistics and activity\n`;
+            }
         } else {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
@@ -337,6 +342,9 @@ $(async function() {
     // Load portfolio data before initializing the terminal
     await loadPortfolioData();
 
+    // Terminal instance reference
+    let terminal;
+
     // Handle responsive layout
     function handleResponsiveLayout() {
         // Hide stats hint on desktop, show on mobile
@@ -344,6 +352,12 @@ $(async function() {
             $('.stats-hint').show();
         } else {
             $('.stats-hint').hide();
+        }
+
+        // If terminal is initialized, refresh help command to update stats visibility
+        if (terminal) {
+            // We don't want to execute the command, just update the completion list
+            terminal.refresh_completion();
         }
     }
 
@@ -353,7 +367,7 @@ $(async function() {
     // Listen for window resize
     $(window).on('resize', handleResponsiveLayout);
 
-    $('#terminal-container').terminal(function(command, term) {
+    terminal = $('#terminal-container').terminal(function(command, term) {
         // Split the command to handle arguments
         const parts = command.trim().split(/\s+/);
         const cmd = parts[0];
@@ -370,7 +384,17 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         greetings: greetings,
         height: '100%',
         prompt: '[[;#bb9af7;]vinay@portfolio]:[[;#7aa2f7;]~]$ ',
-        completion: Object.keys(commands),
+        completion: function() {
+            // Get base commands
+            const baseCommands = Object.keys(commands);
+
+            // Add stats command if on mobile
+            if (window.innerWidth <= 768) {
+                return [...baseCommands, 'stats'];
+            }
+
+            return baseCommands;
+        },
         exit: false,
         clear: function() {
             // Just clear the terminal without re-displaying the greeting
