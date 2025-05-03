@@ -156,22 +156,23 @@ body {
 
 @media (max-width: 768px) {
     .left-section {
-        height: 65vh;
+        height: 70vh;
     }
 
     .right-section {
-        height: 35vh;
+        height: 30vh;
         flex-direction: column;
     }
 
-    #profile-container, #stats-container {
+    #profile-container {
         width: 100%;
-        height: 50%;
+        height: 100%;
+        border-right: none;
+        border-bottom: none;
     }
 
-    #profile-container {
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
+    #stats-container {
+        display: none; /* Hide stats container on smaller screens */
     }
 
     #header-container {
@@ -180,6 +181,11 @@ body {
 
     #terminal-container {
         height: 80%;
+    }
+
+    /* Show stats command hint in terminal */
+    .stats-hint {
+        display: block;
     }
 }
 
@@ -336,4 +342,24 @@ body {
     background-color: var(--accent-purple);
     color: var(--bg-dark);
     transform: rotate(90deg);
+}
+
+/* Stats hint for mobile */
+.stats-hint {
+    display: none;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: var(--bg-highlight);
+    border-radius: 5px;
+    border-left: 3px solid var(--accent-purple);
+    font-size: 0.9em;
+    color: var(--fg);
+}
+
+.stats-hint code {
+    background-color: var(--bg-darker);
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: var(--accent-cyan);
+    font-family: 'JetBrains Mono', monospace;
 }

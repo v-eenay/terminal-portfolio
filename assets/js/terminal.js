@@ -250,7 +250,22 @@ const commands = {
         // Get GitHub username from portfolio data
         const username = portfolioData.github ? portfolioData.github.username : 'v-eenay';
 
-        return `
+        // Check if we're on a mobile device
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            return `
+
+[[;#9ece6a;]Opening GitHub stats in fullscreen view...]]
+
+GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
+
+[[;#bb9af7;]•] Press ESC or click the X button to close the stats view
+[[;#bb9af7;]•] The dashboard shows your GitHub activity and statistics
+[[;#bb9af7;]•] Stats include: contributions, streak, languages, and more
+`;
+        } else {
+            return `
 
 [[;#9ece6a;]Displaying GitHub stats in a visual dashboard...]]
 
@@ -262,6 +277,7 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 
 [[i;#e0af68;]"Code is like humor. When you have to explain it, it's bad."] [[;#bb9af7;]- Cory House]
 `;
+        }
     },
     contact: function(_, term) {
         displayHeader(term, 'contact');
@@ -321,6 +337,22 @@ $(async function() {
     // Load portfolio data before initializing the terminal
     await loadPortfolioData();
 
+    // Handle responsive layout
+    function handleResponsiveLayout() {
+        // Hide stats hint on desktop, show on mobile
+        if (window.innerWidth <= 768) {
+            $('.stats-hint').show();
+        } else {
+            $('.stats-hint').hide();
+        }
+    }
+
+    // Initial call
+    handleResponsiveLayout();
+
+    // Listen for window resize
+    $(window).on('resize', handleResponsiveLayout);
+
     $('#terminal-container').terminal(function(command, term) {
         // Split the command to handle arguments
         const parts = command.trim().split(/\s+/);
@@ -343,6 +375,11 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         clear: function() {
             // Just clear the terminal without re-displaying the greeting
             this.clear();
+
+            // Re-show the stats hint if on mobile
+            if (window.innerWidth <= 768) {
+                $('.stats-hint').show();
+            }
         },
         onInit: function() {
             // Add a typing effect to the initial message
