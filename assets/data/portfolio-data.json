@@ -1,0 +1,109 @@
+{
+  "personal": {
+    "name": "Vinay Koirala",
+    "title": "TECH ENTHUSIAST & THEATER ARTIST",
+    "email": "koiralavinay@gmail.com",
+    "github": "github.com/v-eenay",
+    "linkedin": "linkedin.com/in/veenay"
+  },
+  "about": {
+    "description": "Versatile technology enthusiast with a unique blend of technical expertise and creative expression. My background in computer science engineering and business administration provides me with a holistic perspective on technology and its applications. When I'm not immersed in code, you'll find me on stage, where I channel my passion for theatrical arts.",
+    "quote": "At the intersection of logic and creativity lies true innovation.",
+    "highlights": [
+      "Computer Science Engineer with an MBA",
+      "Theater performer exploring the art of expression",
+      "Constantly exploring emerging technologies",
+      "Ask me about the parallels between coding and performing arts"
+    ]
+  },
+  "skills": {
+    "languages": ["C#", "Python", "JavaScript", "TypeScript", "Java", "C++", "Dart"],
+    "frontend": ["HTML5", "CSS3", "SASS", "Bootstrap", "Tailwind CSS", "jQuery"],
+    "frontendFrameworks": ["React", "Next.js", "Angular", "Vue.js", "Redux", "Blazor"],
+    "backend": ["Node.js", "Express.js", "Django", "Flask", "Spring", "ASP.NET", ".NET"],
+    "mobile": ["Flutter", "React Native", "Xamarin", "Android", "MAUI"],
+    "databases": ["MySQL", "PostgreSQL", "SQL Server", "MongoDB", "Firebase", "Redis", "GraphQL"],
+    "devops": ["Git", "GitHub", "Docker", "Kubernetes", "AWS", "Azure"],
+    "tools": ["VS Code", "Visual Studio", "IntelliJ", "Android Studio", "Postman"],
+    "design": ["Figma", "Adobe Photoshop", "Adobe Illustrator", "Canva"],
+    "exploring": ["TensorFlow", "PyTorch", "Blockchain", "Web3.js", "Rust", "Go"]
+  },
+  "theater": {
+    "description": "My background in theater has enhanced my professional capabilities, particularly in communication, presentation, and audience engagement - skills that are invaluable in the technology sector. Theater experience has developed my ability to collaborate effectively and deliver compelling presentations.",
+    "quote": "All the world's a stage, and all the men and women merely players.",
+    "quoteAuthor": "William Shakespeare",
+    "additionalInfo": "The methodical approach required in theatrical productions parallels software development practices, emphasizing precision, iteration, and team coordination. Both disciplines require structured creativity and meticulous attention to detail."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "name": "Terminal Portfolio",
+      "description": "An interactive terminal-based portfolio showcasing my skills, projects, and background. Built using HTML, CSS, and JavaScript with jQuery Terminal.",
+      "features": [
+        "Interactive command-line interface",
+        "Custom styling with Tokyo Night theme",
+        "Responsive design for all devices",
+        "Easy navigation through various sections"
+      ],
+      "repo": "terminal-portfolio"
+    },
+    {
+      "id": 2,
+      "name": "Project 2",
+      "description": "Description of project 2",
+      "features": [],
+      "repo": ""
+    },
+    {
+      "id": 3,
+      "name": "Project 3",
+      "description": "Description of project 3",
+      "features": [],
+      "repo": ""
+    }
+  ],
+  "contact": {
+    "email": "koiralavinay@gmail.com",
+    "github": "github.com/v-eenay",
+    "linkedin": "linkedin.com/in/veenay",
+    "quote": "Whether writing code or performing on stage, I'm always looking to create something meaningful. Let's collaborate and build something extraordinary together."
+  },
+  "commands": [
+    {
+      "name": "about",
+      "description": "Learn about me"
+    },
+    {
+      "name": "skills",
+      "description": "See my technical skills"
+    },
+    {
+      "name": "tech",
+      "description": "View my complete tech stack"
+    },
+    {
+      "name": "projects",
+      "description": "View my projects"
+    },
+    {
+      "name": "theater",
+      "description": "Learn about my theater background"
+    },
+    {
+      "name": "contact",
+      "description": "Get my contact information"
+    },
+    {
+      "name": "clear",
+      "description": "Clear the terminal"
+    },
+    {
+      "name": "help",
+      "description": "Show this help message"
+    }
+  ],
+  "github": {
+    "username": "v-eenay",
+    "featuredRepo": "terminal-portfolio"
+  }
+}
