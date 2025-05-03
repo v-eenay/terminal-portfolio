@@ -189,15 +189,49 @@ const commands = {
     projects: function(_, term) {
         displayHeader(term, 'projects');
 
+        // Combine portfolio projects and CV projects
+        let allProjects = [];
+
+        // Add portfolio projects
         if (portfolioData.projects && portfolioData.projects.length > 0) {
-            let projectsText = `\n`;
+            allProjects = [...portfolioData.projects];
+        }
+
+        // Add CV projects if they exist and aren't already included
+        if (portfolioData.cv && portfolioData.cv.projects) {
+            portfolioData.cv.projects.forEach(cvProject => {
+                // Check if this project is already in the portfolio projects
+                const exists = allProjects.some(p => p.name === cvProject.title);
+                if (!exists) {
+                    allProjects.push({
+                        id: allProjects.length + 1,
+                        name: cvProject.title,
+                        description: cvProject.description,
+                        technologies: cvProject.technologies
+                    });
+                }
+            });
+        }
+
+        if (allProjects.length > 0) {
+            let projectsText = `\n[[;#9ece6a;]◆ Featured Projects]\n\n`;
 
             // List all projects
-            portfolioData.projects.forEach(project => {
-                projectsText += `[[;#e0af68;]${project.id}.] [[;#7aa2f7;]${project.name}] - ${project.description.substring(0, 50)}${project.description.length > 50 ? '...' : ''}\n`;
+            allProjects.forEach(project => {
+                const projectName = project.name || project.title;
+                const projectDesc = project.description;
+                projectsText += `[[;#e0af68;]${project.id}.] [[;#7aa2f7;]${projectName}]\n`;
+                projectsText += `   ${projectDesc.substring(0, 100)}${projectDesc.length > 100 ? '...' : ''}\n`;
+
+                // Add technologies if available
+                if (project.technologies && project.technologies.length > 0) {
+                    projectsText += `   [[;#bb9af7;]Technologies:] ${project.technologies.join(', ')}\n`;
+                }
+                projectsText += `\n`;
             });
 
-            projectsText += `\nType '[[;#bb9af7;]project 1]', '[[;#bb9af7;]project 2]', etc. for more details.`;
+            projectsText += `Type '[[;#bb9af7;]project 1]', '[[;#bb9af7;]project 2]', etc. for more details on portfolio projects.\n`;
+            projectsText += `Type '[[;#bb9af7;]cv]' to return to my curriculum vitae.\n`;
 
             return projectsText;
         } else {
@@ -368,9 +402,44 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
                 });
             }
 
+            // Add skills summary
+            if (cv.skills) {
+                cvText += `[[;#9ece6a;]◆ Key Skills]\n`;
+                Object.entries(cv.skills).forEach(([key, value]) => {
+                    const formattedKey = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                    cvText += `  [[;#7aa2f7;]${formattedKey}:]\n  ${value}\n\n`;
+                });
+            }
+
+            // Add certifications
+            if (cv.certifications && cv.certifications.length > 0) {
+                cvText += `[[;#9ece6a;]◆ Certifications]\n`;
+                cv.certifications.forEach(cert => {
+                    cvText += `  [[;#7aa2f7;]${cert.title}] (${cert.year}) - ${cert.issuer}\n`;
+                    if (cert.description) {
+                        cvText += `  ${cert.description}\n\n`;
+                    } else {
+                        cvText += `\n`;
+                    }
+                });
+            }
+
+            // Add languages
+            if (cv.languages && cv.languages.length > 0) {
+                cvText += `[[;#9ece6a;]◆ Languages]\n`;
+                cv.languages.forEach(lang => {
+                    const stars = '★'.repeat(lang.proficiency) + '☆'.repeat(5 - lang.proficiency);
+                    cvText += `  [[;#7aa2f7;]${lang.name}:] ${stars}\n`;
+                });
+                cvText += `\n`;
+            }
+
+            // Add navigation links to other sections
+            cvText += `[[;#e0af68;]Additional Information:]\n`;
             cvText += `Type '[[;#bb9af7;]teaching]' to view my teaching experience.\n`;
             cvText += `Type '[[;#bb9af7;]achievements]' to view my awards and achievements.\n`;
             cvText += `Type '[[;#bb9af7;]projects]' to view my projects.\n`;
+            cvText += `Type '[[;#bb9af7;]contact]' to view my contact information.\n`;
 
             return cvText;
         } else {
@@ -384,15 +453,26 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
             const teaching = portfolioData.cv.teaching;
             let teachingText = `\n`;
 
+            // Add teaching philosophy
+            teachingText += `[[;#9ece6a;]◆ Teaching Philosophy]\n`;
+            teachingText += `  I believe in creating an engaging, interactive learning environment that combines theoretical concepts with practical applications. My teaching approach focuses on fostering critical thinking, problem-solving skills, and technological creativity while adapting to diverse learning styles.\n\n`;
+
             // Add teaching experience
             if (teaching.length > 0) {
-                teachingText += `[[;#9ece6a;]◆ Teaching Experience]\n\n`;
+                teachingText += `[[;#9ece6a;]◆ Courses Taught]\n\n`;
                 teaching.forEach(course => {
                     teachingText += `  [[;#7aa2f7;]${course.course}]\n`;
-                    teachingText += `  ${course.institution}\n`;
+                    teachingText += `  [[;#bb9af7;]${course.institution}]\n`;
                     teachingText += `  ${course.description}\n\n`;
                 });
             }
+
+            // Add teaching methodologies
+            teachingText += `[[;#9ece6a;]◆ Teaching Methodologies]\n`;
+            teachingText += `  [[;#7aa2f7;]• Project-Based Learning:] Implementing real-world projects to enhance practical understanding\n`;
+            teachingText += `  [[;#7aa2f7;]• Flipped Classroom:] Providing materials for pre-class study and focusing on interactive activities during class\n`;
+            teachingText += `  [[;#7aa2f7;]• Peer Learning:] Encouraging collaborative problem-solving and knowledge sharing\n`;
+            teachingText += `  [[;#7aa2f7;]• Technology Integration:] Utilizing digital tools and platforms to enhance learning experiences\n\n`;
 
             // Add professional development
             if (portfolioData.cv.professional_development && portfolioData.cv.professional_development.length > 0) {
@@ -403,6 +483,11 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
                     teachingText += `  ${dev.description}\n\n`;
                 });
             }
+
+            // Add navigation
+            teachingText += `[[;#e0af68;]Related Information:]\n`;
+            teachingText += `Type '[[;#bb9af7;]cv]' to return to my curriculum vitae.\n`;
+            teachingText += `Type '[[;#bb9af7;]achievements]' to view my awards and achievements.\n`;
 
             return teachingText;
         } else {
@@ -416,15 +501,30 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
             const achievements = portfolioData.cv.achievements;
             let achievementsText = `\n`;
 
+            // Add introduction
+            achievementsText += `Throughout my academic and professional journey, I've been recognized for my contributions to education, technology, and community service.\n\n`;
+
             // Add achievements
             if (achievements.length > 0) {
                 achievementsText += `[[;#9ece6a;]◆ Awards & Achievements]\n\n`;
                 achievements.forEach(achievement => {
                     achievementsText += `  [[;#7aa2f7;]${achievement.title}] (${achievement.year})\n`;
-                    achievementsText += `  ${achievement.issuer}\n`;
+                    achievementsText += `  [[;#bb9af7;]${achievement.issuer}]\n`;
                     achievementsText += `  ${achievement.description}\n\n`;
                 });
             }
+
+            // Add skills recognition
+            achievementsText += `[[;#9ece6a;]◆ Skills Recognition]\n`;
+            achievementsText += `  [[;#7aa2f7;]• Technical Excellence:] Recognized for implementing innovative technical solutions in educational contexts\n`;
+            achievementsText += `  [[;#7aa2f7;]• Teaching Innovation:] Acknowledged for developing creative teaching methodologies that enhance student engagement\n`;
+            achievementsText += `  [[;#7aa2f7;]• Community Impact:] Honored for contributions to technology education in the local community\n\n`;
+
+            // Add navigation
+            achievementsText += `[[;#e0af68;]Related Information:]\n`;
+            achievementsText += `Type '[[;#bb9af7;]cv]' to return to my curriculum vitae.\n`;
+            achievementsText += `Type '[[;#bb9af7;]teaching]' to view my teaching experience.\n`;
+            achievementsText += `Type '[[;#bb9af7;]projects]' to view my projects.\n`;
 
             return achievementsText;
         } else {
