@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="150" viewBox="0 0 600 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="headerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3e63dd" />
+      <stop offset="50%" stop-color="#6e56cf" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#ef4444" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.1" />
+    </filter>
+    <pattern id="subtlePattern" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="scale(0.5)">
+      <rect width="100" height="100" fill="#f5f5f7" />
+      <path d="M0,0 L10,10 M20,0 L30,10 M40,0 L50,10 M60,0 L70,10 M80,0 L90,10" stroke="#e8e8ec" stroke-width="0.5" />
+      <path d="M0,20 L10,30 M20,20 L30,30 M40,20 L50,30 M60,20 L70,30 M80,20 L90,30" stroke="#e8e8ec" stroke-width="0.5" />
+      <path d="M0,40 L10,50 M20,40 L30,50 M40,40 L50,50 M60,40 L70,50 M80,40 L90,50" stroke="#e8e8ec" stroke-width="0.5" />
+      <path d="M0,60 L10,70 M20,60 L30,70 M40,60 L50,70 M60,60 L70,70 M80,60 L90,70" stroke="#e8e8ec" stroke-width="0.5" />
+      <path d="M0,80 L10,90 M20,80 L30,90 M40,80 L50,90 M60,80 L70,90 M80,80 L90,90" stroke="#e8e8ec" stroke-width="0.5" />
+    </pattern>
+    <pattern id="circuitPattern" width="50" height="50" patternUnits="userSpaceOnUse">
+      <rect width="50" height="50" fill="transparent" />
+      <circle cx="10" cy="10" r="1" fill="#d1d1d8" />
+      <circle cx="20" cy="20" r="1" fill="#d1d1d8" />
+      <circle cx="30" cy="30" r="1" fill="#d1d1d8" />
+      <circle cx="40" cy="40" r="1" fill="#d1d1d8" />
+      <circle cx="10" cy="40" r="1" fill="#d1d1d8" />
+      <circle cx="40" cy="10" r="1" fill="#d1d1d8" />
+      <path d="M10,10 L20,20" stroke="#d1d1d8" stroke-width="0.5" />
+      <path d="M20,20 L30,30" stroke="#d1d1d8" stroke-width="0.5" />
+      <path d="M30,30 L40,40" stroke="#d1d1d8" stroke-width="0.5" />
+      <path d="M10,40 L40,10" stroke="#d1d1d8" stroke-width="0.5" />
+    </pattern>
+  </defs>
+
+  <!-- Main background with subtle pattern -->
+  <rect x="10" y="10" width="580" height="130" rx="10" fill="url(#subtlePattern)" stroke="url(#headerGradient)" stroke-width="2" filter="url(#softShadow)" />
+
+  <!-- Inner shadow and highlight -->
+  <rect x="12" y="12" width="576" height="126" rx="8" fill="none" stroke="#e8e8ec" stroke-width="1" opacity="0.5" />
+  <rect x="14" y="14" width="572" height="122" rx="7" fill="none" stroke="url(#headerGradient)" stroke-width="0.5" opacity="0.2" />
+
+  <!-- Circuit pattern overlay for tech aesthetic -->
+  <rect x="15" y="15" width="570" height="120" rx="6" fill="url(#circuitPattern)" opacity="0.1" />
+
+  <!-- Decorative code brackets -->
+  <path d="M40,40 L60,60 L40,80" stroke="#3e63dd" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+  <path d="M560,40 L540,60 L560,80" stroke="#10b981" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
+
+  <!-- Main title with enhanced glow -->
+  <text x="300" y="65" font-family="'JetBrains Mono', monospace" font-size="32" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">VINAY KOIRALA</text>
+
+  <!-- Subtitle with improved styling -->
+  <text x="300" y="100" font-family="'JetBrains Mono', monospace" font-size="18" text-anchor="middle" fill="#1f1f23">TECH ENTHUSIAST &amp; THEATER ARTIST</text>
+
+  <!-- Enhanced decorative elements -->
+  <path d="M30,30 L50,30 M30,120 L50,120 M550,30 L570,30 M550,120 L570,120" stroke="url(#headerGradient)" stroke-width="2.5" />
+  <path d="M70,30 L80,30 M70,120 L80,120 M520,30 L530,30 M520,120 L530,120" stroke="url(#headerGradient)" stroke-width="1.5" opacity="0.7" />
+
+  <!-- Tech icons -->
+  <circle cx="100" cy="30" r="5" fill="#10b981" opacity="0.8" />
+  <circle cx="120" cy="30" r="5" fill="#f59e0b" opacity="0.8" />
+  <circle cx="140" cy="30" r="5" fill="#ef4444" opacity="0.8" />
+
+  <!-- Terminal symbols with improved styling -->
+  <svg x="20" y="65" width="20" height="20" viewBox="0 0 24 24" fill="#10b981">
+    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+  </svg>
+  <svg x="560" y="65" width="20" height="20" viewBox="0 0 24 24" fill="#10b981">
+    <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+  </svg>
+
+  <!-- Pulse animation effect -->
+  <circle cx="300" cy="130" r="3" fill="url(#accentGradient)" opacity="0.8">
+    <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite" />
+  </circle>
+</svg>

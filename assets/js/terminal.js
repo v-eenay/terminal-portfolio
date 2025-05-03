@@ -21,7 +21,13 @@ async function loadPortfolioData() {
 function displayHeader(term, command) {
     // Only display header if term is provided
     if (term) {
-        const headerPath = `assets/images/headers/${command}.svg`;
+        // Check if light mode is active
+        const isLightMode = document.documentElement.classList.contains('light-mode');
+
+        // Set the appropriate path based on theme
+        const basePath = isLightMode ? 'assets/images/light-mode/headers/' : 'assets/images/headers/';
+        const headerPath = `${basePath}${command}.svg`;
+
         const headerHTML = `<img src="${headerPath}" alt="${command} header" style="width: 100%; max-width: 500px; margin: 10px 0;">`;
         term.echo(headerHTML, {raw: true});
     }
@@ -226,7 +232,7 @@ const commands = {
         // Create a full-screen overlay to display GitHub stats
         const $overlay = $('<div>').addClass('stats-overlay').appendTo('body');
         const $closeBtn = $('<button>').addClass('close-btn').html('&times;').appendTo($overlay);
-        const $iframe = $('<iframe>').attr({
+        $('<iframe>').attr({
             src: 'assets/templates/github-stats-embed.html',
             frameborder: '0',
             title: 'GitHub Stats'
@@ -353,6 +359,18 @@ function initThemeToggle() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
         document.documentElement.classList.add('light-mode');
+
+        // Wait for iframes to load before notifying them
+        setTimeout(() => {
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                try {
+                    iframe.contentWindow.postMessage('theme-changed', '*');
+                } catch (e) {
+                    console.error('Error notifying iframe about theme change:', e);
+                }
+            });
+        }, 1000);
     }
 
     // Theme toggle functionality
@@ -362,6 +380,16 @@ function initThemeToggle() {
         // Save preference to localStorage
         const currentTheme = document.documentElement.classList.contains('light-mode') ? 'light' : 'dark';
         localStorage.setItem('theme', currentTheme);
+
+        // Notify iframes about theme change
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            try {
+                iframe.contentWindow.postMessage('theme-changed', '*');
+            } catch (e) {
+                console.error('Error notifying iframe about theme change:', e);
+            }
+        });
     });
 }
 
