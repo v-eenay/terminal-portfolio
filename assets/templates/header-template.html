@@ -73,6 +73,30 @@
             }
         }
     </style>
+    <script>
+        // Function to check theme and update images
+        function updateTheme() {
+            // Check if parent document has light-mode class
+            const isLightMode = window.parent.document.documentElement.classList.contains('light-mode');
+            const logoImg = document.querySelector('.header-logo');
+
+            if (isLightMode) {
+                logoImg.src = "../images/light-mode/header-logo.svg";
+            } else {
+                logoImg.src = "../images/header-logo.svg";
+            }
+        }
+
+        // Run on load
+        window.addEventListener('load', updateTheme);
+
+        // Listen for theme changes from parent window
+        window.addEventListener('message', function(event) {
+            if (event.data === 'theme-changed') {
+                updateTheme();
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="header-container">

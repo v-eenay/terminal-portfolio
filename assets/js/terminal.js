@@ -21,7 +21,13 @@ async function loadPortfolioData() {
 function displayHeader(term, command) {
     // Only display header if term is provided
     if (term) {
-        const headerPath = `assets/images/headers/${command}.svg`;
+        // Check if light mode is active
+        const isLightMode = document.documentElement.classList.contains('light-mode');
+
+        // Set the appropriate path based on theme
+        const basePath = isLightMode ? 'assets/images/light-mode/headers/' : 'assets/images/headers/';
+        const headerPath = `${basePath}${command}.svg`;
+
         const headerHTML = `<img src="${headerPath}" alt="${command} header" style="width: 100%; max-width: 500px; margin: 10px 0;">`;
         term.echo(headerHTML, {raw: true});
     }
@@ -29,37 +35,30 @@ function displayHeader(term, command) {
 
 // Define commands
 const commands = {
-    help: function(arg, term) {
+    help: function(_, term) {
         displayHeader(term, 'help');
 
         let helpText = `\n`;
 
-        // Check if portfolio data is loaded
+        // Generate help text from JSON data
         if (portfolioData.commands && portfolioData.commands.length > 0) {
-            // Generate help text from JSON data
             portfolioData.commands.forEach(cmd => {
                 helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}]: ${cmd.description}\n`;
             });
+
+            // Check if we're on a mobile device and add stats command
+            if (window.innerWidth <= 768) {
+                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]stats]: View GitHub statistics and activity\n`;
+            }
         } else {
-            // Fallback if data isn't loaded
-            helpText = `
-[[;#bb9af7;]❯] [[;#7aa2f7;]about]: Learn about me
-[[;#bb9af7;]❯] [[;#7aa2f7;]skills]: See my technical skills
-[[;#bb9af7;]❯] [[;#7aa2f7;]tech]: View my complete tech stack
-[[;#bb9af7;]❯] [[;#7aa2f7;]projects]: View my projects
-[[;#bb9af7;]❯] [[;#7aa2f7;]theater]: Learn about my theater background
-[[;#bb9af7;]❯] [[;#7aa2f7;]contact]: Get my contact information
-[[;#bb9af7;]❯] [[;#7aa2f7;]clear]: Clear the terminal
-[[;#bb9af7;]❯] [[;#7aa2f7;]help]: Show this help message
-`;
+            helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
         return helpText;
     },
-    about: function(arg, term) {
+    about: function(_, term) {
         displayHeader(term, 'about');
 
-        // Check if portfolio data is loaded
         if (portfolioData.about) {
             const about = portfolioData.about;
             let aboutText = `\n${about.description}\n\n`;
@@ -78,26 +77,12 @@ const commands = {
 
             return aboutText;
         } else {
-            // Fallback if data isn't loaded
-            return `
-Versatile technology enthusiast with a unique blend of technical expertise and creative expression.
-My background in computer science engineering and business administration provides me with a
-holistic perspective on technology and its applications. When I'm not immersed in code,
-you'll find me on stage, where I channel my passion for theatrical arts.
-
-[[i;#e0af68;]"At the intersection of logic and creativity lies true innovation."]
-
-[[;#bb9af7;]❯] Computer Science Engineer with an MBA
-[[;#bb9af7;]❯] Theater performer exploring the art of expression
-[[;#bb9af7;]❯] Constantly exploring emerging technologies
-[[;#bb9af7;]❯] Ask me about the parallels between coding and performing arts
-`;
+            return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
         }
     },
-    skills: function(arg, term) {
+    skills: function(_, term) {
         displayHeader(term, 'skills');
 
-        // Check if portfolio data is loaded
         if (portfolioData.skills) {
             const skills = portfolioData.skills;
             let skillsText = `\n`;
@@ -133,30 +118,12 @@ you'll find me on stage, where I channel my passion for theatrical arts.
 
             return skillsText;
         } else {
-            // Fallback if data isn't loaded
-            return `
-[[;#9ece6a;]◆ Languages:]
-  C#, Python, JavaScript, TypeScript, Java, C++, Dart
-
-[[;#9ece6a;]◆ Web Development:]
-  [[;#7aa2f7;]Frontend:] HTML5, CSS3, SASS, Bootstrap, Tailwind CSS, jQuery
-  [[;#7aa2f7;]Frontend Frameworks:] React, Next.js, Angular, Vue.js, Redux, Blazor
-  [[;#7aa2f7;]Backend:] Node.js, Express.js, Django, Flask, Spring, ASP.NET, .NET
-
-[[;#9ece6a;]◆ Mobile Development:]
-  Flutter, React Native, Xamarin, Android, MAUI
-
-[[;#9ece6a;]◆ Databases & Data:]
-  MySQL, PostgreSQL, SQL Server, MongoDB, Firebase, Redis, GraphQL
-
-Type '[[;#bb9af7;]tech]' for my complete tech stack.
-`;
+            return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
         }
     },
-    tech: function(arg, term) {
+    tech: function(_, term) {
         displayHeader(term, 'tech');
 
-        // Check if portfolio data is loaded
         if (portfolioData.skills) {
             const skills = portfolioData.skills;
             let techText = `\n`;
@@ -216,46 +183,12 @@ Type '[[;#bb9af7;]tech]' for my complete tech stack.
 
             return techText;
         } else {
-            // Fallback if data isn't loaded
-            return `
-
-[[;#9ece6a;]◆ Languages]
-  C#, Python, JavaScript, TypeScript, Java, C++, Dart
-
-[[;#9ece6a;]◆ Web Development]
-  [[;#7aa2f7;]Frontend:]
-  HTML5, CSS3, SASS, Bootstrap, Tailwind CSS, jQuery
-
-  [[;#7aa2f7;]Frontend Frameworks:]
-  React, Next.js, Angular, Vue.js, Redux, Blazor
-
-  [[;#7aa2f7;]Backend:]
-  Node.js, Express.js, Django, Flask, Spring, ASP.NET, .NET
-
-[[;#9ece6a;]◆ Mobile Development]
-  Flutter, React Native, Xamarin, Android, MAUI
-
-[[;#9ece6a;]◆ Databases & Data]
-  MySQL, PostgreSQL, SQL Server, MongoDB, Firebase, Redis, GraphQL
-
-[[;#9ece6a;]◆ DevOps & Cloud]
-  Git, GitHub, Docker, Kubernetes, AWS, Azure
-
-[[;#9ece6a;]◆ Development Tools]
-  VS Code, Visual Studio, IntelliJ, Android Studio, Postman
-
-[[;#9ece6a;]◆ Design Tools]
-  Figma, Adobe Photoshop, Adobe Illustrator, Canva
-
-[[;#9ece6a;]◆ Currently Exploring]
-  TensorFlow, PyTorch, Blockchain, Web3.js, Rust, Go
-`;
+            return `\n[[;#f7768e;]Error loading tech stack data. Please refresh the page.]`;
         }
     },
-    projects: function(arg, term) {
+    projects: function(_, term) {
         displayHeader(term, 'projects');
 
-        // Check if portfolio data is loaded
         if (portfolioData.projects && portfolioData.projects.length > 0) {
             let projectsText = `\n`;
 
@@ -268,21 +201,12 @@ Type '[[;#bb9af7;]tech]' for my complete tech stack.
 
             return projectsText;
         } else {
-            // Fallback if data isn't loaded
-            return `
-
-[[;#e0af68;]1.] [[;#7aa2f7;]Terminal Portfolio] - This interactive terminal-based portfolio
-[[;#e0af68;]2.] [[;#7aa2f7;][Project 2]] - Description of project 2
-[[;#e0af68;]3.] [[;#7aa2f7;][Project 3]] - Description of project 3
-
-Type '[[;#bb9af7;]project 1]', '[[;#bb9af7;]project 2]', etc. for more details.
-`;
+            return `\n[[;#f7768e;]Error loading projects data. Please refresh the page.]`;
         }
     },
-    theater: function(arg, term) {
+    theater: function(_, term) {
         displayHeader(term, 'theater');
 
-        // Check if portfolio data is loaded
         if (portfolioData.theater) {
             const theater = portfolioData.theater;
             let theaterText = `\n${theater.description}\n\n`;
@@ -299,23 +223,10 @@ Type '[[;#bb9af7;]project 1]', '[[;#bb9af7;]project 2]', etc. for more details.
 
             return theaterText;
         } else {
-            // Fallback if data isn't loaded
-            return `
-
-My background in theater has enhanced my professional capabilities, particularly in
-communication, presentation, and audience engagement - skills that are invaluable
-in the technology sector. Theater experience has developed my ability to collaborate
-effectively and deliver compelling presentations.
-
-[[i;#e0af68;]"All the world's a stage, and all the men and women merely players."] [[;#bb9af7;]- William Shakespeare]
-
-The methodical approach required in theatrical productions parallels software development
-practices, emphasizing precision, iteration, and team coordination. Both disciplines
-require structured creativity and meticulous attention to detail.
-`;
+            return `\n[[;#f7768e;]Error loading theater data. Please refresh the page.]`;
         }
     },
-    stats: function(arg, term) {
+    stats: function(_, term) {
         displayHeader(term, 'stats');
 
         // Create a full-screen overlay to display GitHub stats
@@ -329,41 +240,69 @@ require structured creativity and meticulous attention to detail.
 
         // Add event listener to close button
         $closeBtn.on('click', function() {
-            $overlay.fadeOut(300, function() {
-                $(this).remove();
-            });
+            $overlay.removeClass('visible');
+
+            // Remove overlay after animation completes
+            setTimeout(function() {
+                $overlay.remove();
+                $(document).off('keydown.stats');
+            }, 500); // Match the transition duration
         });
 
         // Add escape key listener
         $(document).on('keydown.stats', function(e) {
             if (e.key === 'Escape') {
-                $overlay.fadeOut(300, function() {
-                    $(this).remove();
-                });
-                $(document).off('keydown.stats');
+                $overlay.removeClass('visible');
+
+                // Remove overlay after animation completes
+                setTimeout(function() {
+                    $overlay.remove();
+                    $(document).off('keydown.stats');
+                }, 500); // Match the transition duration
             }
         });
 
-        // Show the overlay with a fade-in effect
-        $overlay.hide().fadeIn(300);
+        // Show the overlay with animations
+        // Small delay to ensure the overlay is in the DOM
+        setTimeout(function() {
+            $overlay.addClass('visible');
+        }, 10);
 
-        return `
+        // Get GitHub username from portfolio data
+        const username = portfolioData.github ? portfolioData.github.username : 'v-eenay';
+
+        // Check if we're on a mobile device
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            return `
+
+[[;#9ece6a;]Opening GitHub stats in fullscreen view...]]
+
+GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
+
+[[;#bb9af7;]•] Press ESC or click the X button to close the stats view
+[[;#bb9af7;]•] The dashboard shows your GitHub activity and statistics
+[[;#bb9af7;]•] Stats include: contributions, streak, languages, and more
+`;
+        } else {
+            return `
 
 [[;#9ece6a;]Displaying GitHub stats in a visual dashboard...]]
 
-GitHub Profile: [[u;#7aa2f7;]https://github.com/v-eenay]
+GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 
 [[;#bb9af7;]•] Press ESC or click the X button to close the stats view
 [[;#bb9af7;]•] The dashboard shows real-time GitHub statistics
-[[;#bb9af7;]•] Stats include: contributions, streak, languages, and trophies
+[[;#bb9af7;]•] Stats include: contributions, streak, languages, and more
 
 [[i;#e0af68;]"Code is like humor. When you have to explain it, it's bad."] [[;#bb9af7;]- Cory House]
 `;
+        }
     },
-    contact: function(arg, term) {
+    contact: function(_, term) {
         displayHeader(term, 'contact');
 
-        // Check if portfolio data is loaded
         if (portfolioData.contact) {
             const contact = portfolioData.contact;
             let contactText = `\n`;
@@ -386,22 +325,12 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/v-eenay]
 
             return contactText;
         } else {
-            // Fallback if data isn't loaded
-            return `
-
-[[;#bb9af7;]•] Email: [[;#7aa2f7;]koiralavinay@gmail.com]
-[[;#bb9af7;]•] GitHub: [[u;#7aa2f7;]github.com/v-eenay]
-[[;#bb9af7;]•] LinkedIn: [[u;#7aa2f7;]linkedin.com/in/veenay]
-
-[[i;#e0af68;]"Whether writing code or performing on stage, I'm always looking to create something meaningful.
-Let's collaborate and build something extraordinary together."]
-`;
+            return `\n[[;#f7768e;]Error loading contact data. Please refresh the page.]`;
         }
     },
-    'project 1': function(arg, term) {
+    'project 1': function(_, term) {
         displayHeader(term, 'project1');
 
-        // Check if portfolio data is loaded
         if (portfolioData.projects && portfolioData.projects.length > 0) {
             // Get the first project (Terminal Portfolio)
             const project = portfolioData.projects[0];
@@ -419,28 +348,85 @@ Let's collaborate and build something extraordinary together."]
 
             return projectText;
         } else {
-            // Fallback if data isn't loaded
-            return `
-
-An interactive terminal-based portfolio showcasing my skills, projects, and background.
-Built using HTML, CSS, and JavaScript with jQuery Terminal.
-
-[[;#9ece6a;]◆ Features:]
-  [[;#bb9af7;]•] Interactive command-line interface
-  [[;#bb9af7;]•] Custom styling with Tokyo Night theme
-  [[;#bb9af7;]•] Responsive design for all devices
-  [[;#bb9af7;]•] Easy navigation through various sections
-`;
+            return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
         }
     }
 };
 
+// Theme management
+function initThemeToggle() {
+    // Check for saved theme preference or use default (dark)
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-mode');
+
+        // Wait for iframes to load before notifying them
+        setTimeout(() => {
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                try {
+                    iframe.contentWindow.postMessage('theme-changed', '*');
+                } catch (e) {
+                    console.error('Error notifying iframe about theme change:', e);
+                }
+            });
+        }, 1000);
+    }
+
+    // Theme toggle functionality
+    $('#theme-toggle-btn').on('click', function() {
+        document.documentElement.classList.toggle('light-mode');
+
+        // Save preference to localStorage
+        const currentTheme = document.documentElement.classList.contains('light-mode') ? 'light' : 'dark';
+        localStorage.setItem('theme', currentTheme);
+
+        // Notify iframes about theme change
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            try {
+                iframe.contentWindow.postMessage('theme-changed', '*');
+            } catch (e) {
+                console.error('Error notifying iframe about theme change:', e);
+            }
+        });
+    });
+}
+
 // Initialize terminal
 $(async function() {
+    // Initialize theme toggle
+    initThemeToggle();
+
     // Load portfolio data before initializing the terminal
     await loadPortfolioData();
 
-    $('#terminal-container').terminal(function(command, term) {
+    // Terminal instance reference
+    let terminal;
+
+    // Handle responsive layout
+    function handleResponsiveLayout() {
+        // Hide stats hint on desktop, show on mobile
+        if (window.innerWidth <= 768) {
+            $('.stats-hint').show();
+        } else {
+            $('.stats-hint').hide();
+        }
+
+        // If terminal is initialized, refresh help command to update stats visibility
+        if (terminal) {
+            // We don't want to execute the command, just update the completion list
+            terminal.refresh_completion();
+        }
+    }
+
+    // Initial call
+    handleResponsiveLayout();
+
+    // Listen for window resize
+    $(window).on('resize', handleResponsiveLayout);
+
+    terminal = $('#terminal-container').terminal(function(command, term) {
         // Split the command to handle arguments
         const parts = command.trim().split(/\s+/);
         const cmd = parts[0];
@@ -457,11 +443,26 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         greetings: greetings,
         height: '100%',
         prompt: '[[;#bb9af7;]vinay@portfolio]:[[;#7aa2f7;]~]$ ',
-        completion: Object.keys(commands),
+        completion: function() {
+            // Get base commands
+            const baseCommands = Object.keys(commands);
+
+            // Add stats command if on mobile
+            if (window.innerWidth <= 768) {
+                return [...baseCommands, 'stats'];
+            }
+
+            return baseCommands;
+        },
         exit: false,
         clear: function() {
             // Just clear the terminal without re-displaying the greeting
             this.clear();
+
+            // Re-show the stats hint if on mobile
+            if (window.innerWidth <= 768) {
+                $('.stats-hint').show();
+            }
         },
         onInit: function() {
             // Add a typing effect to the initial message
