@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binaya Koirala - CV</title>
+    <style>
+        :root {
+            --bg-color: #1a1b26;
+            --text-color: #a9b1d6;
+            --heading-color: #7aa2f7;
+            --accent-color: #bb9af7;
+            --highlight-color: #9ece6a;
+            --border-color: #24283b;
+            --section-bg: #16161e;
+            --quote-color: #e0af68;
+        }
+
+        body.light-mode {
+            --bg-color: #f5f5f5;
+            --text-color: #1a1b26;
+            --heading-color: #3e63dd;
+            --accent-color: #6e56cf;
+            --highlight-color: #10b981;
+            --border-color: #e2e8f0;
+            --section-bg: #ffffff;
+            --quote-color: #d97706;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'JetBrains Mono', monospace, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .cv-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--heading-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--heading-color);
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin: 15px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact-item a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .experience-item, .education-item, .project-item, .certification-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .experience-item:last-child, .education-item:last-child, .project-item:last-child, .certification-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .period {
+            color: var(--accent-color);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .location {
+            color: var(--highlight-color);
+            font-size: 0.9rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            margin-bottom: 15px;
+        }
+
+        .skill-category h3 {
+            margin-bottom: 10px;
+        }
+
+        .skill-description {
+            font-size: 0.95rem;
+        }
+
+        .languages-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .language-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-name {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stars {
+            color: var(--highlight-color);
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--quote-color);
+            text-align: center;
+            margin: 30px 0;
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            background-color: rgba(187, 154, 247, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            .cv-container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <header>
+            <h1>Binaya Koirala</h1>
+            <p class="subtitle">IT Lecturer | Computer Engineering & Business Administration Graduate</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📍 Itahari</span>
+                </div>
+                <div class="contact-item">
+                    <span>📞 +9779862035479</span>
+                </div>
+                <div class="contact-item">
+                    <span>✉️ <a href="mailto:binaya.5oirala@iic.edu.np">binaya.5oirala@iic.edu.np</a></span>
+                </div>
+                <div class="contact-item">
+                    <span>🔗 <a href="https://github.com/v-eenay" target="_blank">github.com/v-eenay</a></span>
+                </div>
+            </div>
+        </header>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <p>Versatile IT lecturer with an MBA and B.Tech in Computer Science Engineering, experienced in both academic and business settings. Committed to fostering a dynamic learning environment that integrates technology and innovative practices across disciplines. Passionate about empowering students and professionals through collaborative engagement and continuous skill development.</p>
+        </div>
+
+        <div class="section">
+            <h2>Experience</h2>
+            
+            <div class="experience-item">
+                <h3>IT Lecturer</h3>
+                <p class="period">July, 2023 - Present</p>
+                <p class="location">Itahari International College, Itahari</p>
+                <p>Currently teaching Introduction to Information Systems, covering HTML, CSS, JavaScript, and MySQL, as well as Fundamentals of Computing, focusing on Python programming. Conducting enrichment classes on Flutter for mobile development and contributing to the content upgrade program to enhance the curriculum for future students.</p>
+            </div>
+            
+            <div class="experience-item">
+                <h3>Teacher</h3>
+                <p class="period">June, 2022 - April, 2023</p>
+                <p class="location">Gokyo International School, Itahari</p>
+                <p>Delivered engaging computer science instruction, covering programming, software applications, and digital literacy. Developed tailored lesson plans, assessed student performance, and created a supportive environment to foster students' interest and skills in technology.</p>
+            </div>
+            
+            <div class="experience-item">
+                <h3>Computer Instructor</h3>
+                <p class="period">February, 2021 - February, 2022</p>
+                <p class="location">Good Luck Education and Training Center, Itahari</p>
+                <p>Delivered comprehensive computer education to students, covering essential software and programming skills. Developed curriculum materials, assessed student progress, and fostered a collaborative learning environment to enhance digital literacy and technical proficiency.</p>
+            </div>
+            
+            <div class="experience-item">
+                <h3>Production Manager</h3>
+                <p class="period">February, 2019 - January, 2021</p>
+                <p class="location">Namaste F.M., Itahari</p>
+                <p>Oversaw the production and broadcasting operations, ensuring high-quality content delivery and adherence to schedules. Managed a team of technical and creative staff, coordinated programming, and optimized processes to enhance listener engagement and station performance.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Education</h2>
+            
+            <div class="education-item">
+                <h3>Business Administration</h3>
+                <p class="period">March, 2019 - January, 2022</p>
+                <p class="location">Lincoln University, Malaysia</p>
+                <p>M.B.A</p>
+            </div>
+            
+            <div class="education-item">
+                <h3>Computer Science and Engineering</h3>
+                <p class="period">October, 2014 - May, 2018</p>
+                <p class="location">Aryabhatta Knowledge University, India</p>
+                <p>B. Tech.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Research and Survey</h2>
+            
+            <div class="project-item">
+                <h3>Online Digital Library</h3>
+                <p class="period">2018</p>
+                <p>Conducted for the partial fulfillment of the B.Tech in Computer Science and Engineering. Developed a digital library system using Java, Spring Framework, and Hibernate for back-end development, along with MySQL for database management. The user interface was created with HTML, CSS, and JavaScript to enhance educational resource accessibility.</p>
+            </div>
+            
+            <div class="project-item">
+                <h3>The Impact of Personalized Marketing on Growing Advertising Reach of Local Business</h3>
+                <p class="period">2022</p>
+                <p>Undertaken for the partial fulfillment of the MBA. Analysed the effectiveness of personalised marketing strategies on local business advertising reach, providing insights for optimising marketing approaches based on customer engagement data.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Skills</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Web Development</h3>
+                    <p class="skill-description">Proficient in HTML5, CSS3, JavaScript (ES6), and frameworks like Bootstrap and jQuery, with expertise in Node.js and MySQL for developing responsive web applications.</p>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Programming</h3>
+                    <p class="skill-description">Advanced knowledge in Python and Java, utilizing frameworks like Django and Spring for software development.</p>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Mobile Development</h3>
+                    <p class="skill-description">Experienced in Flutter and Dart for developing high-performance cross-platform mobile applications.</p>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Frontend Development</h3>
+                    <p class="skill-description">Skilled in React and Redux for creating dynamic user interfaces, with a solid grasp of design principles.</p>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Backend Development</h3>
+                    <p class="skill-description">Familiar with server-side technologies and RESTful API development for seamless client-server integration.</p>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>Graphic Design</h3>
+                    <p class="skill-description">Proficient in Adobe Photoshop and Illustrator for creating high-quality graphics that enhance branding and marketing.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Certifications</h2>
+            
+            <div class="certification-item">
+                <h3>Advanced Java Programming</h3>
+                <p class="period">2017</p>
+                <p class="location">Broadway Infosys, Kathmandu</p>
+                <p>Certified in Advanced Java Programming, with expertise in Servlets, JSP, JDBC, and frameworks such as Hibernate, Spring, Struts, and JavaServer Faces (JSF).</p>
+            </div>
+            
+            <div class="certification-item">
+                <h3>Diploma in Web Programming</h3>
+                <p class="period">2013</p>
+                <p class="location">Computer Point Nepal, Itahari</p>
+                <p>Certified in Web Programming, proficient in HTML5, CSS3, and JavaScript, with expertise in frameworks for dynamic web applications.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Languages</h2>
+            
+            <div class="languages-list">
+                <div class="language-item">
+                    <span class="language-name">Nepali</span>
+                    <span class="stars">★★★★★</span>
+                </div>
+                
+                <div class="language-item">
+                    <span class="language-name">English</span>
+                    <span class="stars">★★★★☆</span>
+                </div>
+                
+                <div class="language-item">
+                    <span class="language-name">Hindi</span>
+                    <span class="stars">★★★★☆</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote">
+            "At the intersection of logic and creativity lies true innovation."
+        </div>
+    </div>
+
+    <script>
+        // Listen for theme change messages from parent window
+        window.addEventListener('message', function(event) {
+            if (event.data === 'theme-changed') {
+                const isLightMode = parent.document.documentElement.classList.contains('light-mode');
+                if (isLightMode) {
+                    document.body.classList.add('light-mode');
+                } else {
+                    document.body.classList.remove('light-mode');
+                }
+            }
+        });
+
+        // Check parent theme on load
+        window.onload = function() {
+            try {
+                const isLightMode = parent.document.documentElement.classList.contains('light-mode');
+                if (isLightMode) {
+                    document.body.classList.add('light-mode');
+                }
+            } catch (e) {
+                console.error('Error checking parent theme:', e);
+            }
+        };
+    </script>
+</body>
+</html>

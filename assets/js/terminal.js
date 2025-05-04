@@ -365,85 +365,74 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
     cv: function(_, term) {
         displayHeader(term, 'cv');
 
-        if (portfolioData.cv) {
-            const cv = portfolioData.cv;
-            let cvText = `\n`;
+        // Create a full-screen overlay to display CV
+        const $overlay = $('<div>').addClass('stats-overlay').appendTo('body');
+        const $closeBtn = $('<button>').addClass('close-btn').html('&times;').appendTo($overlay);
+        $('<iframe>').attr({
+            src: 'assets/templates/cv-embed.html',
+            frameborder: '0',
+            title: 'Curriculum Vitae'
+        }).appendTo($overlay);
 
-            // Add summary
-            if (cv.summary) {
-                cvText += `[[;#9ece6a;]◆ Summary]\n${cv.summary}\n\n`;
+        // Add event listener to close button
+        $closeBtn.on('click', function() {
+            $overlay.removeClass('visible');
+
+            // Remove overlay after animation completes
+            setTimeout(function() {
+                $overlay.remove();
+                $(document).off('keydown.cv');
+            }, 500); // Match the transition duration
+        });
+
+        // Add escape key listener
+        $(document).on('keydown.cv', function(e) {
+            if (e.key === 'Escape') {
+                $overlay.removeClass('visible');
+
+                // Remove overlay after animation completes
+                setTimeout(function() {
+                    $overlay.remove();
+                    $(document).off('keydown.cv');
+                }, 500); // Match the transition duration
             }
+        });
 
-            // Add experience
-            if (cv.experience && cv.experience.length > 0) {
-                cvText += `[[;#9ece6a;]◆ Professional Experience]\n`;
-                cv.experience.forEach(exp => {
-                    cvText += `  [[;#7aa2f7;]${exp.title}] - ${exp.company}, ${exp.location}\n`;
-                    cvText += `  [[;#bb9af7;]${exp.period}]\n`;
-                    cvText += `  ${exp.description}\n\n`;
-                });
-            }
+        // Show the overlay with animations
+        // Small delay to ensure the overlay is in the DOM
+        setTimeout(function() {
+            $overlay.addClass('visible');
+        }, 10);
 
-            // Add education
-            if (cv.education && cv.education.length > 0) {
-                cvText += `[[;#9ece6a;]◆ Education]\n`;
-                cv.education.forEach(edu => {
-                    cvText += `  [[;#7aa2f7;]${edu.degree}] - ${edu.institution}\n`;
-                    cvText += `  [[;#bb9af7;]${edu.field}] | ${edu.period}\n\n`;
-                });
-            }
+        // Check if we're on a mobile device
+        const isMobile = window.innerWidth <= 768;
 
-            // Add research
-            if (cv.research && cv.research.length > 0) {
-                cvText += `[[;#9ece6a;]◆ Research & Publications]\n`;
-                cv.research.forEach(res => {
-                    cvText += `  [[;#7aa2f7;]${res.title}] (${res.year})\n`;
-                    cvText += `  ${res.description}\n\n`;
-                });
-            }
+        if (isMobile) {
+            return `
 
-            // Add skills summary
-            if (cv.skills) {
-                cvText += `[[;#9ece6a;]◆ Key Skills]\n`;
-                Object.entries(cv.skills).forEach(([key, value]) => {
-                    const formattedKey = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-                    cvText += `  [[;#7aa2f7;]${formattedKey}:]\n  ${value}\n\n`;
-                });
-            }
+[[;#9ece6a;]Opening CV in fullscreen view...]]
 
-            // Add certifications
-            if (cv.certifications && cv.certifications.length > 0) {
-                cvText += `[[;#9ece6a;]◆ Certifications]\n`;
-                cv.certifications.forEach(cert => {
-                    cvText += `  [[;#7aa2f7;]${cert.title}] (${cert.year}) - ${cert.issuer}\n`;
-                    if (cert.description) {
-                        cvText += `  ${cert.description}\n\n`;
-                    } else {
-                        cvText += `\n`;
-                    }
-                });
-            }
-
-            // Add languages
-            if (cv.languages && cv.languages.length > 0) {
-                cvText += `[[;#9ece6a;]◆ Languages]\n`;
-                cv.languages.forEach(lang => {
-                    const stars = '★'.repeat(lang.proficiency) + '☆'.repeat(5 - lang.proficiency);
-                    cvText += `  [[;#7aa2f7;]${lang.name}:] ${stars}\n`;
-                });
-                cvText += `\n`;
-            }
-
-            // Add navigation links to other sections
-            cvText += `[[;#e0af68;]Additional Information:]\n`;
-            cvText += `Type '[[;#bb9af7;]teaching]' to view my teaching experience.\n`;
-            cvText += `Type '[[;#bb9af7;]achievements]' to view my awards and achievements.\n`;
-            cvText += `Type '[[;#bb9af7;]projects]' to view my projects.\n`;
-            cvText += `Type '[[;#bb9af7;]contact]' to view my contact information.\n`;
-
-            return cvText;
+[[;#bb9af7;]•] Press ESC or click the X button to close the CV view
+[[;#bb9af7;]•] The CV shows my professional experience, education, and skills
+[[;#bb9af7;]•] For more details on specific sections, use the related commands:
+   - Type '[[;#bb9af7;]teaching]' for teaching experience
+   - Type '[[;#bb9af7;]achievements]' for awards and achievements
+   - Type '[[;#bb9af7;]projects]' for project details
+`;
         } else {
-            return `\n[[;#f7768e;]Error loading CV data. Please refresh the page.]`;
+            return `
+
+[[;#9ece6a;]Displaying CV in a visual format...]]
+
+[[;#bb9af7;]•] Press ESC or click the X button to close the CV view
+[[;#bb9af7;]•] The CV provides a comprehensive overview of my professional background
+[[;#bb9af7;]•] For more details on specific sections, use the related commands:
+   - Type '[[;#bb9af7;]teaching]' for teaching experience
+   - Type '[[;#bb9af7;]achievements]' for awards and achievements
+   - Type '[[;#bb9af7;]projects]' for project details
+
+[[i;#e0af68;]"Education is not the filling of a pail, but the lighting of a fire."] [[;#bb9af7;]- W.B. Yeats]
+`;
         }
     },
     teaching: function(_, term) {
