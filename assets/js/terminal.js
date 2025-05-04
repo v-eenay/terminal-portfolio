@@ -464,6 +464,7 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 [[;#bb9af7;]•] For more details on specific sections, use the related commands:
    - Type '[[;#bb9af7;]teaching]' for teaching experience
    - Type '[[;#bb9af7;]projects]' for project details
+   - Type '[[;#bb9af7;]download-cv]' to download my CV as PDF
 `;
         } else {
             return `
@@ -475,10 +476,37 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 [[;#bb9af7;]•] For more details on specific sections, use the related commands:
    - Type '[[;#bb9af7;]teaching]' for teaching experience
    - Type '[[;#bb9af7;]projects]' for project details
+   - Type '[[;#bb9af7;]download-cv]' to download my CV as PDF
 
 [[i;#e0af68;]"Education is not the filling of a pail, but the lighting of a fire."] [[;#bb9af7;]- W.B. Yeats]
 `;
         }
+    },
+    'download-cv': function(_, term) {
+        displayHeader(term, 'cv');
+
+        // Create a download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = 'assets/downloads/Binay_Koirala_CV.pdf';
+        downloadLink.download = 'Binay_Koirala_CV.pdf';
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+
+        // Trigger the download
+        downloadLink.click();
+
+        // Clean up
+        setTimeout(() => {
+            document.body.removeChild(downloadLink);
+        }, 100);
+
+        return `
+[[;#9ece6a;]Downloading CV as PDF...]]
+
+[[;#bb9af7;]•] Your download should start automatically
+[[;#bb9af7;]•] If the download doesn't start, please try again or use the download button in the CV view
+[[;#bb9af7;]•] Type '[[;#bb9af7;]cv]' to view my curriculum vitae in the browser
+`;
     },
     teaching: function(_, term) {
         displayHeader(term, 'teaching');

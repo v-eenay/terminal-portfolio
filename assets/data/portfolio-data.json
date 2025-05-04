@@ -149,6 +149,10 @@
       "description": "View my curriculum vitae"
     },
     {
+      "name": "download-cv",
+      "description": "Download my CV as PDF"
+    },
+    {
       "name": "skills",
       "description": "See my technical skills"
     },

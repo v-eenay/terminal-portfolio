@@ -212,6 +212,34 @@
             font-size: 0.95rem;
         }
 
+        .download-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .download-button:hover {
+            background-color: var(--heading-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
         @media (max-width: 768px) {
             .cv-container {
                 padding: 10px;
@@ -476,6 +504,12 @@
 
         <div class="quote">
             "At the intersection of logic and creativity lies true innovation."
+        </div>
+
+        <div class="download-button-container">
+            <a href="../downloads/Binay_Koirala_CV.pdf" download class="download-button">
+                Download CV as PDF
+            </a>
         </div>
     </div>
 
