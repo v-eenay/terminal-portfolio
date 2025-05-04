@@ -221,7 +221,6 @@ const commands = {
     projects: function(_, term) {
         displayHeader(term, 'projects');
 
-        // Only use projects from the portfolio data, not from CV
         let allProjects = [];
 
         // Add portfolio projects

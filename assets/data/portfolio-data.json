@@ -254,23 +254,7 @@
         "description": "Enrichment program teaching cross-platform mobile app development using Flutter and Dart."
       }
     ],
-    "projects": [
-      {
-        "title": "Terminal Portfolio",
-        "description": "Interactive command-line interface portfolio built with HTML, CSS, and JavaScript featuring responsive design and custom Tokyo Night theme.",
-        "technologies": ["HTML5", "CSS3", "JavaScript", "jQuery Terminal"]
-      },
-      {
-        "title": "Student Management System",
-        "description": "Comprehensive system for educational institutions to manage student records, attendance, and performance analytics.",
-        "technologies": ["Java", "Spring Boot", "MySQL", "Thymeleaf", "Bootstrap"]
-      },
-      {
-        "title": "E-Learning Platform",
-        "description": "Web-based learning management system with video content delivery, interactive quizzes, and progress tracking.",
-        "technologies": ["React", "Node.js", "MongoDB", "Express", "AWS S3"]
-      }
-    ],
+
     "achievements": [
       {
         "title": "Best Teaching Innovation Award",
