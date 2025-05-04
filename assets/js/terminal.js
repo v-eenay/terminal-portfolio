@@ -35,7 +35,7 @@ function generateProjectDetails(project, username) {
     return projectText;
 }
 
-// Load portfolio data from JSON
+// Function to load portfolio data from JSON
 async function loadPortfolioData() {
     try {
         const response = await fetch('assets/data/portfolio-data.json');
@@ -49,62 +49,51 @@ async function loadPortfolioData() {
     }
 }
 
-// Display header SVG
-function displayHeader(term, headerName) {
-    // Check if we're in light mode
-    const isLightMode = document.documentElement.classList.contains('light-mode');
-    
-    // Determine the path based on the theme
-    const basePath = isLightMode ? 'assets/images/light-mode/headers/' : 'assets/images/headers/';
-    const headerPath = `${basePath}${headerName}.svg`;
-    
-    // Display the header
-    term.echo(`<img src="${headerPath}" alt="${headerName} header" class="command-header">`, {raw: true});
+// Function to display SVG headers
+function displayHeader(term, command) {
+    // Only display header if term is provided
+    if (term) {
+        // Check if light mode is active
+        const isLightMode = document.documentElement.classList.contains('light-mode');
+
+        // Set the appropriate path based on theme
+        const basePath = isLightMode ? 'assets/images/light-mode/headers/' : 'assets/images/headers/';
+        const headerPath = `${basePath}${command}.svg`;
+
+        const headerHTML = `<img src="${headerPath}" alt="${command} header" style="width: 100%; max-width: 500px; margin: 10px 0;">`;
+        term.echo(headerHTML, {raw: true});
+    }
 }
 
-// Available commands
+// Define commands
 const commands = {
-    help: function() {
-        return `
-[[;#9ece6a;]Available Commands:]]
+    help: function(_, term) {
+        displayHeader(term, 'help');
 
-[[;#7aa2f7;]General:]]
-  [[;#bb9af7;]help]        - Show this help message
-  [[;#bb9af7;]about]       - About me
-  [[;#bb9af7;]skills]      - My technical skills
-  [[;#bb9af7;]projects]    - View my projects
-  [[;#bb9af7;]contact]     - Contact information
-  [[;#bb9af7;]cv]          - View my curriculum vitae
-  [[;#bb9af7;]clear]       - Clear the terminal
-  [[;#bb9af7;]theme]       - Toggle light/dark theme
+        let helpText = `\n`;
 
-[[;#7aa2f7;]Navigation:]]
-  Use the [[;#bb9af7;]Tab] key to autocomplete commands
-  Use [[;#bb9af7;]↑/↓] arrows to navigate command history
-  
-[[;#7aa2f7;]Tips:]]
-  Try '[[;#bb9af7;]projects]' to see what I've been working on
-  Type '[[;#bb9af7;]contact]' to get in touch with me
-`;
+        // Generate help text from JSON data
+        if (portfolioData.commands && portfolioData.commands.length > 0) {
+            portfolioData.commands.forEach(cmd => {
+                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}]: ${cmd.description}\n`;
+            });
+
+            // Check if we're on a mobile device and add stats command
+            if (window.innerWidth <= 768) {
+                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]stats]: View GitHub statistics and activity\n`;
+            }
+        } else {
+            helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
+        }
+
+        return helpText;
     },
     about: function(_, term) {
         displayHeader(term, 'about');
 
-        if (portfolioData.about && portfolioData.personal) {
+        if (portfolioData.about) {
             const about = portfolioData.about;
-            const personal = portfolioData.personal;
-            
-            // Display personal information
-            let aboutText = `\n[[;#9ece6a;]◆ Personal Information]\n`;
-            aboutText += `  [[;#7aa2f7;]Name:] ${personal.name}\n`;
-            aboutText += `  [[;#7aa2f7;]Title:] ${personal.title}\n`;
-            aboutText += `  [[;#7aa2f7;]Email:] ${personal.email}\n`;
-            aboutText += `  [[;#7aa2f7;]GitHub:] [[u;#7aa2f7;]${personal.github}]\n`;
-            aboutText += `  [[;#7aa2f7;]LinkedIn:] [[u;#7aa2f7;]${personal.linkedin}]\n\n`;
-            
-            // Display about description
-            aboutText += `[[;#9ece6a;]◆ About Me]\n`;
-            aboutText += `  ${about.description}\n\n`;
+            let aboutText = `\n${about.description}\n\n`;
 
             // Add quote if available
             if (about.quote) {
@@ -113,17 +102,10 @@ const commands = {
 
             // Add highlights if available
             if (about.highlights && about.highlights.length > 0) {
-                aboutText += `[[;#9ece6a;]◆ Highlights]\n`;
                 about.highlights.forEach(highlight => {
-                    aboutText += `  [[;#bb9af7;]❯] ${highlight}\n`;
+                    aboutText += `[[;#bb9af7;]❯] ${highlight}\n`;
                 });
             }
-            
-            // Add navigation options
-            aboutText += `\n[[;#e0af68;]Related Commands:]\n`;
-            aboutText += `Type '[[;#bb9af7;]skills]' to see my technical skills\n`;
-            aboutText += `Type '[[;#bb9af7;]projects]' to view my projects\n`;
-            aboutText += `Type '[[;#bb9af7;]contact]' for contact information\n`;
 
             return aboutText;
         } else {
@@ -137,39 +119,103 @@ const commands = {
             const skills = portfolioData.skills;
             let skillsText = `\n`;
 
-            // Add introduction
-            skillsText += `I have experience with various technologies across different domains of software development.\n\n`;
-
-            // Add skills by category
-            Object.keys(skills).forEach(category => {
-                skillsText += `[[;#9ece6a;]◆ ${category}]\n`;
-                
-                skills[category].forEach(skill => {
-                    // If skill has a proficiency level
-                    if (typeof skill === 'object' && skill.name && skill.level) {
-                        const stars = '★'.repeat(skill.level) + '☆'.repeat(5 - skill.level);
-                        skillsText += `  [[;#7aa2f7;]${skill.name}] [[;#e0af68;]${stars}]\n`;
-                    } else {
-                        // Simple skill name
-                        skillsText += `  [[;#7aa2f7;]${skill}]\n`;
-                    }
-                });
-                
-                skillsText += `\n`;
-            });
-
-            // Add learning section if available
-            if (portfolioData.learning && portfolioData.learning.length > 0) {
-                skillsText += `[[;#9ece6a;]◆ Currently Learning]\n`;
-                portfolioData.learning.forEach(item => {
-                    skillsText += `  [[;#bb9af7;]•] ${item}\n`;
-                });
-                skillsText += `\n`;
+            // Add languages if available
+            if (skills.languages && skills.languages.length > 0) {
+                skillsText += `[[;#9ece6a;]◆ Languages:]\n  ${skills.languages.join(', ')}\n\n`;
             }
+
+            // Add web development skills
+            skillsText += `[[;#9ece6a;]◆ Web Development:]\n`;
+            if (skills.frontend && skills.frontend.length > 0) {
+                skillsText += `  [[;#7aa2f7;]Frontend:] ${skills.frontend.join(', ')}\n`;
+            }
+            if (skills.frontendFrameworks && skills.frontendFrameworks.length > 0) {
+                skillsText += `  [[;#7aa2f7;]Frontend Frameworks:] ${skills.frontendFrameworks.join(', ')}\n`;
+            }
+            if (skills.backend && skills.backend.length > 0) {
+                skillsText += `  [[;#7aa2f7;]Backend:] ${skills.backend.join(', ')}\n\n`;
+            }
+
+            // Add mobile development skills
+            if (skills.mobile && skills.mobile.length > 0) {
+                skillsText += `[[;#9ece6a;]◆ Mobile Development:]\n  ${skills.mobile.join(', ')}\n\n`;
+            }
+
+            // Add database skills
+            if (skills.databases && skills.databases.length > 0) {
+                skillsText += `[[;#9ece6a;]◆ Databases & Data:]\n  ${skills.databases.join(', ')}\n\n`;
+            }
+
+            skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
             return skillsText;
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
+        }
+    },
+    tech: function(_, term) {
+        displayHeader(term, 'tech');
+
+        if (portfolioData.skills) {
+            const skills = portfolioData.skills;
+            let techText = `\n`;
+
+            // Add languages if available
+            if (skills.languages && skills.languages.length > 0) {
+                techText += `[[;#9ece6a;]◆ Languages]\n  ${skills.languages.join(', ')}\n\n`;
+            }
+
+            // Add web development section
+            techText += `[[;#9ece6a;]◆ Web Development]\n`;
+
+            // Add frontend skills
+            if (skills.frontend && skills.frontend.length > 0) {
+                techText += `  [[;#7aa2f7;]Frontend:]\n  ${skills.frontend.join(', ')}\n\n`;
+            }
+
+            // Add frontend frameworks
+            if (skills.frontendFrameworks && skills.frontendFrameworks.length > 0) {
+                techText += `  [[;#7aa2f7;]Frontend Frameworks:]\n  ${skills.frontendFrameworks.join(', ')}\n\n`;
+            }
+
+            // Add backend skills
+            if (skills.backend && skills.backend.length > 0) {
+                techText += `  [[;#7aa2f7;]Backend:]\n  ${skills.backend.join(', ')}\n\n`;
+            }
+
+            // Add mobile development skills
+            if (skills.mobile && skills.mobile.length > 0) {
+                techText += `[[;#9ece6a;]◆ Mobile Development]\n  ${skills.mobile.join(', ')}\n\n`;
+            }
+
+            // Add database skills
+            if (skills.databases && skills.databases.length > 0) {
+                techText += `[[;#9ece6a;]◆ Databases & Data]\n  ${skills.databases.join(', ')}\n\n`;
+            }
+
+            // Add DevOps
+            if (skills.devops && skills.devops.length > 0) {
+                techText += `[[;#9ece6a;]◆ DevOps & Cloud]\n  ${skills.devops.join(', ')}\n\n`;
+            }
+
+            // Add tools
+            if (skills.tools && skills.tools.length > 0) {
+                techText += `[[;#9ece6a;]◆ Development Tools]\n  ${skills.tools.join(', ')}\n\n`;
+            }
+
+            // Add design skills
+            if (skills.design && skills.design.length > 0) {
+                techText += `[[;#9ece6a;]◆ Design Tools]\n  ${skills.design.join(', ')}\n\n`;
+            }
+
+            // Add exploring skills
+            if (skills.exploring && skills.exploring.length > 0) {
+                techText += `[[;#9ece6a;]◆ Currently Exploring]\n  ${skills.exploring.join(', ')}`;
+            }
+
+            return techText;
+        } else {
+            return `\n[[;#f7768e;]Error loading tech stack data. Please refresh the page.]`;
         }
     },
     projects: function(_, term) {
@@ -183,23 +229,21 @@ const commands = {
             allProjects = [...portfolioData.projects];
         }
 
-        let projectsText = `\n`;
+        if (allProjects.length > 0) {
+            let projectsText = `\n[[;#9ece6a;]◆ Featured Projects]\n\n`;
 
-        if (allProjects.length === 0) {
-            projectsText += `[[;#f7768e;]No projects found. Please refresh the page.]\n`;
-        } else {
             // List all projects
             allProjects.forEach(project => {
                 const projectName = project.name || project.title;
                 const projectDesc = project.description;
                 projectsText += `[[;#e0af68;]${project.id}.] [[;#7aa2f7;]${projectName}]\n`;
-                
+
                 // Display full description with proper wrapping
                 // Split description into words and rebuild with proper wrapping
                 const words = projectDesc.split(' ');
                 let currentLine = '   ';
                 const maxLineLength = 80; // Maximum characters per line
-                
+
                 words.forEach(word => {
                     // If adding this word would exceed the line length, start a new line
                     if (currentLine.length + word.length + 1 > maxLineLength) {
@@ -209,7 +253,7 @@ const commands = {
                         currentLine += word + ' ';
                     }
                 });
-                
+
                 // Add the last line if it's not empty
                 if (currentLine.trim().length > 0) {
                     projectsText += `${currentLine}\n`;
@@ -227,92 +271,164 @@ const commands = {
             for (let i = 1; i <= allProjects.length; i++) {
                 projectsText += `Type '[[;#bb9af7;]project ${i}]' for details on ${allProjects[i-1].name}\n`;
             }
-        }
 
-        return projectsText;
+            return projectsText;
+        } else {
+            return `\n[[;#f7768e;]Error loading projects data. Please refresh the page.]`;
+        }
+    },
+    theater: function(_, term) {
+        displayHeader(term, 'theater');
+
+        if (portfolioData.theater) {
+            const theater = portfolioData.theater;
+            let theaterText = `\n${theater.description}\n\n`;
+
+            // Add quote if available
+            if (theater.quote) {
+                theaterText += `[[i;#e0af68;]"${theater.quote}"] [[;#bb9af7;]- ${theater.quoteAuthor || ''}]\n\n`;
+            }
+
+            // Add additional info if available
+            if (theater.additionalInfo) {
+                theaterText += `${theater.additionalInfo}`;
+            }
+
+            return theaterText;
+        } else {
+            return `\n[[;#f7768e;]Error loading theater data. Please refresh the page.]`;
+        }
+    },
+    stats: function(_, term) {
+        displayHeader(term, 'stats');
+
+        // Create a full-screen overlay to display GitHub stats
+        const $overlay = $('<div>').addClass('stats-overlay').appendTo('body');
+        const $closeBtn = $('<button>').addClass('close-btn').html('&times;').appendTo($overlay);
+        $('<iframe>').attr({
+            src: 'assets/templates/github-stats-embed.html',
+            frameborder: '0',
+            title: 'GitHub Stats'
+        }).appendTo($overlay);
+
+        // Add event listener to close button
+        $closeBtn.on('click', function() {
+            $overlay.removeClass('visible');
+
+            // Remove overlay after animation completes
+            setTimeout(function() {
+                $overlay.remove();
+                $(document).off('keydown.stats');
+            }, 500); // Match the transition duration
+        });
+
+        // Add escape key listener
+        $(document).on('keydown.stats', function(e) {
+            if (e.key === 'Escape') {
+                $overlay.removeClass('visible');
+
+                // Remove overlay after animation completes
+                setTimeout(function() {
+                    $overlay.remove();
+                    $(document).off('keydown.stats');
+                }, 500); // Match the transition duration
+            }
+        });
+
+        // Show the overlay with animations
+        // Small delay to ensure the overlay is in the DOM
+        setTimeout(function() {
+            $overlay.addClass('visible');
+        }, 10);
+
+        // Get GitHub username from portfolio data
+        const username = portfolioData.github ? portfolioData.github.username : 'v-eenay';
+
+        // Check if we're on a mobile device
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+            return `
+
+[[;#9ece6a;]Opening GitHub stats in fullscreen view...]]
+
+GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
+
+[[;#bb9af7;]•] Press ESC or click the X button to close the stats view
+[[;#bb9af7;]•] The dashboard shows your GitHub activity and statistics
+[[;#bb9af7;]•] Stats include: contributions, streak, languages, and more
+`;
+        } else {
+            return `
+
+[[;#9ece6a;]Displaying GitHub stats in a visual dashboard...]]
+
+GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
+
+[[;#bb9af7;]•] Press ESC or click the X button to close the stats view
+[[;#bb9af7;]•] The dashboard shows real-time GitHub statistics
+[[;#bb9af7;]•] Stats include: contributions, streak, languages, and more
+
+[[i;#e0af68;]"Code is like humor. When you have to explain it, it's bad."] [[;#bb9af7;]- Cory House]
+`;
+        }
     },
     contact: function(_, term) {
         displayHeader(term, 'contact');
 
-        if (portfolioData.personal) {
-            const personal = portfolioData.personal;
+        if (portfolioData.contact) {
+            const contact = portfolioData.contact;
             let contactText = `\n`;
 
             // Add contact information
-            contactText += `[[;#9ece6a;]◆ Contact Information]\n\n`;
-            
-            if (personal.email) {
-                contactText += `  [[;#7aa2f7;]Email:] [[u;#bb9af7;]${personal.email}]\n`;
+            if (contact.email) {
+                contactText += `[[;#bb9af7;]•] Email: [[;#7aa2f7;]${contact.email}]\n`;
             }
-            
-            if (personal.linkedin) {
-                contactText += `  [[;#7aa2f7;]LinkedIn:] [[u;#bb9af7;]${personal.linkedin}]\n`;
+            if (contact.github) {
+                contactText += `[[;#bb9af7;]•] GitHub: [[u;#7aa2f7;]${contact.github}]\n`;
             }
-            
-            if (personal.github) {
-                contactText += `  [[;#7aa2f7;]GitHub:] [[u;#bb9af7;]${personal.github}]\n`;
+            if (contact.linkedin) {
+                contactText += `[[;#bb9af7;]•] LinkedIn: [[u;#7aa2f7;]${contact.linkedin}]\n`;
             }
-            
-            if (personal.location) {
-                contactText += `  [[;#7aa2f7;]Location:] ${personal.location}\n`;
+
+            // Add quote if available
+            if (contact.quote) {
+                contactText += `\n[[i;#e0af68;]"${contact.quote}"]\n`;
             }
-            
-            // Add contact form information
-            contactText += `\n[[;#9ece6a;]◆ Get In Touch]\n\n`;
-            contactText += `  I'm open to freelance opportunities, collaborations, and interesting projects.\n`;
-            contactText += `  Feel free to reach out if you'd like to discuss potential collaborations or just say hello!\n\n`;
-            
-            // Add response time
-            contactText += `  [[;#e0af68;]Response Time:] I typically respond within 24-48 hours.\n`;
 
             return contactText;
         } else {
             return `\n[[;#f7768e;]Error loading contact data. Please refresh the page.]`;
         }
     },
-    theme: function() {
-        // Toggle the theme
-        document.documentElement.classList.toggle('light-mode');
-        
-        // Save preference to localStorage
-        const currentTheme = document.documentElement.classList.contains('light-mode') ? 'light' : 'dark';
-        localStorage.setItem('theme', currentTheme);
-        
-        // Notify iframes about theme change
-        const iframes = document.querySelectorAll('iframe');
-        iframes.forEach(iframe => {
-            try {
-                iframe.contentWindow.postMessage('theme-changed', '*');
-            } catch (e) {
-                console.error('Error notifying iframe about theme change:', e);
-            }
-        });
-        
-        return `\n[[;#9ece6a;]Theme switched to ${currentTheme} mode!]`;
-    },
     cv: function(_, term) {
-        // Create a fullscreen overlay for the CV
-        const $overlay = $('<div class="fullscreen-overlay"><div class="overlay-content"><div class="overlay-header"><button class="overlay-close">×</button><h2>Curriculum Vitae</h2></div><div class="overlay-body"><iframe src="assets/templates/cv-embed.html" frameborder="0"></iframe></div></div></div>');
-        
-        // Add to the body
-        $('body').append($overlay);
-        
-        // Add close button handler
-        $overlay.find('.overlay-close').on('click', function() {
+        displayHeader(term, 'cv');
+
+        // Create a full-screen overlay to display CV
+        const $overlay = $('<div>').addClass('stats-overlay').appendTo('body');
+        const $closeBtn = $('<button>').addClass('close-btn').html('&times;').appendTo($overlay);
+        $('<iframe>').attr({
+            src: 'assets/templates/cv-embed.html',
+            frameborder: '0',
+            title: 'Curriculum Vitae'
+        }).appendTo($overlay);
+
+        // Add event listener to close button
+        $closeBtn.on('click', function() {
             $overlay.removeClass('visible');
-            
+
             // Remove overlay after animation completes
             setTimeout(function() {
                 $overlay.remove();
                 $(document).off('keydown.cv');
             }, 500); // Match the transition duration
         });
-        
+
         // Add escape key listener
         $(document).on('keydown.cv', function(e) {
             if (e.key === 'Escape') {
                 $overlay.removeClass('visible');
-                
+
                 // Remove overlay after animation completes
                 setTimeout(function() {
                     $overlay.remove();
@@ -320,16 +436,16 @@ const commands = {
                 }, 500); // Match the transition duration
             }
         });
-        
+
         // Show the overlay with animations
         // Small delay to ensure the overlay is in the DOM
         setTimeout(function() {
             $overlay.addClass('visible');
         }, 10);
-        
+
         // Check if we're on a mobile device
         const isMobile = window.innerWidth <= 768;
-        
+
         if (isMobile) {
             return `
 
@@ -337,8 +453,10 @@ const commands = {
 
 [[;#bb9af7;]•] Press ESC or click the X button to close the CV view
 [[;#bb9af7;]•] The CV shows my professional experience, education, and skills
-[[;#bb9af7;]•] For more details on specific sections, use the related command:
+[[;#bb9af7;]•] For more details on specific sections, use the related commands:
    - Type '[[;#bb9af7;]teaching]' for teaching experience
+   - Type '[[;#bb9af7;]achievements]' for awards and achievements
+   - Type '[[;#bb9af7;]projects]' for project details
 `;
         } else {
             return `
@@ -347,8 +465,10 @@ const commands = {
 
 [[;#bb9af7;]•] Press ESC or click the X button to close the CV view
 [[;#bb9af7;]•] The CV provides a comprehensive overview of my professional background
-[[;#bb9af7;]•] For more details on specific sections, use the related command:
+[[;#bb9af7;]•] For more details on specific sections, use the related commands:
    - Type '[[;#bb9af7;]teaching]' for teaching experience
+   - Type '[[;#bb9af7;]achievements]' for awards and achievements
+   - Type '[[;#bb9af7;]projects]' for project details
 
 [[i;#e0af68;]"Education is not the filling of a pail, but the lighting of a fire."] [[;#bb9af7;]- W.B. Yeats]
 `;
@@ -395,12 +515,51 @@ const commands = {
             // Add navigation
             teachingText += `[[;#e0af68;]Related Information:]\n`;
             teachingText += `Type '[[;#bb9af7;]cv]' to return to my curriculum vitae.\n`;
+            teachingText += `Type '[[;#bb9af7;]achievements]' to view my awards and achievements.\n`;
 
             return teachingText;
         } else {
             return `\n[[;#f7768e;]Error loading teaching data. Please refresh the page.]`;
         }
     },
+    achievements: function(_, term) {
+        displayHeader(term, 'achievements');
+
+        if (portfolioData.cv && portfolioData.cv.achievements) {
+            const achievements = portfolioData.cv.achievements;
+            let achievementsText = `\n`;
+
+            // Add introduction
+            achievementsText += `Throughout my academic and professional journey, I've been recognized for my contributions to education, technology, and community service.\n\n`;
+
+            // Add achievements
+            if (achievements.length > 0) {
+                achievementsText += `[[;#9ece6a;]◆ Awards & Achievements]\n\n`;
+                achievements.forEach(achievement => {
+                    achievementsText += `  [[;#7aa2f7;]${achievement.title}] (${achievement.year})\n`;
+                    achievementsText += `  [[;#bb9af7;]${achievement.issuer}]\n`;
+                    achievementsText += `  ${achievement.description}\n\n`;
+                });
+            }
+
+            // Add skills recognition
+            achievementsText += `[[;#9ece6a;]◆ Skills Recognition]\n`;
+            achievementsText += `  [[;#7aa2f7;]• Technical Excellence:] Recognized for implementing innovative technical solutions in educational contexts\n`;
+            achievementsText += `  [[;#7aa2f7;]• Teaching Innovation:] Acknowledged for developing creative teaching methodologies that enhance student engagement\n`;
+            achievementsText += `  [[;#7aa2f7;]• Community Impact:] Honored for contributions to technology education in the local community\n\n`;
+
+            // Add navigation
+            achievementsText += `[[;#e0af68;]Related Information:]\n`;
+            achievementsText += `Type '[[;#bb9af7;]cv]' to return to my curriculum vitae.\n`;
+            achievementsText += `Type '[[;#bb9af7;]teaching]' to view my teaching experience.\n`;
+            achievementsText += `Type '[[;#bb9af7;]projects]' to view my projects.\n`;
+
+            return achievementsText;
+        } else {
+            return `\n[[;#f7768e;]Error loading achievements data. Please refresh the page.]`;
+        }
+    },
+
 
     'project 1': function(_, term) {
         displayHeader(term, 'project1');
@@ -550,17 +709,17 @@ $(async function() {
     terminal = $('#terminal-container').terminal(function(command, term) {
         // Trim the command
         const trimmedCommand = command.trim();
-        
+
         // First check if the full command exists (for commands with spaces like "project 1")
         if (trimmedCommand in commands) {
             return commands[trimmedCommand].call(this, [], term);
         }
-        
+
         // If not, split by spaces and check the first part
         const parts = trimmedCommand.split(/\s+/);
         const cmd = parts[0];
         const args = parts.slice(1);
-        
+
         // Check if the command exists
         if (cmd in commands) {
             return commands[cmd].call(this, args, term);
@@ -572,7 +731,7 @@ $(async function() {
                     return commands[projectCmd].call(this, args.slice(1), term);
                 }
             }
-            
+
             return `[[;#f7768e;]Command not found: ${trimmedCommand}]
 Type '[[;#bb9af7;]help]' to see available commands.`;
         }
@@ -583,15 +742,15 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         completion: function() {
             // Get base commands
             const baseCommands = Object.keys(commands);
-            
+
             // Create the final list of commands
             let allCommands = [...baseCommands];
-            
+
             // Add stats command if on mobile
             if (window.innerWidth <= 768) {
                 allCommands.push('stats');
             }
-            
+
             // Add project commands based on available projects
             if (portfolioData.projects) {
                 const projectCount = portfolioData.projects.length;
@@ -599,7 +758,7 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
                     allCommands.push(`project ${i}`);
                 }
             }
-            
+
             return allCommands;
         },
         exit: false,
