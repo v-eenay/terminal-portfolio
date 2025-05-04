@@ -1,4 +1,4 @@
-# Terminal Portfolio - Vinay Koirala
+# Terminal Portfolio - Binay Koirala
 
 A stylish, interactive terminal-based portfolio website showcasing my skills, projects, and background.
 
@@ -7,15 +7,16 @@ A stylish, interactive terminal-based portfolio website showcasing my skills, pr
 - Interactive command-line interface
 - Custom styling with Tokyo Night theme
 - Responsive design for all devices
-- ASCII art header
+- SVG header and profile image
 - Split-screen layout with terminal and profile image
+- Light/Dark mode toggle
 
 ## Technologies Used
 
 - HTML5, CSS3, JavaScript
 - jQuery Terminal
+- SVG graphics
 - Responsive design
-- ASCII art
 
 ## Project Structure
 
@@ -25,13 +26,23 @@ terminal-portfolio/
 │   ├── css/
 │   │   └── main.css
 │   ├── data/
-│   │   └── ascii-header.txt
+│   │   └── portfolio-data.json
 │   ├── images/
-│   │   └── profile.jpg
+│   │   ├── headers/
+│   │   │   ├── dark/          # SVG headers for dark mode
+│   │   │   └── light/         # SVG headers for light mode
+│   │   ├── logos/
+│   │   │   ├── dark/          # Logo for dark mode
+│   │   │   └── light/         # Logo for light mode
+│   │   └── profile/
+│   │       └── vinay-image.svg # Profile image
 │   ├── js/
 │   │   └── terminal.js
 │   └── templates/
-│       └── profile-image.html
+│       ├── cv-embed.html      # CV template
+│       ├── github-stats-embed.html  # GitHub stats template
+│       ├── header-template.html     # Header template
+│       └── profile-image.html       # Profile image template
 └── index.html
 ```
 
@@ -49,7 +60,8 @@ terminal-portfolio/
 
 ## Contact
 
-- Email: koiralavinay@gmail.com
+- Personal Email: koiralavinay@gmail.com
+- Professional Email: binaya.koirala@iic.edu.np
 - GitHub: github.com/v-eenay
 - LinkedIn: linkedin.com/in/veenay
 

@@ -56,7 +56,7 @@
   <path d="M560,40 L540,60 L560,80" stroke="#5fb3d9" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" />
 
   <!-- Main title with enhanced glow -->
-  <text x="300" y="65" font-family="'JetBrains Mono', monospace" font-size="32" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">VINAY KOIRALA</text>
+  <text x="300" y="65" font-family="'JetBrains Mono', monospace" font-size="32" font-weight="bold" text-anchor="middle" fill="url(#headerGradient)" filter="url(#glow)">BINAY KOIRALA</text>
 
   <!-- Subtitle with improved styling -->
   <text x="300" y="100" font-family="'JetBrains Mono', monospace" font-size="18" text-anchor="middle" fill="#c0caf5">TECH ENTHUSIAST &amp; THEATER ARTIST</text>

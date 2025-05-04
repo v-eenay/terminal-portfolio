@@ -1,8 +1,11 @@
 {
   "personal": {
-    "name": "Vinay Koirala",
-    "title": "TECH ENTHUSIAST & THEATER ARTIST",
-    "email": "koiralavinay@gmail.com",
+    "name": "Binay Koirala",
+    "title": "IT LECTURER & COMPUTER ENGINEERING GRADUATE",
+    "email": {
+      "personal": "koiralavinay@gmail.com",
+      "professional": "binaya.koirala@iic.edu.np"
+    },
     "github": "github.com/v-eenay",
     "linkedin": "linkedin.com/in/veenay"
   },
@@ -49,21 +52,85 @@
     },
     {
       "id": 2,
-      "name": "Project 2",
-      "description": "Description of project 2",
-      "features": [],
-      "repo": ""
+      "name": "Automated Metadata Extraction and Reporting Tool (AMERT)",
+      "description": "A Python-powered tool designed to extract metadata from PDF and DOCX files within nested folder structures, generating organized Excel reports. Ideal for managing coursework submissions or research documents.",
+      "features": [
+        "Metadata extraction from PDF/DOCX files (author, title, creation date, etc.)",
+        "Recursive folder scanning for deep directory structures",
+        "Excel report generation with organized metadata",
+        "Error logging for robust issue tracking",
+        "Cross-platform compatibility (Windows, macOS, Linux)"
+      ],
+      "repo": "Automated-Metadata-Extraction-and-Reporting-Tool-AMERT-"
     },
     {
       "id": 3,
-      "name": "Project 3",
-      "description": "Description of project 3",
-      "features": [],
-      "repo": ""
+      "name": "SkillForge E-Learning Platform",
+      "description": "A modern e-learning platform offering high-quality educational content from industry experts, featuring an intuitive interface for learners and instructors. Built with Java EE, Bootstrap, and MySQL for robust course management and user engagement.",
+      "features": [
+        "User authentication with role-based access control (Admin, Instructor, Student)",
+        "Course creation, editing, and management with media support",
+        "Responsive design with modern dashboards for all user roles",
+        "Admin tools for user management and platform analytics",
+        "Planned features: interactive quizzes, payment system, and social features"
+      ],
+      "repo": "skillforge-elearning"
+    },
+    {
+      "id": 4,
+      "name": "Java Servlet REST API",
+      "description": "An experimental Java-based RESTful API for a Todo application, utilizing Jakarta Servlet API and Gson for JSON processing. This project explores CRUD operations on Todo items, despite Servlets not being naturally suited for API development.",
+      "features": [
+        "CRUD operations for Todo items (Create, Read, Update, Delete)",
+        "JSON processing with Gson",
+        "MySQL database integration for persistent storage",
+        "RESTful endpoints for managing Todo items",
+        "Toggle status functionality via PATCH requests"
+      ],
+      "repo": "java-servlet-rest-api"
+    },
+    {
+      "id": 5,
+      "name": "Student Folder Management System",
+      "description": "A Python-based automation tool that organizes student data from Excel sheets into a hierarchical folder structure, creating personalized Excel files for each student based on sections and group assignments.",
+      "features": [
+        "Automated creation of section and group folders",
+        "Generation of individual student Excel files with pre-filled information",
+        "Case-insensitive name matching for accurate student grouping",
+        "Comprehensive logging for process tracking and troubleshooting",
+        "Support for Excel file handling with openpyxl"
+      ],
+      "repo": "Student-Folder-Management-System"
+    },
+    {
+      "id": 6,
+      "name": "Online Digital Library",
+      "description": "A digital library system developed in 2018 for B.Tech in Computer Science and Engineering, utilizing Java, Spring Framework, and Hibernate for back-end development, MySQL for database management, and HTML, CSS, and JavaScript for an accessible user interface.",
+      "features": [
+        "Back-end development with Java, Spring Framework, and Hibernate",
+        "MySQL database for efficient resource management",
+        "User-friendly interface built with HTML, CSS, and JavaScript",
+        "Enhanced accessibility for educational resources"
+      ],
+      "repo": null
+    },
+    {
+      "id": 7,
+      "name": "The Impact of Personalized Marketing on Growing Advertising Reach of Local Business",
+      "description": "A 2022 MBA research project analyzing the effectiveness of personalized marketing strategies on enhancing the advertising reach of local businesses, offering insights for optimizing marketing approaches based on customer engagement data.",
+      "features": [
+        "Analysis of personalized marketing effectiveness",
+        "Insights derived from customer engagement data",
+        "Recommendations for optimizing local business marketing strategies"
+      ],
+      "repo": null
     }
   ],
   "contact": {
-    "email": "koiralavinay@gmail.com",
+    "email": {
+      "personal": "koiralavinay@gmail.com",
+      "professional": "binaya.koirala@iic.edu.np"
+    },
     "github": "github.com/v-eenay",
     "linkedin": "linkedin.com/in/veenay",
     "quote": "Whether writing code or performing on stage, I'm always looking to create something meaningful. Let's collaborate and build something extraordinary together."
@@ -78,6 +145,14 @@
       "description": "Learn about me"
     },
     {
+      "name": "cv",
+      "description": "View my curriculum vitae"
+    },
+    {
+      "name": "download-cv",
+      "description": "Download my CV as PDF"
+    },
+    {
       "name": "skills",
       "description": "See my technical skills"
     },
@@ -89,6 +164,11 @@
       "name": "projects",
       "description": "View my projects"
     },
+    {
+      "name": "teaching",
+      "description": "Learn about my teaching experience"
+    },
+
     {
       "name": "theater",
       "description": "Learn about my theater background"
@@ -105,5 +185,153 @@
   "github": {
     "username": "v-eenay",
     "featuredRepo": "terminal-portfolio"
+  },
+  "cv": {
+    "summary": "Versatile IT lecturer with an MBA and B.Tech in Computer Science Engineering, experienced in both academic and business settings. Committed to fostering a dynamic learning environment that integrates technology and innovative practices across disciplines. Passionate about empowering students and professionals through collaborative engagement and continuous skill development.",
+    "experience": [
+      {
+        "title": "IT Lecturer",
+        "company": "Itahari International College",
+        "location": "Itahari",
+        "period": "July, 2023 - Present",
+        "description": "Currently teaching Introduction to Information Systems, covering HTML, CSS, JavaScript, and MySQL, as well as Fundamentals of Computing, focusing on Python programming. Conducting enrichment classes on Flutter for mobile development and contributing to the content upgrade program to enhance the curriculum for future students."
+      },
+      {
+        "title": "Teacher",
+        "company": "Gokyo International School",
+        "location": "Itahari",
+        "period": "June, 2022 - April, 2023",
+        "description": "Delivered engaging computer science instruction, covering programming, software applications, and digital literacy. Developed tailored lesson plans, assessed student performance, and created a supportive environment to foster students' interest and skills in technology."
+      },
+      {
+        "title": "Computer Instructor",
+        "company": "Good Luck Education and Training Center",
+        "location": "Itahari",
+        "period": "February, 2021 - February, 2022",
+        "description": "Delivered comprehensive computer education to students, covering essential software and programming skills. Developed curriculum materials, assessed student progress, and fostered a collaborative learning environment to enhance digital literacy and technical proficiency."
+      },
+      {
+        "title": "Production Manager",
+        "company": "Namaste F.M.",
+        "location": "Itahari",
+        "period": "February, 2019 - January, 2021",
+        "description": "Oversaw the production and broadcasting operations, ensuring high-quality content delivery and adherence to schedules. Managed a team of technical and creative staff, coordinated programming, and optimized processes to enhance listener engagement and station performance."
+      }
+    ],
+    "education": [
+      {
+        "degree": "M.B.A",
+        "institution": "Lincoln University, Malaysia",
+        "field": "Business Administration",
+        "period": "March, 2019 - January, 2022"
+      },
+      {
+        "degree": "B.Tech.",
+        "institution": "Aryabhatta Knowledge University, India",
+        "field": "Computer Science and Engineering",
+        "period": "October, 2014 - May, 2018"
+      }
+    ],
+    "research": [
+      {
+        "title": "Online Digital Library",
+        "year": "2018",
+        "description": "Conducted for the partial fulfillment of the B.Tech in Computer Science and Engineering. Developed a digital library system using Java, Spring Framework, and Hibernate for back-end development, along with MySQL for database management. The user interface was created with HTML, CSS, and JavaScript to enhance educational resource accessibility."
+      },
+      {
+        "title": "The Impact of Personalized Marketing on Growing Advertising Reach of Local Business",
+        "year": "2022",
+        "description": "Undertaken for the partial fulfillment of the MBA. Analysed the effectiveness of personalised marketing strategies on local business advertising reach, providing insights for optimising marketing approaches based on customer engagement data."
+      }
+    ],
+    "teaching": [
+      {
+        "course": "Introduction to Information Systems",
+        "institution": "Itahari International College",
+        "description": "Comprehensive course covering web technologies including HTML, CSS, JavaScript, and database fundamentals with MySQL."
+      },
+      {
+        "course": "Fundamentals of Computing",
+        "institution": "Itahari International College",
+        "description": "Core computer science course with focus on Python programming, algorithms, and computational thinking."
+      },
+      {
+        "course": "Flutter Development Workshop",
+        "institution": "Itahari International College",
+        "description": "Enrichment program teaching cross-platform mobile app development using Flutter and Dart."
+      }
+    ],
+
+
+    "professional_development": [
+      {
+        "title": "Advanced Java Programming",
+        "provider": "Broadway Infosys, Kathmandu",
+        "year": "2017",
+        "description": "Certified in Advanced Java Programming, with expertise in Servlets, JSP, JDBC, and frameworks such as Hibernate, Spring, Struts, and JavaServer Faces (JSF)."
+      },
+      {
+        "title": "Diploma in Web Programming",
+        "provider": "Computer Point Nepal, Itahari",
+        "year": "2013",
+        "description": "Certified in Web Programming, proficient in HTML5, CSS3, and JavaScript, with expertise in frameworks for dynamic web applications."
+      },
+      {
+        "title": "Responsive Web Design Certification",
+        "provider": "freeCodeCamp",
+        "year": "2023",
+        "description": "Comprehensive certification in responsive web design principles, covering HTML5, CSS3, flexbox, CSS grid, and responsive design patterns."
+      },
+      {
+        "title": "JavaScript Algorithms and Data Structures Certification",
+        "provider": "freeCodeCamp",
+        "year": "2023",
+        "description": "In-depth certification covering JavaScript fundamentals, ES6, regular expressions, debugging, data structures, OOP, functional programming, and algorithm scripting."
+      },
+      {
+        "title": "Foundational C# with Microsoft Certification",
+        "provider": "freeCodeCamp",
+        "year": "2025",
+        "description": "Certification in C# programming fundamentals in collaboration with Microsoft, covering core language features, object-oriented programming, and .NET ecosystem."
+      },
+      {
+        "title": "Problem Solving (Basic and Intermediate)",
+        "provider": "HackerRank",
+        "year": "2024",
+        "description": "Certification demonstrating proficiency in solving algorithmic challenges, data structures implementation, and optimization techniques."
+      },
+      {
+        "title": "Python (Basic and Intermediate)",
+        "provider": "HackerRank",
+        "year": "2024",
+        "description": "Certification in Python programming covering core language features, data structures, algorithms, and problem-solving techniques."
+      },
+      {
+        "title": "Introduction to ASP.NET Core",
+        "provider": "CodeSignal",
+        "year": "2024",
+        "description": "Certification in ASP.NET Core fundamentals, covering MVC architecture, Razor pages, API development, and Entity Framework Core."
+      }
+    ],
+    "references": [
+      {
+        "name": "Santosh Parajuli",
+        "position": "Program Leader - BIT, Itahari International College",
+        "phone": "+9779802776830",
+        "email": "santosh.parajuli@iic.edu.np"
+      },
+      {
+        "name": "Prajwal Parajuli",
+        "position": "Managing Director, Gokyo International School",
+        "phone": "+9779841722388",
+        "email": "Prajwal.parajuli99@gmail.com"
+      },
+      {
+        "name": "Rewati Dulal",
+        "position": "Station Manager, Namaste F.M.",
+        "phone": "+9779852063219",
+        "email": "namastefm@gmail.com"
+      }
+    ]
   }
 }
