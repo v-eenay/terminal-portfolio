@@ -291,38 +291,58 @@
       {
         "title": "Responsive Web Design Certification",
         "provider": "freeCodeCamp",
-        "year": "2021",
+        "year": "2023",
         "description": "Comprehensive certification in responsive web design principles, covering HTML5, CSS3, flexbox, CSS grid, and responsive design patterns."
       },
       {
         "title": "JavaScript Algorithms and Data Structures Certification",
         "provider": "freeCodeCamp",
-        "year": "2021",
+        "year": "2023",
         "description": "In-depth certification covering JavaScript fundamentals, ES6, regular expressions, debugging, data structures, OOP, functional programming, and algorithm scripting."
       },
       {
         "title": "Foundational C# with Microsoft Certification",
         "provider": "freeCodeCamp",
-        "year": "2022",
+        "year": "2025",
         "description": "Certification in C# programming fundamentals in collaboration with Microsoft, covering core language features, object-oriented programming, and .NET ecosystem."
       },
       {
         "title": "Problem Solving (Basic and Intermediate)",
         "provider": "HackerRank",
-        "year": "2022",
+        "year": "2024",
         "description": "Certification demonstrating proficiency in solving algorithmic challenges, data structures implementation, and optimization techniques."
       },
       {
         "title": "Python (Basic and Intermediate)",
         "provider": "HackerRank",
-        "year": "2022",
+        "year": "2024",
         "description": "Certification in Python programming covering core language features, data structures, algorithms, and problem-solving techniques."
       },
       {
         "title": "Introduction to ASP.NET Core",
         "provider": "CodeSignal",
-        "year": "2023",
+        "year": "2024",
         "description": "Certification in ASP.NET Core fundamentals, covering MVC architecture, Razor pages, API development, and Entity Framework Core."
+      }
+    ],
+    "references": [
+      {
+        "name": "Santosh Parajuli",
+        "position": "Program Leader - BIT, Itahari International College",
+        "phone": "+9779802776830",
+        "email": "santosh.parajuli@iic.edu.np"
+      },
+      {
+        "name": "Prajwal Parajuli",
+        "position": "Managing Director, Gokyo International School",
+        "phone": "+9779841722388",
+        "email": "Prajwal.parajuli99@gmail.com"
+      },
+      {
+        "name": "Rewati Dulal",
+        "position": "Station Manager, Namaste F.M.",
+        "phone": "+9779852063219",
+        "email": "namastefm@gmail.com"
       }
     ]
   }
