@@ -252,6 +252,11 @@
         "course": "Flutter Development Workshop",
         "institution": "Itahari International College",
         "description": "Enrichment program teaching cross-platform mobile app development using Flutter and Dart."
+      },
+      {
+        "course": "Advanced Programming",
+        "institution": "Itahari International College",
+        "description": "Advanced course teaching Java technologies including JDBC, JSP, and Servlets for enterprise application development."
       }
     ],
     "projects": [
