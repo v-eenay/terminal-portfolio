@@ -1,4 +1,4 @@
-# Terminal Portfolio - Vinay Koirala
+# Terminal Portfolio - Binay Koirala
 
 A stylish, interactive terminal-based portfolio website showcasing my skills, projects, and background.
 
@@ -60,7 +60,8 @@ terminal-portfolio/
 
 ## Contact
 
-- Email: koiralavinay@gmail.com
+- Personal Email: koiralavinay@gmail.com
+- Professional Email: binaya.koirala@iic.edu.np
 - GitHub: github.com/v-eenay
 - LinkedIn: linkedin.com/in/veenay
 

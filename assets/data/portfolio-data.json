@@ -1,8 +1,11 @@
 {
   "personal": {
-    "name": "Vinay Koirala",
+    "name": "Binay Koirala",
     "title": "IT LECTURER & COMPUTER ENGINEERING GRADUATE",
-    "email": "koiralavinay@gmail.com",
+    "email": {
+      "personal": "koiralavinay@gmail.com",
+      "professional": "binaya.koirala@iic.edu.np"
+    },
     "github": "github.com/v-eenay",
     "linkedin": "linkedin.com/in/veenay"
   },
@@ -124,7 +127,10 @@
     }
   ],
   "contact": {
-    "email": "koiralavinay@gmail.com",
+    "email": {
+      "personal": "koiralavinay@gmail.com",
+      "professional": "binaya.koirala@iic.edu.np"
+    },
     "github": "github.com/v-eenay",
     "linkedin": "linkedin.com/in/veenay",
     "quote": "Whether writing code or performing on stage, I'm always looking to create something meaningful. Let's collaborate and build something extraordinary together."

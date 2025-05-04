@@ -381,7 +381,16 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 
             // Add contact information
             if (contact.email) {
-                contactText += `[[;#bb9af7;]•] Email: [[;#7aa2f7;]${contact.email}]\n`;
+                if (typeof contact.email === 'object') {
+                    if (contact.email.personal) {
+                        contactText += `[[;#bb9af7;]•] Personal Email: [[;#7aa2f7;]${contact.email.personal}]\n`;
+                    }
+                    if (contact.email.professional) {
+                        contactText += `[[;#bb9af7;]•] Professional Email: [[;#7aa2f7;]${contact.email.professional}]\n`;
+                    }
+                } else {
+                    contactText += `[[;#bb9af7;]•] Email: [[;#7aa2f7;]${contact.email}]\n`;
+                }
             }
             if (contact.github) {
                 contactText += `[[;#bb9af7;]•] GitHub: [[u;#7aa2f7;]${contact.github}]\n`;
@@ -737,7 +746,7 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
     }, {
         greetings: greetings,
         height: '100%',
-        prompt: '[[;#bb9af7;]vinay@portfolio]:[[;#7aa2f7;]~]$ ',
+        prompt: '[[;#bb9af7;]binay@portfolio]:[[;#7aa2f7;]~]$ ',
         completion: function() {
             // Get base commands
             const baseCommands = Object.keys(commands);
