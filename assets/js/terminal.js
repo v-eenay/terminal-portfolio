@@ -3,6 +3,38 @@ const greetings = `[[;#7dcfff;]Welcome to my terminal portfolio!] Type '[[;#bb9a
 // Portfolio data
 let portfolioData = {};
 
+// Helper function to generate project details
+function generateProjectDetails(project, username) {
+    let projectText = `\n`;
+
+    // Display project name
+    projectText += `[[;#7aa2f7;]${project.name}]\n\n`;
+
+    // Display full description
+    projectText += `${project.description}\n\n`;
+
+    // Add features if available
+    if (project.features && project.features.length > 0) {
+        projectText += `[[;#9ece6a;]◆ Features:]\n`;
+        project.features.forEach(feature => {
+            projectText += `  [[;#bb9af7;]•] ${feature}\n`;
+        });
+        projectText += `\n`;
+    }
+
+    // Add repository link if available
+    if (project.repo) {
+        projectText += `[[;#9ece6a;]◆ Repository:]\n`;
+        projectText += `  [[u;#7aa2f7;]https://github.com/${username}/${project.repo}]\n\n`;
+    }
+
+    // Add navigation options
+    projectText += `[[;#e0af68;]Navigation:]\n`;
+    projectText += `Type '[[;#bb9af7;]projects]' to return to the projects list.\n`;
+
+    return projectText;
+}
+
 // Function to load portfolio data from JSON
 async function loadPortfolioData() {
     try {
@@ -189,28 +221,12 @@ const commands = {
     projects: function(_, term) {
         displayHeader(term, 'projects');
 
-        // Combine portfolio projects and CV projects
+        // Only use projects from the portfolio data, not from CV
         let allProjects = [];
 
         // Add portfolio projects
         if (portfolioData.projects && portfolioData.projects.length > 0) {
             allProjects = [...portfolioData.projects];
-        }
-
-        // Add CV projects if they exist and aren't already included
-        if (portfolioData.cv && portfolioData.cv.projects) {
-            portfolioData.cv.projects.forEach(cvProject => {
-                // Check if this project is already in the portfolio projects
-                const exists = allProjects.some(p => p.name === cvProject.title);
-                if (!exists) {
-                    allProjects.push({
-                        id: allProjects.length + 1,
-                        name: cvProject.title,
-                        description: cvProject.description,
-                        technologies: cvProject.technologies
-                    });
-                }
-            });
         }
 
         if (allProjects.length > 0) {
@@ -221,7 +237,27 @@ const commands = {
                 const projectName = project.name || project.title;
                 const projectDesc = project.description;
                 projectsText += `[[;#e0af68;]${project.id}.] [[;#7aa2f7;]${projectName}]\n`;
-                projectsText += `   ${projectDesc.substring(0, 100)}${projectDesc.length > 100 ? '...' : ''}\n`;
+
+                // Display full description with proper wrapping
+                // Split description into words and rebuild with proper wrapping
+                const words = projectDesc.split(' ');
+                let currentLine = '   ';
+                const maxLineLength = 80; // Maximum characters per line
+
+                words.forEach(word => {
+                    // If adding this word would exceed the line length, start a new line
+                    if (currentLine.length + word.length + 1 > maxLineLength) {
+                        projectsText += `${currentLine}\n`;
+                        currentLine = '   ' + word + ' '; // Start new line with indentation
+                    } else {
+                        currentLine += word + ' ';
+                    }
+                });
+
+                // Add the last line if it's not empty
+                if (currentLine.trim().length > 0) {
+                    projectsText += `${currentLine}\n`;
+                }
 
                 // Add technologies if available
                 if (project.technologies && project.technologies.length > 0) {
@@ -230,8 +266,11 @@ const commands = {
                 projectsText += `\n`;
             });
 
-            projectsText += `Type '[[;#bb9af7;]project 1]', '[[;#bb9af7;]project 2]', etc. for more details on portfolio projects.\n`;
-            projectsText += `Type '[[;#bb9af7;]cv]' to return to my curriculum vitae.\n`;
+            // Add instructions for viewing project details
+            projectsText += `[[;#e0af68;]Available Project Commands:]\n`;
+            for (let i = 1; i <= allProjects.length; i++) {
+                projectsText += `Type '[[;#bb9af7;]project ${i}]' for details on ${allProjects[i-1].name}\n`;
+            }
 
             return projectsText;
         } else {
@@ -520,25 +559,74 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
             return `\n[[;#f7768e;]Error loading achievements data. Please refresh the page.]`;
         }
     },
+
+
     'project 1': function(_, term) {
         displayHeader(term, 'project1');
 
         if (portfolioData.projects && portfolioData.projects.length > 0) {
-            // Get the first project (Terminal Portfolio)
-            const project = portfolioData.projects[0];
-            let projectText = `\n`;
+            const project = portfolioData.projects[0]; // Terminal Portfolio
+            return generateProjectDetails(project, portfolioData.github.username);
+        } else {
+            return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
+        }
+    },
+    'project 2': function(_, term) {
+        displayHeader(term, 'project2');
 
-            projectText += `${project.description}\n\n`;
+        if (portfolioData.projects && portfolioData.projects.length > 1) {
+            const project = portfolioData.projects[1]; // AMERT
+            return generateProjectDetails(project, portfolioData.github.username);
+        } else {
+            return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
+        }
+    },
+    'project 3': function(_, term) {
+        displayHeader(term, 'project3');
 
-            // Add features if available
-            if (project.features && project.features.length > 0) {
-                projectText += `[[;#9ece6a;]◆ Features:]\n`;
-                project.features.forEach(feature => {
-                    projectText += `  [[;#bb9af7;]•] ${feature}\n`;
-                });
-            }
+        if (portfolioData.projects && portfolioData.projects.length > 2) {
+            const project = portfolioData.projects[2]; // SkillForge E-Learning Platform
+            return generateProjectDetails(project, portfolioData.github.username);
+        } else {
+            return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
+        }
+    },
+    'project 4': function(_, term) {
+        displayHeader(term, 'project4');
 
-            return projectText;
+        if (portfolioData.projects && portfolioData.projects.length > 3) {
+            const project = portfolioData.projects[3]; // Java Servlet REST API
+            return generateProjectDetails(project, portfolioData.github.username);
+        } else {
+            return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
+        }
+    },
+    'project 5': function(_, term) {
+        displayHeader(term, 'project5');
+
+        if (portfolioData.projects && portfolioData.projects.length > 4) {
+            const project = portfolioData.projects[4]; // Student Folder Management System
+            return generateProjectDetails(project, portfolioData.github.username);
+        } else {
+            return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
+        }
+    },
+    'project 6': function(_, term) {
+        displayHeader(term, 'project6');
+
+        if (portfolioData.projects && portfolioData.projects.length > 5) {
+            const project = portfolioData.projects[5]; // Online Digital Library
+            return generateProjectDetails(project, portfolioData.github.username);
+        } else {
+            return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
+        }
+    },
+    'project 7': function(_, term) {
+        displayHeader(term, 'project7');
+
+        if (portfolioData.projects && portfolioData.projects.length > 6) {
+            const project = portfolioData.projects[6]; // Personalized Marketing Research
+            return generateProjectDetails(project, portfolioData.github.username);
         } else {
             return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
         }
@@ -639,12 +727,23 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             // Get base commands
             const baseCommands = Object.keys(commands);
 
+            // Create the final list of commands
+            let allCommands = [...baseCommands];
+
             // Add stats command if on mobile
             if (window.innerWidth <= 768) {
-                return [...baseCommands, 'stats'];
+                allCommands.push('stats');
             }
 
-            return baseCommands;
+            // Add project commands based on available projects
+            if (portfolioData.projects) {
+                const projectCount = portfolioData.projects.length;
+                for (let i = 1; i <= projectCount; i++) {
+                    allCommands.push(`project ${i}`);
+                }
+            }
+
+            return allCommands;
         },
         exit: false,
         clear: function() {

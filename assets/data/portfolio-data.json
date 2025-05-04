@@ -49,17 +49,78 @@
     },
     {
       "id": 2,
-      "name": "Project 2",
-      "description": "Description of project 2",
-      "features": [],
-      "repo": ""
+      "name": "Automated Metadata Extraction and Reporting Tool (AMERT)",
+      "description": "A Python-powered tool designed to extract metadata from PDF and DOCX files within nested folder structures, generating organized Excel reports. Ideal for managing coursework submissions or research documents.",
+      "features": [
+        "Metadata extraction from PDF/DOCX files (author, title, creation date, etc.)",
+        "Recursive folder scanning for deep directory structures",
+        "Excel report generation with organized metadata",
+        "Error logging for robust issue tracking",
+        "Cross-platform compatibility (Windows, macOS, Linux)"
+      ],
+      "repo": "Automated-Metadata-Extraction-and-Reporting-Tool-AMERT-"
     },
     {
       "id": 3,
-      "name": "Project 3",
-      "description": "Description of project 3",
-      "features": [],
-      "repo": ""
+      "name": "SkillForge E-Learning Platform",
+      "description": "A modern e-learning platform offering high-quality educational content from industry experts, featuring an intuitive interface for learners and instructors. Built with Java EE, Bootstrap, and MySQL for robust course management and user engagement.",
+      "features": [
+        "User authentication with role-based access control (Admin, Instructor, Student)",
+        "Course creation, editing, and management with media support",
+        "Responsive design with modern dashboards for all user roles",
+        "Admin tools for user management and platform analytics",
+        "Planned features: interactive quizzes, payment system, and social features"
+      ],
+      "repo": "skillforge-elearning"
+    },
+    {
+      "id": 4,
+      "name": "Java Servlet REST API",
+      "description": "An experimental Java-based RESTful API for a Todo application, utilizing Jakarta Servlet API and Gson for JSON processing. This project explores CRUD operations on Todo items, despite Servlets not being naturally suited for API development.",
+      "features": [
+        "CRUD operations for Todo items (Create, Read, Update, Delete)",
+        "JSON processing with Gson",
+        "MySQL database integration for persistent storage",
+        "RESTful endpoints for managing Todo items",
+        "Toggle status functionality via PATCH requests"
+      ],
+      "repo": "java-servlet-rest-api"
+    },
+    {
+      "id": 5,
+      "name": "Student Folder Management System",
+      "description": "A Python-based automation tool that organizes student data from Excel sheets into a hierarchical folder structure, creating personalized Excel files for each student based on sections and group assignments.",
+      "features": [
+        "Automated creation of section and group folders",
+        "Generation of individual student Excel files with pre-filled information",
+        "Case-insensitive name matching for accurate student grouping",
+        "Comprehensive logging for process tracking and troubleshooting",
+        "Support for Excel file handling with openpyxl"
+      ],
+      "repo": "Student-Folder-Management-System"
+    },
+    {
+      "id": 6,
+      "name": "Online Digital Library",
+      "description": "A digital library system developed in 2018 for B.Tech in Computer Science and Engineering, utilizing Java, Spring Framework, and Hibernate for back-end development, MySQL for database management, and HTML, CSS, and JavaScript for an accessible user interface.",
+      "features": [
+        "Back-end development with Java, Spring Framework, and Hibernate",
+        "MySQL database for efficient resource management",
+        "User-friendly interface built with HTML, CSS, and JavaScript",
+        "Enhanced accessibility for educational resources"
+      ],
+      "repo": null
+    },
+    {
+      "id": 7,
+      "name": "The Impact of Personalized Marketing on Growing Advertising Reach of Local Business",
+      "description": "A 2022 MBA research project analyzing the effectiveness of personalized marketing strategies on enhancing the advertising reach of local businesses, offering insights for optimizing marketing approaches based on customer engagement data.",
+      "features": [
+        "Analysis of personalized marketing effectiveness",
+        "Insights derived from customer engagement data",
+        "Recommendations for optimizing local business marketing strategies"
+      ],
+      "repo": null
     }
   ],
   "contact": {

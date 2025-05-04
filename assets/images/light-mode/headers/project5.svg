@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="80" viewBox="0 0 500 80">
+  <style>
+    .title { fill: #3e63dd; font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: bold; }
+    .subtitle { fill: #6e56cf; font-family: 'JetBrains Mono', monospace; font-size: 16px; }
+  </style>
+  <text x="10" y="35" class="title">Student Folder Management System</text>
+  <text x="10" y="60" class="subtitle">Python-based student data organization tool</text>
+</svg>
