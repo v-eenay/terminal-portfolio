@@ -57,8 +57,8 @@ function displayHeader(term, command) {
         const isLightMode = document.documentElement.classList.contains('light-mode');
 
         // Set the appropriate path based on theme
-        const basePath = isLightMode ? 'assets/images/light-mode/headers/' : 'assets/images/headers/';
-        const headerPath = `${basePath}${command}.svg`;
+        const theme = isLightMode ? 'light' : 'dark';
+        const headerPath = `assets/images/headers/${theme}/${command}.svg`;
 
         const headerHTML = `<img src="${headerPath}" alt="${command} header" style="width: 100%; max-width: 500px; margin: 10px 0;">`;
         term.echo(headerHTML, {raw: true});

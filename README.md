@@ -28,10 +28,14 @@ terminal-portfolio/
 │   ├── data/
 │   │   └── portfolio-data.json
 │   ├── images/
-│   │   ├── headers/           # SVG headers for dark mode
-│   │   ├── light-mode/        # SVG assets for light mode
-│   │   ├── header-logo.svg    # Main header logo
-│   │   └── vinay-image.svg    # Profile image
+│   │   ├── headers/
+│   │   │   ├── dark/          # SVG headers for dark mode
+│   │   │   └── light/         # SVG headers for light mode
+│   │   ├── logos/
+│   │   │   ├── dark/          # Logo for dark mode
+│   │   │   └── light/         # Logo for light mode
+│   │   └── profile/
+│   │       └── vinay-image.svg # Profile image
 │   ├── js/
 │   │   └── terminal.js
 │   └── templates/
