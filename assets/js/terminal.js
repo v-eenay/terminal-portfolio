@@ -707,8 +707,16 @@ $(async function() {
     $(window).on('resize', handleResponsiveLayout);
 
     terminal = $('#terminal-container').terminal(function(command, term) {
-        // Split the command to handle arguments
-        const parts = command.trim().split(/\s+/);
+        // Trim the command
+        const trimmedCommand = command.trim();
+
+        // First check if the full command exists (for commands with spaces like "project 1")
+        if (trimmedCommand in commands) {
+            return commands[trimmedCommand].call(this, [], term);
+        }
+
+        // If not, split by spaces and check the first part
+        const parts = trimmedCommand.split(/\s+/);
         const cmd = parts[0];
         const args = parts.slice(1);
 
@@ -716,7 +724,15 @@ $(async function() {
         if (cmd in commands) {
             return commands[cmd].call(this, args, term);
         } else {
-            return `[[;#f7768e;]Command not found: ${cmd}]
+            // Check if it's a project command
+            if (cmd === 'project' && args.length > 0) {
+                const projectCmd = `project ${args[0]}`;
+                if (projectCmd in commands) {
+                    return commands[projectCmd].call(this, args.slice(1), term);
+                }
+            }
+
+            return `[[;#f7768e;]Command not found: ${trimmedCommand}]
 Type '[[;#bb9af7;]help]' to see available commands.`;
         }
     }, {
