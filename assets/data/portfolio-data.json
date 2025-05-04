@@ -164,10 +164,7 @@
       "name": "teaching",
       "description": "Learn about my teaching experience"
     },
-    {
-      "name": "achievements",
-      "description": "View my awards and achievements"
-    },
+
     {
       "name": "theater",
       "description": "Learn about my theater background"
@@ -261,26 +258,7 @@
       }
     ],
 
-    "achievements": [
-      {
-        "title": "Best Teaching Innovation Award",
-        "issuer": "Itahari International College",
-        "year": "2024",
-        "description": "Recognized for implementing innovative teaching methodologies that significantly improved student engagement and learning outcomes."
-      },
-      {
-        "title": "Outstanding Academic Performance",
-        "issuer": "Aryabhatta Knowledge University",
-        "year": "2018",
-        "description": "Graduated with distinction in B.Tech Computer Science and Engineering program."
-      },
-      {
-        "title": "Community Tech Educator Award",
-        "issuer": "Itahari Municipality",
-        "year": "2022",
-        "description": "Honored for conducting free programming workshops for underprivileged students in the community."
-      }
-    ],
+
     "professional_development": [
       {
         "title": "Advanced Java Programming",

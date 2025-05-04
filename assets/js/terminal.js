@@ -463,7 +463,6 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 [[;#bb9af7;]•] The CV shows my professional experience, education, and skills
 [[;#bb9af7;]•] For more details on specific sections, use the related commands:
    - Type '[[;#bb9af7;]teaching]' for teaching experience
-   - Type '[[;#bb9af7;]achievements]' for awards and achievements
    - Type '[[;#bb9af7;]projects]' for project details
 `;
         } else {
@@ -475,7 +474,6 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 [[;#bb9af7;]•] The CV provides a comprehensive overview of my professional background
 [[;#bb9af7;]•] For more details on specific sections, use the related commands:
    - Type '[[;#bb9af7;]teaching]' for teaching experience
-   - Type '[[;#bb9af7;]achievements]' for awards and achievements
    - Type '[[;#bb9af7;]projects]' for project details
 
 [[i;#e0af68;]"Education is not the filling of a pail, but the lighting of a fire."] [[;#bb9af7;]- W.B. Yeats]
@@ -523,50 +521,13 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
             // Add navigation
             teachingText += `[[;#e0af68;]Related Information:]\n`;
             teachingText += `Type '[[;#bb9af7;]cv]' to return to my curriculum vitae.\n`;
-            teachingText += `Type '[[;#bb9af7;]achievements]' to view my awards and achievements.\n`;
 
             return teachingText;
         } else {
             return `\n[[;#f7768e;]Error loading teaching data. Please refresh the page.]`;
         }
     },
-    achievements: function(_, term) {
-        displayHeader(term, 'achievements');
 
-        if (portfolioData.cv && portfolioData.cv.achievements) {
-            const achievements = portfolioData.cv.achievements;
-            let achievementsText = `\n`;
-
-            // Add introduction
-            achievementsText += `Throughout my academic and professional journey, I've been recognized for my contributions to education, technology, and community service.\n\n`;
-
-            // Add achievements
-            if (achievements.length > 0) {
-                achievementsText += `[[;#9ece6a;]◆ Awards & Achievements]\n\n`;
-                achievements.forEach(achievement => {
-                    achievementsText += `  [[;#7aa2f7;]${achievement.title}] (${achievement.year})\n`;
-                    achievementsText += `  [[;#bb9af7;]${achievement.issuer}]\n`;
-                    achievementsText += `  ${achievement.description}\n\n`;
-                });
-            }
-
-            // Add skills recognition
-            achievementsText += `[[;#9ece6a;]◆ Skills Recognition]\n`;
-            achievementsText += `  [[;#7aa2f7;]• Technical Excellence:] Recognized for implementing innovative technical solutions in educational contexts\n`;
-            achievementsText += `  [[;#7aa2f7;]• Teaching Innovation:] Acknowledged for developing creative teaching methodologies that enhance student engagement\n`;
-            achievementsText += `  [[;#7aa2f7;]• Community Impact:] Honored for contributions to technology education in the local community\n\n`;
-
-            // Add navigation
-            achievementsText += `[[;#e0af68;]Related Information:]\n`;
-            achievementsText += `Type '[[;#bb9af7;]cv]' to return to my curriculum vitae.\n`;
-            achievementsText += `Type '[[;#bb9af7;]teaching]' to view my teaching experience.\n`;
-            achievementsText += `Type '[[;#bb9af7;]projects]' to view my projects.\n`;
-
-            return achievementsText;
-        } else {
-            return `\n[[;#f7768e;]Error loading achievements data. Please refresh the page.]`;
-        }
-    },
 
 
     'project 1': function(_, term) {
