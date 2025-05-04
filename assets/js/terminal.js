@@ -91,9 +91,21 @@ const commands = {
     about: function(_, term) {
         displayHeader(term, 'about');
 
-        if (portfolioData.about) {
+        if (portfolioData.about && portfolioData.personal) {
             const about = portfolioData.about;
-            let aboutText = `\n${about.description}\n\n`;
+            const personal = portfolioData.personal;
+
+            // Display personal information
+            let aboutText = `\n[[;#9ece6a;]◆ Personal Information]\n`;
+            aboutText += `  [[;#7aa2f7;]Name:] ${personal.name}\n`;
+            aboutText += `  [[;#7aa2f7;]Title:] ${personal.title}\n`;
+            aboutText += `  [[;#7aa2f7;]Email:] ${personal.email}\n`;
+            aboutText += `  [[;#7aa2f7;]GitHub:] [[u;#7aa2f7;]${personal.github}]\n`;
+            aboutText += `  [[;#7aa2f7;]LinkedIn:] [[u;#7aa2f7;]${personal.linkedin}]\n\n`;
+
+            // Display about description
+            aboutText += `[[;#9ece6a;]◆ About Me]\n`;
+            aboutText += `  ${about.description}\n\n`;
 
             // Add quote if available
             if (about.quote) {
@@ -102,10 +114,17 @@ const commands = {
 
             // Add highlights if available
             if (about.highlights && about.highlights.length > 0) {
+                aboutText += `[[;#9ece6a;]◆ Highlights]\n`;
                 about.highlights.forEach(highlight => {
-                    aboutText += `[[;#bb9af7;]❯] ${highlight}\n`;
+                    aboutText += `  [[;#bb9af7;]❯] ${highlight}\n`;
                 });
             }
+
+            // Add navigation options
+            aboutText += `\n[[;#e0af68;]Related Commands:]\n`;
+            aboutText += `Type '[[;#bb9af7;]skills]' to see my technical skills\n`;
+            aboutText += `Type '[[;#bb9af7;]projects]' to view my projects\n`;
+            aboutText += `Type '[[;#bb9af7;]contact]' for contact information\n`;
 
             return aboutText;
         } else {
