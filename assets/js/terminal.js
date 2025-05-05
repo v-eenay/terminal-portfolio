@@ -84,7 +84,7 @@ const commands = {
             }
 
             // Add sound command
-            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound]: Toggle typing sound effects on/off\n`;
+            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound]: Information about sound effects\n`;
         } else {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
@@ -92,9 +92,8 @@ const commands = {
         return helpText;
     },
     sound: function(_, term) {
-        const enabled = $.terminal.toggleSound();
-
-        return `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]`;
+        // Since we removed the sound functionality, just return a message
+        return `\n[[;#9ece6a;]Sound effects are not available in this version.]`;
     },
     about: function(_, term) {
         displayHeader(term, 'about');
