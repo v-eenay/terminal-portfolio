@@ -90,20 +90,24 @@ const commands = {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        return helpText;
+        // Use the typewrite method for animation
+        term.typewrite(helpText, { delay: 10 });
+        return '';
     },
     sound: function(args, term) {
         if (args.length > 0 && args[0] === 'test') {
             // Play test sounds
             if ($.terminal.sound.playTest) {
                 $.terminal.sound.playTest();
-                return `\n[[;#9ece6a;]Playing test sounds...]]`;
+                term.typewrite(`\n[[;#9ece6a;]Playing test sounds...]]`, { delay: 20 });
+                return '';
             }
         } else {
             // Toggle sound effects
             const enabled = $.terminal.sound.toggle();
-            return `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
-Type '[[;#bb9af7;]sound test]' to play test sounds.`;
+            term.typewrite(`\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
+Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 20 });
+            return '';
         }
     },
     about: function(_, term) {
@@ -125,7 +129,9 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`;
                 });
             }
 
-            return aboutText;
+            // Use the typewrite method for animation
+            term.typewrite(aboutText, { delay: 20 });
+            return '';
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
         }
@@ -166,7 +172,9 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`;
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
-            return skillsText;
+            // Use the typewrite method for animation
+            term.typewrite(skillsText, { delay: 15 });
+            return '';
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
         }
@@ -795,8 +803,7 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             }
         },
         onInit: function() {
-            // Add a typing effect to the initial message
-            this.echo('\nType [[;#7dcfff;]help] to see available commands.');
+            const term = this;
 
             // Enable sound by default and initialize
             if (window.TerminalSounds) {
@@ -816,8 +823,22 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
                 $.terminal.sound.enable();
             }
 
-            // Add a message about sound
-            this.echo('\n[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]');
+            // Add typing effect to the initial messages with animation
+            // Use a sequence of messages with delays for a more dramatic effect
+            setTimeout(() => {
+                term.echo('\nWelcome to my terminal portfolio!', { delay: 40 });
+
+                setTimeout(() => {
+                    term.echo('\nType [[;#7dcfff;]help] to see available commands.', { delay: 30 });
+
+                    setTimeout(() => {
+                        term.echo('\n[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]', {
+                            delay: 20,
+                            finalDelay: 500
+                        });
+                    }, 1000);
+                }, 1000);
+            }, 300);
         },
         linksNoReferrer: false,
         convertLinks: true,
