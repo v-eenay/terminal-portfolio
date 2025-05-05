@@ -84,7 +84,7 @@ const commands = {
             }
 
             // Add sound command
-            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound]: Information about sound effects\n`;
+            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound]: Toggle keyboard sound effects on/off\n`;
         } else {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
@@ -92,8 +92,9 @@ const commands = {
         return helpText;
     },
     sound: function(_, term) {
-        // Since we removed the sound functionality, just return a message
-        return `\n[[;#9ece6a;]Sound effects are not available in this version.]`;
+        // Toggle sound effects
+        const enabled = $.terminal.sound.toggle();
+        return `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]`;
     },
     about: function(_, term) {
         displayHeader(term, 'about');
@@ -786,6 +787,11 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         onInit: function() {
             // Add a typing effect to the initial message
             this.echo('\nType [[;#7dcfff;]help] to see available commands.');
+
+            // Enable sound by default
+            if ($.terminal.sound && typeof $.terminal.sound.enable === 'function') {
+                $.terminal.sound.enable();
+            }
         },
         linksNoReferrer: false,
         convertLinks: true,
