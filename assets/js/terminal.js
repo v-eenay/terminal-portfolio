@@ -89,18 +89,12 @@ const commands = {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        // Use the new typing animation
-        term.typingFormatted(helpText, { delay: 15 }); // Faster typing for help command
-        return ''; // Return empty string since we already echoed the content
+        return helpText;
     },
     sound: function(_, term) {
         const enabled = $.terminal.toggleSound();
 
-        // Use the new typing animation
-        term.typingFormatted(`\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]`, {
-            delay: 20
-        });
-        return '';
+        return `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]`;
     },
     about: function(_, term) {
         displayHeader(term, 'about');
@@ -121,9 +115,7 @@ const commands = {
                 });
             }
 
-            // Use the new typing animation
-            term.typingFormatted(aboutText, { delay: 25 });
-            return ''; // Return empty string since we already echoed the content
+            return aboutText;
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
         }
@@ -164,9 +156,7 @@ const commands = {
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
-            // Use the new typing animation
-            term.typingFormatted(skillsText, { delay: 20 });
-            return ''; // Return empty string since we already echoed the content
+            return skillsText;
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
         }
@@ -795,13 +785,8 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             }
         },
         onInit: function() {
-            // Add a typing effect to the initial message with our new animation
-            this.typingFormatted('\nType [[;#7dcfff;]help] to see available commands.', {
-                delay: 30 // Milliseconds between characters
-            });
-
-            // Enable sound by default
-            $.terminal.toggleSound(true);
+            // Add a typing effect to the initial message
+            this.echo('\nType [[;#7dcfff;]help] to see available commands.');
         },
         linksNoReferrer: false,
         convertLinks: true,
