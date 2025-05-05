@@ -109,11 +109,30 @@ window.TerminalSounds = (function() {
         }
     }
 
-    // Initialize when the document is ready
+    // Initialize when the document is ready and after user interaction
+    function initSounds() {
+        // We'll wait for user interaction before initializing sounds
+        const userInteractionEvents = ['click', 'keydown', 'touchstart'];
+
+        const initOnUserInteraction = function() {
+            initKeyboardSounds();
+
+            // Remove all event listeners once initialized
+            userInteractionEvents.forEach(event => {
+                document.removeEventListener(event, initOnUserInteraction);
+            });
+        };
+
+        // Add event listeners for user interaction
+        userInteractionEvents.forEach(event => {
+            document.addEventListener(event, initOnUserInteraction);
+        });
+    }
+
     if (document.readyState === 'complete') {
-        initKeyboardSounds();
+        initSounds();
     } else {
-        window.addEventListener('load', initKeyboardSounds);
+        window.addEventListener('load', initSounds);
     }
 
     // Public API

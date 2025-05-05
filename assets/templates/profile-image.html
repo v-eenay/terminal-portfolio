@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vinay Koirala - Image</title>
+    <title>Binay Koirala - Image</title>
     <style>
         body {
             margin: 0;
@@ -25,29 +25,39 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 0;
+            position: relative;
         }
 
-        .profile-image-container {
+        .profile-image-wrapper {
             width: 90%;
             height: 90%;
-            max-width: 300px;
-            max-height: 300px;
             border-radius: 50%;
             overflow: hidden;
+            position: relative;
             box-shadow: 0 0 25px rgba(122, 162, 247, 0.5);
             transition: all 0.3s ease;
-            position: relative;
+            background-color: rgba(26, 27, 38, 0.5);
+            animation: subtle-pulse 6s infinite ease-in-out;
+        }
+
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
         .profile-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            object-position: center;
             transition: all 0.3s ease;
+            transform: scale(0.85);
+            filter: contrast(1.1) brightness(1.05);
         }
 
-        /* Add a subtle border glow effect */
-        .profile-image-container::after {
+        /* Add a subtle glow effect */
+        .profile-image-wrapper::after {
             content: '';
             position: absolute;
             top: 0;
@@ -55,29 +65,8 @@
             right: 0;
             bottom: 0;
             border-radius: 50%;
-            box-shadow: inset 0 0 15px rgba(122, 162, 247, 0.3);
+            box-shadow: inset 0 0 10px rgba(122, 162, 247, 0.3);
             pointer-events: none;
-        }
-
-        @media (max-width: 768px) {
-            .profile-image-container {
-                width: 85%;
-                height: 85%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .profile-image-container {
-                width: 80%;
-                height: 80%;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .profile-image-container {
-                width: 75%;
-                height: 75%;
-            }
         }
     </style>
     <script>
@@ -86,14 +75,16 @@
             // Check if parent document has light-mode class
             const isLightMode = window.parent.document.documentElement.classList.contains('light-mode');
             const body = document.body;
-            const profileImageContainer = document.querySelector('.profile-image-container');
+            const profileImageWrapper = document.querySelector('.profile-image-wrapper');
 
             if (isLightMode) {
                 body.style.backgroundColor = '#ffffff';
-                profileImageContainer.style.boxShadow = '0 0 25px rgba(110, 86, 207, 0.4)';
+                profileImageWrapper.style.boxShadow = '0 0 25px rgba(110, 86, 207, 0.4)';
+                profileImageWrapper.style.backgroundColor = 'rgba(245, 245, 247, 0.5)';
             } else {
                 body.style.backgroundColor = '#1a1b26';
-                profileImageContainer.style.boxShadow = '0 0 25px rgba(122, 162, 247, 0.5)';
+                profileImageWrapper.style.boxShadow = '0 0 25px rgba(122, 162, 247, 0.5)';
+                profileImageWrapper.style.backgroundColor = 'rgba(26, 27, 38, 0.5)';
             }
         }
 
@@ -110,8 +101,8 @@
 </head>
 <body>
     <div class="image-container">
-        <div class="profile-image-container">
-            <img src="../images/profile/vinay-image.svg" alt="Vinay Koirala" class="profile-image">
+        <div class="profile-image-wrapper">
+            <img src="../images/profile/vinay-image.svg" alt="Binay Koirala" class="profile-image">
         </div>
     </div>
 </body>
