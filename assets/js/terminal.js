@@ -82,11 +82,29 @@ const commands = {
             if (window.innerWidth <= 768) {
                 helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]stats]: View GitHub statistics and activity\n`;
             }
+
+            // Add sound command
+            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound]: Toggle typing sound effects on/off\n`;
         } else {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        return helpText;
+        // Use typing animation with faster speed for help
+        term.echo(helpText, {
+            typingSpeed: 80, // Faster typing for help command
+            animation: true
+        });
+        return ''; // Return empty string since we already echoed the content
+    },
+    sound: function(_, term) {
+        const enabled = $.terminal.toggleSound();
+
+        // Use typing animation
+        term.echo(`\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]`, {
+            typingSpeed: 60,
+            animation: true
+        });
+        return '';
     },
     about: function(_, term) {
         displayHeader(term, 'about');
@@ -107,7 +125,12 @@ const commands = {
                 });
             }
 
-            return aboutText;
+            // Use typing animation
+            term.echo(aboutText, {
+                typingSpeed: 40,
+                animation: true
+            });
+            return ''; // Return empty string since we already echoed the content
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
         }
@@ -148,7 +171,12 @@ const commands = {
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
-            return skillsText;
+            // Use typing animation
+            term.echo(skillsText, {
+                typingSpeed: 50,
+                animation: true
+            });
+            return ''; // Return empty string since we already echoed the content
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
         }
@@ -777,8 +805,14 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             }
         },
         onInit: function() {
-            // Add a typing effect to the initial message
-            this.echo('\nType [[;#7dcfff;]help] to see available commands.');
+            // Add a typing effect to the initial message with animation
+            this.echo('\nType [[;#7dcfff;]help] to see available commands.', {
+                typingSpeed: 30, // Characters per second
+                animation: true
+            });
+
+            // Enable sound by default
+            $.terminal.toggleSound(true);
         },
         linksNoReferrer: false,
         convertLinks: true,
