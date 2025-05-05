@@ -179,17 +179,16 @@ body::before {
 }
 
 #profile-container {
-    height: 50%;
+    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid var(--border-color);
     overflow: hidden;
     position: relative;
     transition: all var(--transition-medium) ease;
     background-color: var(--bg-darker);
-    padding: 10px;
+    padding: 0;
 }
 
 #profile-container::after {
@@ -208,14 +207,9 @@ body::before {
 }
 
 #stats-container {
-    height: 50%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    transition: all var(--transition-medium) ease;
+    display: none;
+    height: 0;
+    width: 0;
 }
 
 #vinay-image-frame, #github-stats-frame {
@@ -267,14 +261,15 @@ body::before {
 
     #profile-container {
         height: 100%;
-        width: 40%;
+        width: 100%;
         border-bottom: none;
-        border-right: 1px solid var(--border-color);
+        border-right: none;
     }
 
     #stats-container {
-        height: 100%;
-        width: 60%;
+        display: none;
+        height: 0;
+        width: 0;
     }
 
     #header-container {
