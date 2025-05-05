@@ -85,16 +85,26 @@ const commands = {
 
             // Add sound command
             helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound]: Toggle keyboard sound effects on/off\n`;
+            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound test]: Play test sounds to verify audio is working\n`;
         } else {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
         return helpText;
     },
-    sound: function(_, term) {
-        // Toggle sound effects
-        const enabled = $.terminal.sound.toggle();
-        return `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]`;
+    sound: function(args, term) {
+        if (args.length > 0 && args[0] === 'test') {
+            // Play test sounds
+            if ($.terminal.sound.playTest) {
+                $.terminal.sound.playTest();
+                return `\n[[;#9ece6a;]Playing test sounds...]]`;
+            }
+        } else {
+            // Toggle sound effects
+            const enabled = $.terminal.sound.toggle();
+            return `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
+Type '[[;#bb9af7;]sound test]' to play test sounds.`;
+        }
     },
     about: function(_, term) {
         displayHeader(term, 'about');
@@ -788,10 +798,26 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             // Add a typing effect to the initial message
             this.echo('\nType [[;#7dcfff;]help] to see available commands.');
 
-            // Enable sound by default
-            if ($.terminal.sound && typeof $.terminal.sound.enable === 'function') {
+            // Enable sound by default and initialize
+            if (window.TerminalSounds) {
+                window.TerminalSounds.enable();
+
+                // Play a silent sound to initialize audio context (needed for some browsers)
+                const silentSound = new Audio("data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tAwAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAADwAD///////////////////////////////////////////8AAAA8TEFNRTMuMTAwAc0AAAAAAAAAABSAJAJAQgAAgAAAA8DcWLjdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQxAADwAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=");
+                silentSound.play().catch(e => {});
+
+                // Initialize with a test sound after a short delay
+                setTimeout(() => {
+                    if (window.TerminalSounds.playTest) {
+                        window.TerminalSounds.playTest();
+                    }
+                }, 1000);
+            } else if ($.terminal.sound && typeof $.terminal.sound.enable === 'function') {
                 $.terminal.sound.enable();
             }
+
+            // Add a message about sound
+            this.echo('\n[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]');
         },
         linksNoReferrer: false,
         convertLinks: true,
