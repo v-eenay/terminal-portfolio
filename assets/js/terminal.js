@@ -1,67 +1,94 @@
 const greetings = `[[;#7dcfff;]Welcome to my terminal portfolio!] Type '[[;#bb9af7;]help]' to see available commands.`;
 
-// Improved typing animation function
+// Completely rewritten typing animation function
 function typeText(term, text, options = {}) {
     const delay = options.delay || 30; // Default delay between characters
 
     // If text is empty, do nothing
     if (!text) return;
 
-    // Parse the formatting to get the formatted text and formatting information
-    const formatters = $.terminal.defaults.formatters;
-    // Temporarily disable formatters to avoid interference
-    $.terminal.defaults.formatters = [];
-
     // Create a unique ID for this typing instance
     const typingId = 'typing-' + Math.floor(Math.random() * 10000);
 
-    // Echo an empty container first
-    term.echo('<span id="' + typingId + '"></span>', { raw: true });
+    // First, echo the raw text with proper formatting but make it invisible
+    term.echo(text, {
+        finalize: function($div) {
+            // Add the ID to the div for later reference
+            $div.attr('id', typingId);
+            // Make all text initially invisible
+            $div.find('span').css('opacity', '0');
+            // Make the container visible
+            $div.css('opacity', '1');
+        }
+    });
 
     // Get the container
     const $container = $('#' + typingId);
 
-    // Get the raw text without formatting
-    const rawText = $.terminal.strip(text);
-
-    // Restore formatters
-    $.terminal.defaults.formatters = formatters;
+    // Get all text nodes and spans in the container
+    const $elements = $container.find('span').addBack();
+    const totalElements = $elements.length;
 
     // Variables for the animation
-    let index = 0;
+    let elementIndex = 0;
+    let charIndex = 0;
+    let currentElement = null;
+    let currentText = '';
+    let originalText = '';
 
-    // Function to add the next character
-    function addNextChar() {
-        if (index > rawText.length) {
-            // We're done
+    // Function to reveal the next element or character
+    function revealNext() {
+        // If we've processed all elements, we're done
+        if (elementIndex >= totalElements) {
             return;
         }
 
-        // Get the current substring of text
-        const currentText = text.substring(0, index);
+        // Get the current element if we don't have one
+        if (!currentElement) {
+            currentElement = $elements.eq(elementIndex);
+            originalText = currentElement.text();
+            currentText = '';
+            charIndex = 0;
 
-        // Format and display the current text
-        const formatted = $.terminal.format(currentText);
-        $container.html(formatted);
+            // If this element is empty or just whitespace, move to the next one
+            if (!originalText || originalText.trim() === '') {
+                elementIndex++;
+                currentElement = null;
+                setTimeout(revealNext, 0);
+                return;
+            }
+
+            // Make the element visible but with no text
+            currentElement.css('opacity', '1').text('');
+        }
+
+        // Add the next character
+        currentText += originalText.charAt(charIndex);
+        charIndex++;
+
+        // Update the element text
+        currentElement.text(currentText);
 
         // Play typing sound if available
-        if (index > 0 && window.TerminalSounds && typeof window.TerminalSounds.playKeySound === 'function') {
-            // Only play sound for visible characters
-            const char = rawText.charAt(index - 1);
+        if (window.TerminalSounds && typeof window.TerminalSounds.playKeySound === 'function') {
+            const char = originalText.charAt(charIndex - 1);
             if (char.trim() !== '') {
                 window.TerminalSounds.playKeySound();
             }
         }
 
-        // Increment the index
-        index++;
+        // If we've revealed all characters in this element, move to the next one
+        if (charIndex >= originalText.length) {
+            elementIndex++;
+            currentElement = null;
+        }
 
-        // Schedule the next character
-        setTimeout(addNextChar, delay);
+        // Schedule the next character or element
+        setTimeout(revealNext, delay);
     }
 
     // Start the animation
-    addNextChar();
+    revealNext();
 }
 
 // Portfolio data
@@ -154,8 +181,8 @@ const commands = {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        // Use our custom typing animation with a faster speed
-        typeText(term, helpText, { delay: 5 });
+        // Use our completely rewritten typing animation with a faster speed
+        typeText(term, helpText, { delay: 3 });
         return '';
     },
     sound: function(args, term) {
@@ -163,14 +190,15 @@ const commands = {
             // Play test sounds
             if ($.terminal.sound.playTest) {
                 $.terminal.sound.playTest();
-                typeText(term, `\n[[;#9ece6a;]Playing test sounds...]]`, { delay: 10 });
+                typeText(term, `\n[[;#9ece6a;]Playing test sounds...]]`, { delay: 5 });
                 return '';
             }
         } else {
             // Toggle sound effects
             const enabled = $.terminal.sound.toggle();
             typeText(term, `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
-Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 10 });
+
+Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 5 });
             return '';
         }
     },
@@ -193,8 +221,8 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 10 });
                 });
             }
 
-            // Use our custom typing animation with a faster speed
-            typeText(term, aboutText, { delay: 5 });
+            // Use our completely rewritten typing animation with a faster speed
+            typeText(term, aboutText, { delay: 3 });
             return '';
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
@@ -236,8 +264,8 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 10 });
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
-            // Use our custom typing animation with a faster speed
-            typeText(term, skillsText, { delay: 5 });
+            // Use our completely rewritten typing animation with a faster speed
+            typeText(term, skillsText, { delay: 2 });
             return '';
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
@@ -889,14 +917,14 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
 
             // Add a single welcome message with typing animation
             setTimeout(() => {
-                // Create a welcome message with all text
+                // Create a welcome message with all text and proper spacing
                 const welcomeMessage =
                     '[[;#7dcfff;]Welcome to my terminal portfolio!]\n\n' +
                     'Type [[;#bb9af7;]help] to see available commands.\n\n' +
                     '[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]';
 
-                // Use our improved typing animation
-                typeText(term, welcomeMessage, { delay: 25 });
+                // Use our completely rewritten typing animation
+                typeText(term, welcomeMessage, { delay: 15 });
             }, 300);
         },
         linksNoReferrer: false,
