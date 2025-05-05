@@ -670,6 +670,67 @@ function initThemeToggle() {
     });
 }
 
+// Function to detect language based on command
+function detectLanguage(command) {
+    // Extract the first word (the command)
+    const cmd = command.split(/\s+/)[0];
+
+    // Map commands to languages for syntax highlighting
+    const languageMap = {
+        'git': 'bash',
+        'npm': 'bash',
+        'node': 'javascript',
+        'python': 'python',
+        'pip': 'bash',
+        'java': 'java',
+        'javac': 'java',
+        'gradle': 'bash',
+        'mvn': 'bash',
+        'docker': 'bash',
+        'kubectl': 'bash',
+        'aws': 'bash',
+        'az': 'bash',
+        'gcloud': 'bash',
+        'terraform': 'bash',
+        'ansible': 'yaml',
+        'ssh': 'bash',
+        'curl': 'bash',
+        'wget': 'bash',
+        'ls': 'bash',
+        'cd': 'bash',
+        'mkdir': 'bash',
+        'rm': 'bash',
+        'cp': 'bash',
+        'mv': 'bash',
+        'cat': 'bash',
+        'echo': 'bash',
+        'grep': 'bash',
+        'find': 'bash',
+        'sed': 'bash',
+        'awk': 'bash',
+        'ps': 'bash',
+        'top': 'bash',
+        'kill': 'bash',
+        'chmod': 'bash',
+        'chown': 'bash',
+        'tar': 'bash',
+        'zip': 'bash',
+        'unzip': 'bash',
+        'ssh-keygen': 'bash'
+    };
+
+    return languageMap[cmd] || null;
+}
+
+// Function to apply syntax highlighting to command
+function highlightCommand(command) {
+    const language = detectLanguage(command);
+    if (language) {
+        return $.terminal.prism(language, command);
+    }
+    return command;
+}
+
 // Initialize terminal
 $(async function() {
     // Initialize theme toggle
@@ -703,7 +764,89 @@ $(async function() {
     // Listen for window resize
     $(window).on('resize', handleResponsiveLayout);
 
+    // Update the command database for tab completion
+    $.terminal.updateCompletionDatabase({
+        'help': {
+            description: 'Show available commands',
+            args: []
+        },
+        'about': {
+            description: 'Display information about me',
+            args: []
+        },
+        'skills': {
+            description: 'List my technical skills',
+            args: []
+        },
+        'tech': {
+            description: 'Show my complete tech stack',
+            args: []
+        },
+        'experience': {
+            description: 'Display my work experience',
+            args: []
+        },
+        'education': {
+            description: 'Show my educational background',
+            args: []
+        },
+        'projects': {
+            description: 'List my projects',
+            args: []
+        },
+        'contact': {
+            description: 'Display my contact information',
+            args: []
+        },
+        'clear': {
+            description: 'Clear the terminal screen',
+            args: []
+        },
+        'theme': {
+            description: 'Change the terminal theme',
+            args: ['dark', 'light']
+        },
+        'cv': {
+            description: 'View my curriculum vitae',
+            args: []
+        },
+        'download-cv': {
+            description: 'Download my CV as PDF',
+            args: []
+        },
+        'stats': {
+            description: 'View GitHub statistics',
+            args: []
+        },
+        'project': {
+            description: 'View details of a specific project',
+            args: []
+        }
+    });
+
+    // If projects are available, add them to the command database
+    if (portfolioData.projects) {
+        const projectArgs = [];
+        for (let i = 1; i <= portfolioData.projects.length; i++) {
+            projectArgs.push(i.toString());
+        }
+        $.terminal.updateCompletionDatabase({
+            'project': {
+                description: 'View details of a specific project',
+                args: projectArgs
+            }
+        });
+    }
+
     terminal = $('#terminal-container').terminal(function(command, term) {
+        // Apply syntax highlighting to the command before processing
+        const highlightedCommand = highlightCommand(command);
+
+        // Echo the highlighted command if it's different from the original
+        if (highlightedCommand !== command) {
+            term.echo(`${highlightedCommand}`, { echoCommand: false });
+        }
+
         // Trim the command
         const trimmedCommand = command.trim();
 
@@ -736,27 +879,9 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         greetings: greetings,
         height: '100%',
         prompt: '[[;#bb9af7;]binay@portfolio]:[[;#7aa2f7;]~]$ ',
-        completion: function() {
-            // Get base commands
-            const baseCommands = Object.keys(commands);
-
-            // Create the final list of commands
-            let allCommands = [...baseCommands];
-
-            // Add stats command if on mobile
-            if (window.innerWidth <= 768) {
-                allCommands.push('stats');
-            }
-
-            // Add project commands based on available projects
-            if (portfolioData.projects) {
-                const projectCount = portfolioData.projects.length;
-                for (let i = 1; i <= projectCount; i++) {
-                    allCommands.push(`project ${i}`);
-                }
-            }
-
-            return allCommands;
+        completion: function(command, callback) {
+            // Use the enhanced tab completion
+            $.terminal.completion(this, command, callback);
         },
         exit: false,
         clear: function() {
@@ -771,11 +896,20 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         onInit: function() {
             // Add a typing effect to the initial message
             this.echo('\nType [[;#7dcfff;]help] to see available commands.');
+
+            // Enable syntax highlighting for common languages
+            $.terminal.syntax(['javascript', 'python', 'java', 'bash', 'css', 'html']);
         },
         linksNoReferrer: false,
         convertLinks: true,
         allowedAttributes: ['href', 'target', 'title', 'style', 'class'],
         historySize: 50,
-        scrollOnEcho: true
+        scrollOnEcho: true,
+        // Enable autocomplete menu for better tab completion experience
+        autocompleteMenu: true,
+        // Process command arguments for better tab completion
+        processArguments: true,
+        // Enable word autocomplete
+        wordAutocomplete: true
     });
 });
