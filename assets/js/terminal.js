@@ -164,25 +164,54 @@ const commands = {
 
         let helpText = `\n`;
 
-        // Generate help text from JSON data
+        // Generate help text from JSON data with categories
         if (portfolioData.commands && portfolioData.commands.length > 0) {
-            portfolioData.commands.forEach(cmd => {
-                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}][[;#ffffff;]: ${cmd.description}]\n`;
-            });
+            // Define command categories
+            const categories = {
+                "About Me": ["about", "cv", "download-cv", "teaching", "theater"],
+                "Skills & Projects": ["skills", "tech", "projects"],
+                "Connect": ["contact", "stats"],
+                "Terminal Controls": ["help", "clear", "sound"]
+            };
 
-            // Check if we're on a mobile device and add stats command
-            if (window.innerWidth <= 768) {
-                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]stats][[;#ffffff;]: View GitHub statistics and activity]\n`;
+            // Process each category
+            for (const [category, cmdList] of Object.entries(categories)) {
+                helpText += `[[;#9ece6a;]◆ ${category}:]\n`;
+
+                // Filter commands that belong to this category
+                const categoryCommands = portfolioData.commands.filter(cmd => cmdList.includes(cmd.name));
+
+                // Add each command in this category
+                categoryCommands.forEach(cmd => {
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}][[;#ffffff;]: ${cmd.description}]\n`;
+                });
+
+                // Add special commands for each category
+                if (category === "Connect" && window.innerWidth <= 768) {
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]stats][[;#ffffff;]: View GitHub statistics and activity]\n`;
+                }
+
+                if (category === "Terminal Controls") {
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]sound][[;#ffffff;]: Toggle keyboard sound effects on/off]\n`;
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]sound test][[;#ffffff;]: Play test sounds to verify audio is working]\n`;
+                }
+
+                helpText += `\n`;
             }
 
-            // Add sound command
-            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound][[;#ffffff;]: Toggle keyboard sound effects on/off]\n`;
-            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound test][[;#ffffff;]: Play test sounds to verify audio is working]\n`;
+            // Add project commands if there are projects
+            if (portfolioData.projects && portfolioData.projects.length > 0) {
+                helpText += `[[;#9ece6a;]◆ Project Details:]\n`;
+                for (let i = 1; i <= portfolioData.projects.length; i++) {
+                    const project = portfolioData.projects[i-1];
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]project ${i}][[;#ffffff;]: View details for ${project.name}]\n`;
+                }
+            }
         } else {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        // Return the text directly instead of using typing animation
+        // Return the text directly without typing animation
         return helpText;
     },
     sound: function(args, term) {
