@@ -179,11 +179,12 @@ body::before {
 }
 
 #profile-container {
-    height: 100%;
+    height: 50%;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid var(--border-color);
     overflow: hidden;
     position: relative;
     transition: all var(--transition-medium) ease;
@@ -207,9 +208,14 @@ body::before {
 }
 
 #stats-container {
-    display: none;
-    height: 0;
-    width: 0;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    transition: all var(--transition-medium) ease;
 }
 
 #vinay-image-frame, #github-stats-frame {
@@ -261,15 +267,14 @@ body::before {
 
     #profile-container {
         height: 100%;
-        width: 100%;
+        width: 40%;
         border-bottom: none;
-        border-right: none;
+        border-right: 1px solid var(--border-color);
     }
 
     #stats-container {
-        display: none;
-        height: 0;
-        width: 0;
+        height: 100%;
+        width: 60%;
     }
 
     #header-container {

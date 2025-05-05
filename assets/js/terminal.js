@@ -97,7 +97,10 @@ let portfolioData = {};
 
 // Helper function for text wrapping and justification
 function formatParagraph(text, indentation = 0, maxWidth = 80, justify = true) {
-    // Split text into words
+    // Handle empty or undefined text
+    if (!text) return '';
+
+    // Split text into words, preserving hyphenated words as single units
     const words = text.split(' ');
     const lines = [];
     let currentLine = '';
@@ -109,6 +112,19 @@ function formatParagraph(text, indentation = 0, maxWidth = 80, justify = true) {
     // Process each word
     for (let i = 0; i < words.length; i++) {
         const word = words[i];
+
+        // Special case: if a single word is longer than the effective max width
+        if (word.length > effectiveMaxWidth) {
+            // If we have content on the current line, add it first
+            if (currentLine.length > 0) {
+                lines.push(currentLine);
+                currentLine = '';
+            }
+
+            // Add the long word as its own line - never cut words
+            lines.push(word);
+            continue;
+        }
 
         // Check if adding this word would exceed the line length
         if (currentLine.length + word.length + 1 > effectiveMaxWidth && currentLine.length > 0) {
@@ -132,7 +148,7 @@ function formatParagraph(text, indentation = 0, maxWidth = 80, justify = true) {
     }
 
     // Justify the text if requested (except for the last line)
-    if (justify) {
+    if (justify && lines.length > 1) {
         for (let i = 0; i < lines.length - 1; i++) {
             const line = lines[i];
             const words = line.split(' ');
