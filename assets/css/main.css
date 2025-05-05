@@ -188,6 +188,8 @@ body::before {
     overflow: hidden;
     position: relative;
     transition: all var(--transition-medium) ease;
+    background-color: var(--bg-darker);
+    padding: 10px;
 }
 
 #profile-container::after {
@@ -226,16 +228,15 @@ body::before {
 }
 
 #vinay-image-frame {
-    filter: drop-shadow(0 0 15px rgba(110, 86, 207, 0.3));
+    filter: none;
     transform: scale(1);
-    transition: transform var(--transition-medium) cubic-bezier(0.34, 1.56, 0.64, 1),
-                filter var(--transition-medium) ease;
-    padding: 10px;
+    transition: transform var(--transition-medium) cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 0;
+    background-color: transparent;
 }
 
 #vinay-image-frame:hover {
-    transform: scale(1.03);
-    filter: drop-shadow(0 5px 25px rgba(110, 86, 207, 0.5));
+    transform: scale(1.02);
 }
 
 #github-stats-frame {
