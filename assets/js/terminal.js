@@ -1,5 +1,56 @@
 const greetings = `[[;#7dcfff;]Welcome to my terminal portfolio!] Type '[[;#bb9af7;]help]' to see available commands.`;
 
+// Simple typing animation function
+function typeText(term, text, options = {}) {
+    const delay = options.delay || 30; // Default delay between characters
+
+    // If text is empty, do nothing
+    if (!text) return;
+
+    // Create a unique ID for this typing instance
+    const typingId = 'typing-' + Math.floor(Math.random() * 10000);
+
+    // Echo an empty container first
+    term.echo('<span id="' + typingId + '"></span>', { raw: true });
+
+    // Get the container
+    const $container = $('#' + typingId);
+
+    // Split the text into characters
+    let index = 0;
+    let currentText = '';
+
+    // Function to add the next character
+    function addNextChar() {
+        if (index >= text.length) {
+            // We're done
+            return;
+        }
+
+        // Add the next character
+        currentText += text.charAt(index);
+        index++;
+
+        // Update the container
+        $container.html(currentText);
+
+        // Play typing sound if available
+        if (window.TerminalSounds && typeof window.TerminalSounds.playKeySound === 'function') {
+            // Only play sound for visible characters
+            const char = text.charAt(index - 1);
+            if (char.trim() !== '' && !char.startsWith('[') && !char.startsWith(']')) {
+                window.TerminalSounds.playKeySound();
+            }
+        }
+
+        // Schedule the next character
+        setTimeout(addNextChar, delay);
+    }
+
+    // Start the animation
+    addNextChar();
+}
+
 // Portfolio data
 let portfolioData = {};
 
@@ -90,8 +141,8 @@ const commands = {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        // Use the typewrite method for animation
-        term.typewrite(helpText, { delay: 10 });
+        // Use our custom typing animation
+        typeText(term, helpText, { delay: 10 });
         return '';
     },
     sound: function(args, term) {
@@ -99,13 +150,13 @@ const commands = {
             // Play test sounds
             if ($.terminal.sound.playTest) {
                 $.terminal.sound.playTest();
-                term.typewrite(`\n[[;#9ece6a;]Playing test sounds...]]`, { delay: 20 });
+                typeText(term, `\n[[;#9ece6a;]Playing test sounds...]]`, { delay: 20 });
                 return '';
             }
         } else {
             // Toggle sound effects
             const enabled = $.terminal.sound.toggle();
-            term.typewrite(`\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
+            typeText(term, `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
 Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 20 });
             return '';
         }
@@ -129,8 +180,8 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 20 });
                 });
             }
 
-            // Use the typewrite method for animation
-            term.typewrite(aboutText, { delay: 20 });
+            // Use our custom typing animation
+            typeText(term, aboutText, { delay: 20 });
             return '';
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
@@ -172,8 +223,8 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 20 });
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
-            // Use the typewrite method for animation
-            term.typewrite(skillsText, { delay: 15 });
+            // Use our custom typing animation
+            typeText(term, skillsText, { delay: 15 });
             return '';
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
@@ -826,15 +877,14 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             // Add typing effect to the initial messages with animation
             // Use a sequence of messages with delays for a more dramatic effect
             setTimeout(() => {
-                term.echo('\nWelcome to my terminal portfolio!', { delay: 40 });
+                typeText(term, '\nWelcome to my terminal portfolio!', { delay: 40 });
 
                 setTimeout(() => {
-                    term.echo('\nType [[;#7dcfff;]help] to see available commands.', { delay: 30 });
+                    typeText(term, '\nType [[;#7dcfff;]help] to see available commands.', { delay: 30 });
 
                     setTimeout(() => {
-                        term.echo('\n[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]', {
-                            delay: 20,
-                            finalDelay: 500
+                        typeText(term, '\n[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]', {
+                            delay: 20
                         });
                     }, 1000);
                 }, 1000);
