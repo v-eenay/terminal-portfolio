@@ -1,17 +1,16 @@
 const greetings = `[[;#7dcfff;]Welcome to my terminal portfolio!] Type '[[;#bb9af7;]help]' to see available commands.`;
 
-// Simple typing animation function
+// Improved typing animation function
 function typeText(term, text, options = {}) {
     const delay = options.delay || 30; // Default delay between characters
 
     // If text is empty, do nothing
     if (!text) return;
 
-    // Create a temporary div to hold the full formatted text
-    const $tempDiv = $('<div>').html($.terminal.format(text));
-
-    // Get the formatted HTML
-    const formattedHtml = $tempDiv.html();
+    // Parse the formatting to get the formatted text and formatting information
+    const formatters = $.terminal.defaults.formatters;
+    // Temporarily disable formatters to avoid interference
+    $.terminal.defaults.formatters = [];
 
     // Create a unique ID for this typing instance
     const typingId = 'typing-' + Math.floor(Math.random() * 10000);
@@ -22,34 +21,40 @@ function typeText(term, text, options = {}) {
     // Get the container
     const $container = $('#' + typingId);
 
-    // For typing animation, we'll use the raw text but apply formatting at the end
+    // Get the raw text without formatting
     const rawText = $.terminal.strip(text);
-    let visibleText = '';
+
+    // Restore formatters
+    $.terminal.defaults.formatters = formatters;
+
+    // Variables for the animation
     let index = 0;
 
     // Function to add the next character
     function addNextChar() {
-        if (index >= rawText.length) {
-            // We're done - replace with the fully formatted text
-            $container.html(formattedHtml);
+        if (index > rawText.length) {
+            // We're done
             return;
         }
 
-        // Add the next character
-        visibleText += rawText.charAt(index);
-        index++;
+        // Get the current substring of text
+        const currentText = text.substring(0, index);
 
-        // Update the container with formatted version of current text
-        $container.html($.terminal.format('[[;transparent;]' + visibleText.replace(/\n/g, '\\n') + ']'));
+        // Format and display the current text
+        const formatted = $.terminal.format(currentText);
+        $container.html(formatted);
 
         // Play typing sound if available
-        if (window.TerminalSounds && typeof window.TerminalSounds.playKeySound === 'function') {
+        if (index > 0 && window.TerminalSounds && typeof window.TerminalSounds.playKeySound === 'function') {
             // Only play sound for visible characters
             const char = rawText.charAt(index - 1);
             if (char.trim() !== '') {
                 window.TerminalSounds.playKeySound();
             }
         }
+
+        // Increment the index
+        index++;
 
         // Schedule the next character
         setTimeout(addNextChar, delay);
@@ -134,23 +139,23 @@ const commands = {
         // Generate help text from JSON data
         if (portfolioData.commands && portfolioData.commands.length > 0) {
             portfolioData.commands.forEach(cmd => {
-                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}]: ${cmd.description}\n`;
+                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}][[;#ffffff;]: ${cmd.description}]\n`;
             });
 
             // Check if we're on a mobile device and add stats command
             if (window.innerWidth <= 768) {
-                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]stats]: View GitHub statistics and activity\n`;
+                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]stats][[;#ffffff;]: View GitHub statistics and activity]\n`;
             }
 
             // Add sound command
-            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound]: Toggle keyboard sound effects on/off\n`;
-            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound test]: Play test sounds to verify audio is working\n`;
+            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound][[;#ffffff;]: Toggle keyboard sound effects on/off]\n`;
+            helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]sound test][[;#ffffff;]: Play test sounds to verify audio is working]\n`;
         } else {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        // Use our custom typing animation
-        typeText(term, helpText, { delay: 10 });
+        // Use our custom typing animation with a faster speed
+        typeText(term, helpText, { delay: 5 });
         return '';
     },
     sound: function(args, term) {
@@ -158,14 +163,14 @@ const commands = {
             // Play test sounds
             if ($.terminal.sound.playTest) {
                 $.terminal.sound.playTest();
-                typeText(term, `\n[[;#9ece6a;]Playing test sounds...]]`, { delay: 20 });
+                typeText(term, `\n[[;#9ece6a;]Playing test sounds...]]`, { delay: 10 });
                 return '';
             }
         } else {
             // Toggle sound effects
             const enabled = $.terminal.sound.toggle();
             typeText(term, `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
-Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 20 });
+Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 10 });
             return '';
         }
     },
@@ -174,7 +179,7 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 20 });
 
         if (portfolioData.about) {
             const about = portfolioData.about;
-            let aboutText = `\n${about.description}\n\n`;
+            let aboutText = `\n[[;#ffffff;]${about.description}]\n\n`;
 
             // Add quote if available
             if (about.quote) {
@@ -184,12 +189,12 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 20 });
             // Add highlights if available
             if (about.highlights && about.highlights.length > 0) {
                 about.highlights.forEach(highlight => {
-                    aboutText += `[[;#bb9af7;]❯] ${highlight}\n`;
+                    aboutText += `[[;#bb9af7;]❯] [[;#ffffff;]${highlight}]\n`;
                 });
             }
 
-            // Use our custom typing animation
-            typeText(term, aboutText, { delay: 20 });
+            // Use our custom typing animation with a faster speed
+            typeText(term, aboutText, { delay: 5 });
             return '';
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
@@ -204,35 +209,35 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 20 });
 
             // Add languages if available
             if (skills.languages && skills.languages.length > 0) {
-                skillsText += `[[;#9ece6a;]◆ Languages:]\n  ${skills.languages.join(', ')}\n\n`;
+                skillsText += `[[;#9ece6a;]◆ Languages:]\n  [[;#ffffff;]${skills.languages.join(', ')}]\n\n`;
             }
 
             // Add web development skills
             skillsText += `[[;#9ece6a;]◆ Web Development:]\n`;
             if (skills.frontend && skills.frontend.length > 0) {
-                skillsText += `  [[;#7aa2f7;]Frontend:] ${skills.frontend.join(', ')}\n`;
+                skillsText += `  [[;#7aa2f7;]Frontend:] [[;#ffffff;]${skills.frontend.join(', ')}]\n`;
             }
             if (skills.frontendFrameworks && skills.frontendFrameworks.length > 0) {
-                skillsText += `  [[;#7aa2f7;]Frontend Frameworks:] ${skills.frontendFrameworks.join(', ')}\n`;
+                skillsText += `  [[;#7aa2f7;]Frontend Frameworks:] [[;#ffffff;]${skills.frontendFrameworks.join(', ')}]\n`;
             }
             if (skills.backend && skills.backend.length > 0) {
-                skillsText += `  [[;#7aa2f7;]Backend:] ${skills.backend.join(', ')}\n\n`;
+                skillsText += `  [[;#7aa2f7;]Backend:] [[;#ffffff;]${skills.backend.join(', ')}]\n\n`;
             }
 
             // Add mobile development skills
             if (skills.mobile && skills.mobile.length > 0) {
-                skillsText += `[[;#9ece6a;]◆ Mobile Development:]\n  ${skills.mobile.join(', ')}\n\n`;
+                skillsText += `[[;#9ece6a;]◆ Mobile Development:]\n  [[;#ffffff;]${skills.mobile.join(', ')}]\n\n`;
             }
 
             // Add database skills
             if (skills.databases && skills.databases.length > 0) {
-                skillsText += `[[;#9ece6a;]◆ Databases & Data:]\n  ${skills.databases.join(', ')}\n\n`;
+                skillsText += `[[;#9ece6a;]◆ Databases & Data:]\n  [[;#ffffff;]${skills.databases.join(', ')}]\n\n`;
             }
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
-            // Use our custom typing animation
-            typeText(term, skillsText, { delay: 15 });
+            // Use our custom typing animation with a faster speed
+            typeText(term, skillsText, { delay: 5 });
             return '';
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
@@ -882,26 +887,16 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
                 $.terminal.sound.enable();
             }
 
-            // Add typing effect to the initial messages with animation
-            // Use a sequence of messages with delays for a more dramatic effect
+            // Add a single welcome message with typing animation
             setTimeout(() => {
-                // First message
-                term.echo(''); // Add an empty line first
-                typeText(term, '[[;#7dcfff;]Welcome to my terminal portfolio!]', { delay: 40 });
+                // Create a welcome message with all text
+                const welcomeMessage =
+                    '[[;#7dcfff;]Welcome to my terminal portfolio!]\n\n' +
+                    'Type [[;#bb9af7;]help] to see available commands.\n\n' +
+                    '[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]';
 
-                setTimeout(() => {
-                    // Second message
-                    term.echo(''); // Add an empty line
-                    typeText(term, 'Type [[;#7dcfff;]help] to see available commands.', { delay: 30 });
-
-                    setTimeout(() => {
-                        // Third message
-                        term.echo(''); // Add an empty line
-                        typeText(term, '[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]', {
-                            delay: 20
-                        });
-                    }, 1000);
-                }, 1000);
+                // Use our improved typing animation
+                typeText(term, welcomeMessage, { delay: 25 });
             }, 300);
         },
         linksNoReferrer: false,
