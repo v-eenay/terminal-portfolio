@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vinay Koirala - Image</title>
+    <title>Binay Koirala - Image</title>
     <style>
         body {
             margin: 0;
@@ -25,36 +25,50 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            padding: 0;
+            position: relative;
+        }
+
+        .profile-image-wrapper {
+            width: 80%;
+            height: 90%;
+            max-width: 400px;
+            aspect-ratio: 3/4;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(122, 162, 247, 0.3);
+            transition: all 0.3s ease;
+            background-color: rgba(26, 27, 38, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0 auto;
+        }
+
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
         .profile-image {
-            max-width: 80%;
-            max-height: 80%;
-            object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(122, 162, 247, 0.4);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
             transition: all 0.3s ease;
+            transform: scale(1);
+            filter: none;
+            image-rendering: auto;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 4px;
         }
 
-        @media (max-width: 768px) {
-            .profile-image {
-                max-width: 85%;
-                max-height: 85%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .profile-image {
-                max-width: 75%;
-                max-height: 75%;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .profile-image {
-                max-width: 70%;
-                max-height: 70%;
-            }
+        /* Remove border effect */
+        .profile-image-wrapper::after {
+            content: none;
         }
     </style>
     <script>
@@ -63,14 +77,20 @@
             // Check if parent document has light-mode class
             const isLightMode = window.parent.document.documentElement.classList.contains('light-mode');
             const body = document.body;
-            const profileImage = document.querySelector('.profile-image');
+            const profileImageWrapper = document.querySelector('.profile-image-wrapper');
 
             if (isLightMode) {
                 body.style.backgroundColor = '#ffffff';
-                profileImage.style.boxShadow = '0 0 20px rgba(110, 86, 207, 0.3)';
+                profileImageWrapper.style.boxShadow = '0 0 20px rgba(110, 86, 207, 0.3)';
+                profileImageWrapper.style.backgroundColor = 'rgba(245, 245, 247, 0.3)';
+                profileImageWrapper.style.borderRadius = '8px';
+                profileImageWrapper.style.border = '1px solid rgba(110, 86, 207, 0.2)';
             } else {
                 body.style.backgroundColor = '#1a1b26';
-                profileImage.style.boxShadow = '0 0 20px rgba(122, 162, 247, 0.4)';
+                profileImageWrapper.style.boxShadow = '0 0 20px rgba(122, 162, 247, 0.3)';
+                profileImageWrapper.style.backgroundColor = 'rgba(26, 27, 38, 0.3)';
+                profileImageWrapper.style.borderRadius = '8px';
+                profileImageWrapper.style.border = '1px solid rgba(122, 162, 247, 0.2)';
             }
         }
 
@@ -87,7 +107,9 @@
 </head>
 <body>
     <div class="image-container">
-        <img src="../images/profile/vinay-image.svg" alt="Vinay Koirala" class="profile-image">
+        <div class="profile-image-wrapper">
+            <img src="../images/profile/vinay-image.svg" alt="Binay Koirala" class="profile-image">
+        </div>
     </div>
 </body>
 </html>

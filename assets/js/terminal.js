@@ -1,7 +1,181 @@
-const greetings = `[[;#7dcfff;]Welcome to my terminal portfolio!] Type '[[;#bb9af7;]help]' to see available commands.`;
+// Empty greetings - we'll use our custom typing animation instead
+const greetings = '';
+
+// Completely rewritten typing animation function
+function typeText(term, text, options = {}) {
+    const delay = options.delay || 30; // Default delay between characters
+
+    // If text is empty, do nothing
+    if (!text) return;
+
+    // Create a unique ID for this typing instance
+    const typingId = 'typing-' + Math.floor(Math.random() * 10000);
+
+    // First, echo the raw text with proper formatting but make it invisible
+    term.echo(text, {
+        finalize: function($div) {
+            // Add the ID to the div for later reference
+            $div.attr('id', typingId);
+            // Make all text initially invisible
+            $div.find('span').css('opacity', '0');
+            // Make the container visible
+            $div.css('opacity', '1');
+        }
+    });
+
+    // Get the container
+    const $container = $('#' + typingId);
+
+    // Get all text nodes and spans in the container
+    const $elements = $container.find('span').addBack();
+    const totalElements = $elements.length;
+
+    // Variables for the animation
+    let elementIndex = 0;
+    let charIndex = 0;
+    let currentElement = null;
+    let currentText = '';
+    let originalText = '';
+
+    // Function to reveal the next element or character
+    function revealNext() {
+        // If we've processed all elements, we're done
+        if (elementIndex >= totalElements) {
+            return;
+        }
+
+        // Get the current element if we don't have one
+        if (!currentElement) {
+            currentElement = $elements.eq(elementIndex);
+            originalText = currentElement.text();
+            currentText = '';
+            charIndex = 0;
+
+            // If this element is empty or just whitespace, move to the next one
+            if (!originalText || originalText.trim() === '') {
+                elementIndex++;
+                currentElement = null;
+                setTimeout(revealNext, 0);
+                return;
+            }
+
+            // Make the element visible but with no text
+            currentElement.css('opacity', '1').text('');
+        }
+
+        // Add the next character
+        currentText += originalText.charAt(charIndex);
+        charIndex++;
+
+        // Update the element text
+        currentElement.text(currentText);
+
+        // Play typing sound if available
+        if (window.TerminalSounds && typeof window.TerminalSounds.playKeySound === 'function') {
+            const char = originalText.charAt(charIndex - 1);
+            if (char.trim() !== '') {
+                window.TerminalSounds.playKeySound();
+            }
+        }
+
+        // If we've revealed all characters in this element, move to the next one
+        if (charIndex >= originalText.length) {
+            elementIndex++;
+            currentElement = null;
+        }
+
+        // Schedule the next character or element
+        setTimeout(revealNext, delay);
+    }
+
+    // Start the animation
+    revealNext();
+}
 
 // Portfolio data
 let portfolioData = {};
+
+// Helper function for text wrapping and justification
+function formatParagraph(text, indentation = 0, maxWidth = 80, justify = true) {
+    // Handle empty or undefined text
+    if (!text) return '';
+
+    // Split text into words, preserving hyphenated words as single units
+    const words = text.split(' ');
+    const lines = [];
+    let currentLine = '';
+    const indent = ' '.repeat(indentation);
+
+    // Calculate effective max width (accounting for indentation)
+    const effectiveMaxWidth = maxWidth - indentation;
+
+    // Process each word
+    for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+
+        // Special case: if a single word is longer than the effective max width
+        if (word.length > effectiveMaxWidth) {
+            // If we have content on the current line, add it first
+            if (currentLine.length > 0) {
+                lines.push(currentLine);
+                currentLine = '';
+            }
+
+            // Add the long word as its own line - never cut words
+            lines.push(word);
+            continue;
+        }
+
+        // Check if adding this word would exceed the line length
+        if (currentLine.length + word.length + 1 > effectiveMaxWidth && currentLine.length > 0) {
+            // Add the current line to lines array
+            lines.push(currentLine);
+            // Start a new line with the current word
+            currentLine = word;
+        } else {
+            // Add the word to the current line with a space if not the first word
+            if (currentLine.length > 0) {
+                currentLine += ' ' + word;
+            } else {
+                currentLine = word;
+            }
+        }
+    }
+
+    // Add the last line if it's not empty
+    if (currentLine.length > 0) {
+        lines.push(currentLine);
+    }
+
+    // Justify the text if requested (except for the last line)
+    if (justify && lines.length > 1) {
+        for (let i = 0; i < lines.length - 1; i++) {
+            const line = lines[i];
+            const words = line.split(' ');
+
+            // Only justify if there are multiple words
+            if (words.length > 1) {
+                const totalSpaces = effectiveMaxWidth - line.replace(/ /g, '').length;
+                const gaps = words.length - 1;
+                const spacesPerGap = Math.floor(totalSpaces / gaps);
+                let extraSpaces = totalSpaces - (spacesPerGap * gaps);
+
+                // Rebuild the line with justified spacing
+                let justifiedLine = words[0];
+                for (let j = 1; j < words.length; j++) {
+                    const spaces = spacesPerGap + (extraSpaces > 0 ? 1 : 0);
+                    justifiedLine += ' '.repeat(spaces) + words[j];
+                    extraSpaces--;
+                }
+
+                lines[i] = justifiedLine;
+            }
+        }
+    }
+
+    // Add indentation to each line
+    return lines.map(line => indent + line).join('\n');
+}
 
 // Helper function to generate project details
 function generateProjectDetails(project, username) {
@@ -10,14 +184,19 @@ function generateProjectDetails(project, username) {
     // Display project name
     projectText += `[[;#7aa2f7;]${project.name}]\n\n`;
 
-    // Display full description
-    projectText += `${project.description}\n\n`;
+    // Display full description with proper wrapping and justification
+    const descTextColor = getTextColor();
+    const formattedDescription = formatParagraph(project.description, 0, 80, true);
+    projectText += `[[;${descTextColor};]${formattedDescription}]\n\n`;
 
     // Add features if available
     if (project.features && project.features.length > 0) {
         projectText += `[[;#9ece6a;]◆ Features:]\n`;
         project.features.forEach(feature => {
-            projectText += `  [[;#bb9af7;]•] ${feature}\n`;
+            const featureTextColor = getTextColor();
+            // Format each feature with proper wrapping
+            const formattedFeature = formatParagraph(feature, 4, 80, false);
+            projectText += `  [[;#bb9af7;]•] [[;${featureTextColor};]${formattedFeature.trim()}]\n`;
         });
         projectText += `\n`;
     }
@@ -65,6 +244,22 @@ function displayHeader(term, command) {
     }
 }
 
+// Function to get a neutral text color that works in both themes
+function getTextColor() {
+    // Return a neutral color that's readable in both light and dark modes
+    // #2d4f67 is a muted blue-gray that has good contrast on both backgrounds
+    return '#2d4f67';
+}
+
+// Function to force text color to a neutral color
+function forceTextColor(term, text) {
+    const textColor = getTextColor();
+
+    // Replace any existing color formatting with the neutral color
+    // This ensures text is always readable regardless of theme
+    return text.replace(/\[\[;#[0-9a-fA-F]{6};/g, `[[;${textColor};`);
+}
+
 // Define commands
 const commands = {
     help: function(_, term) {
@@ -72,28 +267,85 @@ const commands = {
 
         let helpText = `\n`;
 
-        // Generate help text from JSON data
+        // Generate help text from JSON data with categories
         if (portfolioData.commands && portfolioData.commands.length > 0) {
-            portfolioData.commands.forEach(cmd => {
-                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}]: ${cmd.description}\n`;
-            });
+            // Define command categories
+            const categories = {
+                "About Me": ["about", "cv", "download-cv", "teaching", "theater"],
+                "Skills & Projects": ["skills", "tech", "projects"],
+                "Connect": ["contact", "stats"],
+                "Terminal Controls": ["help", "clear", "sound"]
+            };
 
-            // Check if we're on a mobile device and add stats command
-            if (window.innerWidth <= 768) {
-                helpText += `[[;#bb9af7;]❯] [[;#7aa2f7;]stats]: View GitHub statistics and activity\n`;
+            // Process each category
+            for (const [category, cmdList] of Object.entries(categories)) {
+                helpText += `[[;#9ece6a;]◆ ${category}:]\n`;
+
+                // Filter commands that belong to this category
+                const categoryCommands = portfolioData.commands.filter(cmd => cmdList.includes(cmd.name));
+
+                // Add each command in this category
+                categoryCommands.forEach(cmd => {
+                    const textColor = getTextColor();
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]${cmd.name}][[;${textColor};]: ${cmd.description}]\n`;
+                });
+
+                // Add special commands for each category
+                if (category === "Connect" && window.innerWidth <= 768) {
+                    const statsTextColor = getTextColor();
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]stats][[;${statsTextColor};]: View GitHub statistics and activity]\n`;
+                }
+
+                if (category === "Terminal Controls") {
+                    const soundTextColor = getTextColor();
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]sound][[;${soundTextColor};]: Toggle keyboard sound effects on/off]\n`;
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]sound test][[;${soundTextColor};]: Play test sounds to verify audio is working]\n`;
+                }
+
+                helpText += `\n`;
+            }
+
+            // Add project commands if there are projects
+            if (portfolioData.projects && portfolioData.projects.length > 0) {
+                helpText += `[[;#9ece6a;]◆ Project Details:]\n`;
+                for (let i = 1; i <= portfolioData.projects.length; i++) {
+                    const project = portfolioData.projects[i-1];
+                    const projectTextColor = getTextColor();
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]project ${i}][[;${projectTextColor};]: View details for ${project.name}]\n`;
+                }
             }
         } else {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
+        // Return the text directly without typing animation
         return helpText;
+    },
+    sound: function(args, term) {
+        if (args.length > 0 && args[0] === 'test') {
+            // Play test sounds
+            if ($.terminal.sound.playTest) {
+                $.terminal.sound.playTest();
+                return `\n[[;#9ece6a;]Playing test sounds...]]`;
+            }
+        } else {
+            // Toggle sound effects
+            const enabled = $.terminal.sound.toggle();
+            return `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
+
+Type '[[;#bb9af7;]sound test]' to play test sounds.`;
+        }
     },
     about: function(_, term) {
         displayHeader(term, 'about');
 
         if (portfolioData.about) {
             const about = portfolioData.about;
-            let aboutText = `\n${about.description}\n\n`;
+            const aboutTextColor = getTextColor();
+
+            // Format the description with proper wrapping and justification
+            const formattedDesc = formatParagraph(about.description, 0, 80, true);
+            let aboutText = `\n[[;${aboutTextColor};]${formattedDesc}]\n\n`;
 
             // Add quote if available
             if (about.quote) {
@@ -103,10 +355,15 @@ const commands = {
             // Add highlights if available
             if (about.highlights && about.highlights.length > 0) {
                 about.highlights.forEach(highlight => {
-                    aboutText += `[[;#bb9af7;]❯] ${highlight}\n`;
+                    const highlightTextColor = getTextColor();
+                    // Format each highlight with proper wrapping
+                    const formattedHighlight = formatParagraph(highlight, 4, 80, true);
+                    aboutText += `[[;#bb9af7;]❯] [[;${highlightTextColor};]${formattedHighlight.trim()}]\n`;
                 });
             }
 
+            // Return the text directly instead of using typing animation
+            // This ensures the full text is displayed immediately
             return aboutText;
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
@@ -121,33 +378,40 @@ const commands = {
 
             // Add languages if available
             if (skills.languages && skills.languages.length > 0) {
-                skillsText += `[[;#9ece6a;]◆ Languages:]\n  ${skills.languages.join(', ')}\n\n`;
+                const langTextColor = getTextColor();
+                skillsText += `[[;#9ece6a;]◆ Languages:]\n  [[;${langTextColor};]${skills.languages.join(', ')}]\n\n`;
             }
 
             // Add web development skills
             skillsText += `[[;#9ece6a;]◆ Web Development:]\n`;
             if (skills.frontend && skills.frontend.length > 0) {
-                skillsText += `  [[;#7aa2f7;]Frontend:] ${skills.frontend.join(', ')}\n`;
+                const frontendTextColor = getTextColor();
+                skillsText += `  [[;#7aa2f7;]Frontend:] [[;${frontendTextColor};]${skills.frontend.join(', ')}]\n`;
             }
             if (skills.frontendFrameworks && skills.frontendFrameworks.length > 0) {
-                skillsText += `  [[;#7aa2f7;]Frontend Frameworks:] ${skills.frontendFrameworks.join(', ')}\n`;
+                const frameworksTextColor = getTextColor();
+                skillsText += `  [[;#7aa2f7;]Frontend Frameworks:] [[;${frameworksTextColor};]${skills.frontendFrameworks.join(', ')}]\n`;
             }
             if (skills.backend && skills.backend.length > 0) {
-                skillsText += `  [[;#7aa2f7;]Backend:] ${skills.backend.join(', ')}\n\n`;
+                const backendTextColor = getTextColor();
+                skillsText += `  [[;#7aa2f7;]Backend:] [[;${backendTextColor};]${skills.backend.join(', ')}]\n\n`;
             }
 
             // Add mobile development skills
             if (skills.mobile && skills.mobile.length > 0) {
-                skillsText += `[[;#9ece6a;]◆ Mobile Development:]\n  ${skills.mobile.join(', ')}\n\n`;
+                const mobileTextColor = getTextColor();
+                skillsText += `[[;#9ece6a;]◆ Mobile Development:]\n  [[;${mobileTextColor};]${skills.mobile.join(', ')}]\n\n`;
             }
 
             // Add database skills
             if (skills.databases && skills.databases.length > 0) {
-                skillsText += `[[;#9ece6a;]◆ Databases & Data:]\n  ${skills.databases.join(', ')}\n\n`;
+                const dbTextColor = getTextColor();
+                skillsText += `[[;#9ece6a;]◆ Databases & Data:]\n  [[;${dbTextColor};]${skills.databases.join(', ')}]\n\n`;
             }
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
+            // Return the text directly instead of using typing animation
             return skillsText;
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
@@ -162,7 +426,8 @@ const commands = {
 
             // Add languages if available
             if (skills.languages && skills.languages.length > 0) {
-                techText += `[[;#9ece6a;]◆ Languages]\n  ${skills.languages.join(', ')}\n\n`;
+                const langTextColor = getTextColor();
+                techText += `[[;#9ece6a;]◆ Languages]\n  [[;${langTextColor};]${skills.languages.join(', ')}]\n\n`;
             }
 
             // Add web development section
@@ -170,47 +435,56 @@ const commands = {
 
             // Add frontend skills
             if (skills.frontend && skills.frontend.length > 0) {
-                techText += `  [[;#7aa2f7;]Frontend:]\n  ${skills.frontend.join(', ')}\n\n`;
+                const frontendTextColor = getTextColor();
+                techText += `  [[;#7aa2f7;]Frontend:]\n  [[;${frontendTextColor};]${skills.frontend.join(', ')}]\n\n`;
             }
 
             // Add frontend frameworks
             if (skills.frontendFrameworks && skills.frontendFrameworks.length > 0) {
-                techText += `  [[;#7aa2f7;]Frontend Frameworks:]\n  ${skills.frontendFrameworks.join(', ')}\n\n`;
+                const frameworksTextColor = getTextColor();
+                techText += `  [[;#7aa2f7;]Frontend Frameworks:]\n  [[;${frameworksTextColor};]${skills.frontendFrameworks.join(', ')}]\n\n`;
             }
 
             // Add backend skills
             if (skills.backend && skills.backend.length > 0) {
-                techText += `  [[;#7aa2f7;]Backend:]\n  ${skills.backend.join(', ')}\n\n`;
+                const backendTextColor = getTextColor();
+                techText += `  [[;#7aa2f7;]Backend:]\n  [[;${backendTextColor};]${skills.backend.join(', ')}]\n\n`;
             }
 
             // Add mobile development skills
             if (skills.mobile && skills.mobile.length > 0) {
-                techText += `[[;#9ece6a;]◆ Mobile Development]\n  ${skills.mobile.join(', ')}\n\n`;
+                const mobileTextColor = getTextColor();
+                techText += `[[;#9ece6a;]◆ Mobile Development]\n  [[;${mobileTextColor};]${skills.mobile.join(', ')}]\n\n`;
             }
 
             // Add database skills
             if (skills.databases && skills.databases.length > 0) {
-                techText += `[[;#9ece6a;]◆ Databases & Data]\n  ${skills.databases.join(', ')}\n\n`;
+                const dbTextColor = getTextColor();
+                techText += `[[;#9ece6a;]◆ Databases & Data]\n  [[;${dbTextColor};]${skills.databases.join(', ')}]\n\n`;
             }
 
             // Add DevOps
             if (skills.devops && skills.devops.length > 0) {
-                techText += `[[;#9ece6a;]◆ DevOps & Cloud]\n  ${skills.devops.join(', ')}\n\n`;
+                const devopsTextColor = getTextColor();
+                techText += `[[;#9ece6a;]◆ DevOps & Cloud]\n  [[;${devopsTextColor};]${skills.devops.join(', ')}]\n\n`;
             }
 
             // Add tools
             if (skills.tools && skills.tools.length > 0) {
-                techText += `[[;#9ece6a;]◆ Development Tools]\n  ${skills.tools.join(', ')}\n\n`;
+                const toolsTextColor = getTextColor();
+                techText += `[[;#9ece6a;]◆ Development Tools]\n  [[;${toolsTextColor};]${skills.tools.join(', ')}]\n\n`;
             }
 
             // Add design skills
             if (skills.design && skills.design.length > 0) {
-                techText += `[[;#9ece6a;]◆ Design Tools]\n  ${skills.design.join(', ')}\n\n`;
+                const designTextColor = getTextColor();
+                techText += `[[;#9ece6a;]◆ Design Tools]\n  [[;${designTextColor};]${skills.design.join(', ')}]\n\n`;
             }
 
             // Add exploring skills
             if (skills.exploring && skills.exploring.length > 0) {
-                techText += `[[;#9ece6a;]◆ Currently Exploring]\n  ${skills.exploring.join(', ')}`;
+                const exploringTextColor = getTextColor();
+                techText += `[[;#9ece6a;]◆ Currently Exploring]\n  [[;${exploringTextColor};]${skills.exploring.join(', ')}]`;
             }
 
             return techText;
@@ -237,38 +511,34 @@ const commands = {
                 const projectDesc = project.description;
                 projectsText += `[[;#e0af68;]${project.id}.] [[;#7aa2f7;]${projectName}]\n`;
 
-                // Display full description with proper wrapping
-                // Split description into words and rebuild with proper wrapping
-                const words = projectDesc.split(' ');
-                let currentLine = '   ';
-                const maxLineLength = 80; // Maximum characters per line
+                // Get the appropriate text color for the current theme
+                const descTextColor = getTextColor();
 
-                words.forEach(word => {
-                    // If adding this word would exceed the line length, start a new line
-                    if (currentLine.length + word.length + 1 > maxLineLength) {
-                        projectsText += `${currentLine}\n`;
-                        currentLine = '   ' + word + ' '; // Start new line with indentation
-                    } else {
-                        currentLine += word + ' ';
-                    }
-                });
+                // Format the description with proper wrapping and justification
+                const formattedDesc = formatParagraph(projectDesc, 3, 80, true);
 
-                // Add the last line if it's not empty
-                if (currentLine.trim().length > 0) {
-                    projectsText += `${currentLine}\n`;
-                }
+                // Add the formatted description with color
+                projectsText += `   [[;${descTextColor};]${formattedDesc}]\n`;
 
                 // Add technologies if available
                 if (project.technologies && project.technologies.length > 0) {
-                    projectsText += `   [[;#bb9af7;]Technologies:] ${project.technologies.join(', ')}\n`;
+                    // Format technologies with proper wrapping if needed
+                    const techText = project.technologies.join(', ');
+                    if (techText.length > 70) {
+                        const formattedTech = formatParagraph(techText, 18, 80, false);
+                        projectsText += `   [[;#bb9af7;]Technologies:] [[;${descTextColor};]${formattedTech.substring(18)}]\n`;
+                    } else {
+                        projectsText += `   [[;#bb9af7;]Technologies:] [[;${descTextColor};]${techText}]\n`;
+                    }
                 }
                 projectsText += `\n`;
             });
 
             // Add instructions for viewing project details
             projectsText += `[[;#e0af68;]Available Project Commands:]\n`;
+            const cmdTextColor = getTextColor();
             for (let i = 1; i <= allProjects.length; i++) {
-                projectsText += `Type '[[;#bb9af7;]project ${i}]' for details on ${allProjects[i-1].name}\n`;
+                projectsText += `[[;${cmdTextColor};]Type ]'[[;#bb9af7;]project ${i}]'[[;${cmdTextColor};] for details on ${allProjects[i-1].name}]\n`;
             }
 
             return projectsText;
@@ -281,7 +551,11 @@ const commands = {
 
         if (portfolioData.theater) {
             const theater = portfolioData.theater;
-            let theaterText = `\n${theater.description}\n\n`;
+            const theaterTextColor = getTextColor();
+
+            // Format the description with proper wrapping and justification
+            const formattedDesc = formatParagraph(theater.description, 0, 80, true);
+            let theaterText = `\n[[;${theaterTextColor};]${formattedDesc}]\n\n`;
 
             // Add quote if available
             if (theater.quote) {
@@ -290,7 +564,10 @@ const commands = {
 
             // Add additional info if available
             if (theater.additionalInfo) {
-                theaterText += `${theater.additionalInfo}`;
+                const additionalInfoTextColor = getTextColor();
+                // Format additional info with proper wrapping and justification
+                const formattedInfo = formatParagraph(theater.additionalInfo, 0, 80, true);
+                theaterText += `[[;${additionalInfoTextColor};]${formattedInfo}]`;
             }
 
             return theaterText;
@@ -377,7 +654,10 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 
         if (portfolioData.contact) {
             const contact = portfolioData.contact;
-            let contactText = `\n`;
+            const contactTextColor = getTextColor();
+            const introText = "Feel free to reach out to me through any of the following channels:";
+            const formattedIntro = formatParagraph(introText, 0, 80, true);
+            let contactText = `\n[[;${contactTextColor};]${formattedIntro}]\n\n`;
 
             // Add contact information
             if (contact.email) {
@@ -517,7 +797,10 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
 
             // Add teaching philosophy
             teachingText += `[[;#9ece6a;]◆ Teaching Philosophy]\n`;
-            teachingText += `  I believe in creating an engaging, interactive learning environment that combines theoretical concepts with practical applications. My teaching approach focuses on fostering critical thinking, problem-solving skills, and technological creativity while adapting to diverse learning styles.\n\n`;
+            const philosophyTextColor = getTextColor();
+            const philosophyText = "I believe in creating an engaging, interactive learning environment that combines theoretical concepts with practical applications. My teaching approach focuses on fostering critical thinking, problem-solving skills, and technological creativity while adapting to diverse learning styles.";
+            const formattedPhilosophy = formatParagraph(philosophyText, 2, 80, true);
+            teachingText += `  [[;${philosophyTextColor};]${formattedPhilosophy}]\n\n`;
 
             // Add teaching experience
             if (teaching.length > 0) {
@@ -525,24 +808,38 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
                 teaching.forEach(course => {
                     teachingText += `  [[;#7aa2f7;]${course.course}]\n`;
                     teachingText += `  [[;#bb9af7;]${course.institution}]\n`;
-                    teachingText += `  ${course.description}\n\n`;
+                    const courseTextColor = getTextColor();
+                    // Format course description with proper wrapping and justification
+                    const formattedDesc = formatParagraph(course.description, 2, 80, true);
+                    teachingText += `  [[;${courseTextColor};]${formattedDesc}]\n\n`;
                 });
             }
 
             // Add teaching methodologies
             teachingText += `[[;#9ece6a;]◆ Teaching Methodologies]\n`;
-            teachingText += `  [[;#7aa2f7;]• Project-Based Learning:] Implementing real-world projects to enhance practical understanding\n`;
-            teachingText += `  [[;#7aa2f7;]• Flipped Classroom:] Providing materials for pre-class study and focusing on interactive activities during class\n`;
-            teachingText += `  [[;#7aa2f7;]• Peer Learning:] Encouraging collaborative problem-solving and knowledge sharing\n`;
-            teachingText += `  [[;#7aa2f7;]• Technology Integration:] Utilizing digital tools and platforms to enhance learning experiences\n\n`;
+            const methodTextColor = getTextColor();
+            // Format each methodology with proper wrapping
+            const pbl = formatParagraph("Implementing real-world projects to enhance practical understanding", 4, 80, true);
+            const flipped = formatParagraph("Providing materials for pre-class study and focusing on interactive activities during class", 4, 80, true);
+            const peer = formatParagraph("Encouraging collaborative problem-solving and knowledge sharing", 4, 80, true);
+            const tech = formatParagraph("Utilizing digital tools and platforms to enhance learning experiences", 4, 80, true);
+
+            teachingText += `  [[;#7aa2f7;]• Project-Based Learning:] [[;${methodTextColor};]${pbl.substring(4)}]\n`;
+            teachingText += `  [[;#7aa2f7;]• Flipped Classroom:] [[;${methodTextColor};]${flipped.substring(4)}]\n`;
+            teachingText += `  [[;#7aa2f7;]• Peer Learning:] [[;${methodTextColor};]${peer.substring(4)}]\n`;
+            teachingText += `  [[;#7aa2f7;]• Technology Integration:] [[;${methodTextColor};]${tech.substring(4)}]\n\n`;
 
             // Add professional development
             if (portfolioData.cv.professional_development && portfolioData.cv.professional_development.length > 0) {
                 teachingText += `[[;#9ece6a;]◆ Professional Development]\n\n`;
                 portfolioData.cv.professional_development.forEach(dev => {
                     teachingText += `  [[;#7aa2f7;]${dev.title}] (${dev.year})\n`;
-                    teachingText += `  ${dev.provider}\n`;
-                    teachingText += `  ${dev.description}\n\n`;
+                    const devTextColor = getTextColor();
+                    // Format provider and description with proper wrapping
+                    const formattedProvider = formatParagraph(dev.provider, 2, 80, true);
+                    const formattedDesc = formatParagraph(dev.description, 2, 80, true);
+                    teachingText += `  [[;${devTextColor};]${formattedProvider}]\n`;
+                    teachingText += `  [[;${devTextColor};]${formattedDesc}]\n\n`;
                 });
             }
 
@@ -630,8 +927,36 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
     }
 };
 
+// Global terminal reference
+let globalTerminal = null;
+
+// Function to set terminal reference
+window.setTerminalReference = function(term) {
+    globalTerminal = term;
+};
+
+// Store terminal settings for recreation
+let terminalSettings = {};
+window.storeTerminalSettings = function(settings) {
+    terminalSettings = settings;
+};
+
 // Theme management
 function initThemeToggle() {
+    // Function to update the terminal prompt when theme changes
+    function updateTerminalPrompt() {
+        if (!globalTerminal) return;
+
+        // Store current command
+        const currentCommand = globalTerminal.get_command();
+
+        // Update the prompt (this will use the neutral color)
+        globalTerminal.set_prompt(globalTerminal.settings().prompt);
+
+        // Restore the command
+        globalTerminal.set_command(currentCommand);
+    }
+
     // Check for saved theme preference or use default (dark)
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light') {
@@ -658,6 +983,10 @@ function initThemeToggle() {
         const currentTheme = document.documentElement.classList.contains('light-mode') ? 'light' : 'dark';
         localStorage.setItem('theme', currentTheme);
 
+        // Just update the prompt - no need to clear or recreate the terminal
+        // since we're using neutral colors that work in both themes
+        updateTerminalPrompt();
+
         // Notify iframes about theme change
         const iframes = document.querySelectorAll('iframe');
         iframes.forEach(iframe => {
@@ -668,6 +997,12 @@ function initThemeToggle() {
             }
         });
     });
+}
+
+// Simple syntax highlighting function
+function highlightCommand(command) {
+    // For now, just return the command as is to avoid any issues
+    return command;
 }
 
 // Initialize terminal
@@ -690,10 +1025,13 @@ $(async function() {
             $('.stats-hint').hide();
         }
 
-        // If terminal is initialized, refresh help command to update stats visibility
-        if (terminal) {
-            // We don't want to execute the command, just update the completion list
-            terminal.refresh_completion();
+        // If terminal is initialized, update the completion list
+        if (terminal && typeof terminal.set_command === 'function') {
+            // Get the current command
+            const currentCommand = terminal.get_command();
+
+            // Set it back to refresh the completion
+            terminal.set_command(currentCommand);
         }
     }
 
@@ -703,7 +1041,10 @@ $(async function() {
     // Listen for window resize
     $(window).on('resize', handleResponsiveLayout);
 
-    terminal = $('#terminal-container').terminal(function(command, term) {
+    // No custom tab completion for now to avoid issues
+
+    // Process command function - extracted to make it reusable for terminal recreation
+    function processCommand(command, term) {
         // Trim the command
         const trimmedCommand = command.trim();
 
@@ -730,12 +1071,18 @@ $(async function() {
             }
 
             return `[[;#f7768e;]Command not found: ${trimmedCommand}]
-Type '[[;#bb9af7;]help]' to see available commands.`;
+[[;#2d4f67;]Type ]'[[;#bb9af7;]help]'[[;#2d4f67;] to see available commands.]`;
         }
-    }, {
+    }
+
+    // Terminal settings
+    const settings = {
         greetings: greetings,
         height: '100%',
-        prompt: '[[;#bb9af7;]binay@portfolio]:[[;#7aa2f7;]~]$ ',
+        get prompt() {
+            // Use a neutral color for the prompt
+            return `[[;#bb9af7;]binay@portfolio]:[[;#7aa2f7;]~][[;#2d4f67;]$ ]`;
+        },
         completion: function() {
             // Get base commands
             const baseCommands = Object.keys(commands);
@@ -769,13 +1116,49 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             }
         },
         onInit: function() {
-            // Add a typing effect to the initial message
-            this.echo('\nType [[;#7dcfff;]help] to see available commands.');
+            const term = this;
+
+            // Store terminal reference for theme toggling
+            if (window.setTerminalReference) {
+                window.setTerminalReference(term);
+            }
+
+            // Enable sound by default and initialize
+            if (window.TerminalSounds) {
+                window.TerminalSounds.enable();
+
+                // Play a silent sound to initialize audio context (needed for some browsers)
+                const silentSound = new Audio("data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tAwAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAADwAD///////////////////////////////////////////8AAAA8TEFNRTMuMTAwAc0AAAAAAAAAABSAJAJAQgAAgAAAA8DcWLjdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//sQxAADwAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVU=");
+                silentSound.play().catch(e => {});
+
+                // Don't auto-play test sounds on page load
+                // We'll let the user interaction trigger sounds naturally
+            } else if ($.terminal.sound && typeof $.terminal.sound.enable === 'function') {
+                $.terminal.sound.enable();
+            }
+
+            // Add a single welcome message without typing animation
+            setTimeout(() => {
+                // Create a welcome message with all text and proper spacing using neutral colors
+                const welcomeMessage =
+                    '[[;#7dcfff;]Welcome to my terminal portfolio!]\n\n' +
+                    `[[;#2d4f67;]Type ][[;#bb9af7;]help][[;#2d4f67;] to see available commands.]\n\n` +
+                    '[[;#9ece6a;]Keyboard sound effects are enabled. Type ][[;#bb9af7;]sound][[;#9ece6a;] to toggle.]';
+
+                // Echo the message directly without typing animation
+                term.echo(welcomeMessage);
+            }, 300);
         },
         linksNoReferrer: false,
         convertLinks: true,
         allowedAttributes: ['href', 'target', 'title', 'style', 'class'],
         historySize: 50,
         scrollOnEcho: true
-    });
+    };
+
+    // Store settings for terminal recreation
+    window.storeTerminalSettings(settings);
+
+    // Initialize the terminal
+    terminal = $('#terminal-container').terminal(processCommand, settings);
 });
