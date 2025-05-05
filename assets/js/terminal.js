@@ -89,20 +89,16 @@ const commands = {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        // Use typing animation with faster speed for help
-        term.echo(helpText, {
-            typingSpeed: 80, // Faster typing for help command
-            animation: true
-        });
+        // Use the new typing animation
+        term.typingFormatted(helpText, { delay: 15 }); // Faster typing for help command
         return ''; // Return empty string since we already echoed the content
     },
     sound: function(_, term) {
         const enabled = $.terminal.toggleSound();
 
-        // Use typing animation
-        term.echo(`\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]`, {
-            typingSpeed: 60,
-            animation: true
+        // Use the new typing animation
+        term.typingFormatted(`\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]`, {
+            delay: 20
         });
         return '';
     },
@@ -125,11 +121,8 @@ const commands = {
                 });
             }
 
-            // Use typing animation
-            term.echo(aboutText, {
-                typingSpeed: 40,
-                animation: true
-            });
+            // Use the new typing animation
+            term.typingFormatted(aboutText, { delay: 25 });
             return ''; // Return empty string since we already echoed the content
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
@@ -171,11 +164,8 @@ const commands = {
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
-            // Use typing animation
-            term.echo(skillsText, {
-                typingSpeed: 50,
-                animation: true
-            });
+            // Use the new typing animation
+            term.typingFormatted(skillsText, { delay: 20 });
             return ''; // Return empty string since we already echoed the content
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
@@ -805,10 +795,9 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             }
         },
         onInit: function() {
-            // Add a typing effect to the initial message with animation
-            this.echo('\nType [[;#7dcfff;]help] to see available commands.', {
-                typingSpeed: 30, // Characters per second
-                animation: true
+            // Add a typing effect to the initial message with our new animation
+            this.typingFormatted('\nType [[;#7dcfff;]help] to see available commands.', {
+                delay: 30 // Milliseconds between characters
             });
 
             // Enable sound by default
