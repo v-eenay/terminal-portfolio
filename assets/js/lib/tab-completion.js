@@ -1,6 +1,6 @@
 /**
  * Enhanced Tab Completion for jQuery Terminal
- * 
+ *
  * This file provides enhanced tab completion functionality for the terminal
  */
 
@@ -94,19 +94,19 @@
     function getCommandSuggestions(input, commands) {
         var suggestions = [];
         var inputLower = input.toLowerCase();
-        
+
         // If input is empty, return all commands
         if (!input) {
             return Object.keys(commands);
         }
-        
+
         // Check for command matches
         for (var cmd in commands) {
             if (cmd.toLowerCase().indexOf(inputLower) === 0) {
                 suggestions.push(cmd);
             }
         }
-        
+
         return suggestions;
     }
 
@@ -115,17 +115,17 @@
         if (!commands[cmd] || !commands[cmd].args || commands[cmd].args.length === 0) {
             return [];
         }
-        
+
         var suggestions = [];
         var argLower = arg.toLowerCase();
-        
+
         for (var i = 0; i < commands[cmd].args.length; i++) {
             var argument = commands[cmd].args[i];
             if (argument.toLowerCase().indexOf(argLower) === 0) {
                 suggestions.push(argument);
             }
         }
-        
+
         return suggestions;
     }
 
@@ -134,17 +134,20 @@
         // Split command into parts
         var parts = command.split(' ');
         var cmd = parts[0];
-        
+
         // If we're completing the command itself
         if (parts.length === 1) {
             callback(getCommandSuggestions(cmd, commandDatabase));
-        } 
+        }
         // If we're completing an argument
         else if (parts.length > 1) {
             var lastArg = parts[parts.length - 1];
             callback(getArgumentSuggestions(cmd, lastArg, commandDatabase));
         }
     };
+
+    // Store the command database globally for other plugins to access
+    $.terminal.commandDatabase = commandDatabase;
 
     // Function to update command database
     $.terminal.updateCompletionDatabase = function(newCommands) {

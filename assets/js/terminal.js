@@ -880,8 +880,8 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
         height: '100%',
         prompt: '[[;#bb9af7;]binay@portfolio]:[[;#7aa2f7;]~]$ ',
         completion: function(command, callback) {
-            // Use the enhanced tab completion
-            $.terminal.completion(this, command, callback);
+            // Use the enhanced tab completion with menu
+            $.terminal.autocomplete_menu(this, command, callback);
         },
         exit: false,
         clear: function() {
