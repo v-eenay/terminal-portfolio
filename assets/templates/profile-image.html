@@ -30,9 +30,9 @@
         }
 
         .profile-image-wrapper {
-            width: 90%;
-            height: 90%;
-            border-radius: 50%;
+            width: 95%;
+            height: 95%;
+            border-radius: 8px;
             overflow: hidden;
             position: relative;
             box-shadow: 0 0 25px rgba(122, 162, 247, 0.5);
@@ -49,10 +49,10 @@
         .profile-image {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            object-position: center;
+            object-fit: cover;
+            object-position: center top;
             transition: all 0.3s ease;
-            transform: scale(0.85);
+            transform: scale(0.98);
             filter: contrast(1.1) brightness(1.05);
         }
 
@@ -64,7 +64,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 50%;
+            border-radius: 8px;
             box-shadow: inset 0 0 10px rgba(122, 162, 247, 0.3);
             pointer-events: none;
         }
@@ -81,10 +81,12 @@
                 body.style.backgroundColor = '#ffffff';
                 profileImageWrapper.style.boxShadow = '0 0 25px rgba(110, 86, 207, 0.4)';
                 profileImageWrapper.style.backgroundColor = 'rgba(245, 245, 247, 0.5)';
+                profileImageWrapper.style.borderRadius = '8px';
             } else {
                 body.style.backgroundColor = '#1a1b26';
                 profileImageWrapper.style.boxShadow = '0 0 25px rgba(122, 162, 247, 0.5)';
                 profileImageWrapper.style.backgroundColor = 'rgba(26, 27, 38, 0.5)';
+                profileImageWrapper.style.borderRadius = '8px';
             }
         }
 
