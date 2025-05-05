@@ -7,6 +7,12 @@ function typeText(term, text, options = {}) {
     // If text is empty, do nothing
     if (!text) return;
 
+    // Create a temporary div to hold the full formatted text
+    const $tempDiv = $('<div>').html($.terminal.format(text));
+
+    // Get the formatted HTML
+    const formattedHtml = $tempDiv.html();
+
     // Create a unique ID for this typing instance
     const typingId = 'typing-' + Math.floor(Math.random() * 10000);
 
@@ -16,29 +22,31 @@ function typeText(term, text, options = {}) {
     // Get the container
     const $container = $('#' + typingId);
 
-    // Split the text into characters
+    // For typing animation, we'll use the raw text but apply formatting at the end
+    const rawText = $.terminal.strip(text);
+    let visibleText = '';
     let index = 0;
-    let currentText = '';
 
     // Function to add the next character
     function addNextChar() {
-        if (index >= text.length) {
-            // We're done
+        if (index >= rawText.length) {
+            // We're done - replace with the fully formatted text
+            $container.html(formattedHtml);
             return;
         }
 
         // Add the next character
-        currentText += text.charAt(index);
+        visibleText += rawText.charAt(index);
         index++;
 
-        // Update the container
-        $container.html(currentText);
+        // Update the container with formatted version of current text
+        $container.html($.terminal.format('[[;transparent;]' + visibleText.replace(/\n/g, '\\n') + ']'));
 
         // Play typing sound if available
         if (window.TerminalSounds && typeof window.TerminalSounds.playKeySound === 'function') {
             // Only play sound for visible characters
-            const char = text.charAt(index - 1);
-            if (char.trim() !== '' && !char.startsWith('[') && !char.startsWith(']')) {
+            const char = rawText.charAt(index - 1);
+            if (char.trim() !== '') {
                 window.TerminalSounds.playKeySound();
             }
         }
@@ -877,13 +885,19 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
             // Add typing effect to the initial messages with animation
             // Use a sequence of messages with delays for a more dramatic effect
             setTimeout(() => {
-                typeText(term, '\nWelcome to my terminal portfolio!', { delay: 40 });
+                // First message
+                term.echo(''); // Add an empty line first
+                typeText(term, '[[;#7dcfff;]Welcome to my terminal portfolio!]', { delay: 40 });
 
                 setTimeout(() => {
-                    typeText(term, '\nType [[;#7dcfff;]help] to see available commands.', { delay: 30 });
+                    // Second message
+                    term.echo(''); // Add an empty line
+                    typeText(term, 'Type [[;#7dcfff;]help] to see available commands.', { delay: 30 });
 
                     setTimeout(() => {
-                        typeText(term, '\n[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]', {
+                        // Third message
+                        term.echo(''); // Add an empty line
+                        typeText(term, '[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]', {
                             delay: 20
                         });
                     }, 1000);
