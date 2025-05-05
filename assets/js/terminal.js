@@ -1,4 +1,5 @@
-const greetings = `[[;#7dcfff;]Welcome to my terminal portfolio!] Type '[[;#bb9af7;]help]' to see available commands.`;
+// Empty greetings - we'll use our custom typing animation instead
+const greetings = '';
 
 // Completely rewritten typing animation function
 function typeText(term, text, options = {}) {
@@ -181,25 +182,22 @@ const commands = {
             helpText = `[[;#f7768e;]Error loading commands. Please refresh the page.]`;
         }
 
-        // Use our completely rewritten typing animation with a faster speed
-        typeText(term, helpText, { delay: 3 });
-        return '';
+        // Return the text directly instead of using typing animation
+        return helpText;
     },
     sound: function(args, term) {
         if (args.length > 0 && args[0] === 'test') {
             // Play test sounds
             if ($.terminal.sound.playTest) {
                 $.terminal.sound.playTest();
-                typeText(term, `\n[[;#9ece6a;]Playing test sounds...]]`, { delay: 5 });
-                return '';
+                return `\n[[;#9ece6a;]Playing test sounds...]]`;
             }
         } else {
             // Toggle sound effects
             const enabled = $.terminal.sound.toggle();
-            typeText(term, `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
+            return `\n[[;#9ece6a;]Sound effects ${enabled ? 'enabled' : 'disabled'}.]
 
-Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 5 });
-            return '';
+Type '[[;#bb9af7;]sound test]' to play test sounds.`;
         }
     },
     about: function(_, term) {
@@ -221,9 +219,9 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 5 });
                 });
             }
 
-            // Use our completely rewritten typing animation with a faster speed
-            typeText(term, aboutText, { delay: 3 });
-            return '';
+            // Return the text directly instead of using typing animation
+            // This ensures the full text is displayed immediately
+            return aboutText;
         } else {
             return `\n[[;#f7768e;]Error loading about data. Please refresh the page.]`;
         }
@@ -264,9 +262,8 @@ Type '[[;#bb9af7;]sound test]' to play test sounds.`, { delay: 5 });
 
             skillsText += `Type '[[;#bb9af7;]tech]' for my complete tech stack.`;
 
-            // Use our completely rewritten typing animation with a faster speed
-            typeText(term, skillsText, { delay: 2 });
-            return '';
+            // Return the text directly instead of using typing animation
+            return skillsText;
         } else {
             return `\n[[;#f7768e;]Error loading skills data. Please refresh the page.]`;
         }
@@ -915,7 +912,7 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
                 $.terminal.sound.enable();
             }
 
-            // Add a single welcome message with typing animation
+            // Add a single welcome message without typing animation
             setTimeout(() => {
                 // Create a welcome message with all text and proper spacing
                 const welcomeMessage =
@@ -923,8 +920,8 @@ Type '[[;#bb9af7;]help]' to see available commands.`;
                     'Type [[;#bb9af7;]help] to see available commands.\n\n' +
                     '[[;#9ece6a;]Keyboard sound effects are enabled. Type \'sound\' to toggle.]';
 
-                // Use our completely rewritten typing animation
-                typeText(term, welcomeMessage, { delay: 15 });
+                // Echo the message directly without typing animation
+                term.echo(welcomeMessage);
             }, 300);
         },
         linksNoReferrer: false,
