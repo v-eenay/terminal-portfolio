@@ -72,6 +72,14 @@
             description: 'Change the terminal theme',
             args: ['dark', 'light']
         },
+        'light': {
+            description: 'Switch to light mode theme',
+            args: []
+        },
+        'dark': {
+            description: 'Switch to dark mode theme',
+            args: []
+        },
         'cv': {
             description: 'View my curriculum vitae',
             args: []
