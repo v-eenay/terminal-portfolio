@@ -274,7 +274,7 @@ const commands = {
                 "About Me": ["about", "cv", "download-cv", "teaching", "theater"],
                 "Skills & Projects": ["skills", "tech", "projects"],
                 "Connect": ["contact", "stats"],
-                "Terminal Controls": ["help", "clear", "sound"]
+                "Terminal Controls": ["help", "clear", "sound", "light", "dark"]
             };
 
             // Process each category
@@ -297,9 +297,11 @@ const commands = {
                 }
 
                 if (category === "Terminal Controls") {
-                    const soundTextColor = getTextColor();
-                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]sound][[;${soundTextColor};]: Toggle keyboard sound effects on/off]\n`;
-                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]sound test][[;${soundTextColor};]: Play test sounds to verify audio is working]\n`;
+                    const textColor = getTextColor();
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]sound][[;${textColor};]: Toggle keyboard sound effects on/off]\n`;
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]sound test][[;${textColor};]: Play test sounds to verify audio is working]\n`;
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]light][[;${textColor};]: Switch to light mode theme]\n`;
+                    helpText += `  [[;#bb9af7;]❯] [[;#7aa2f7;]dark][[;${textColor};]: Switch to dark mode theme]\n`;
                 }
 
                 helpText += `\n`;
@@ -923,6 +925,85 @@ GitHub Profile: [[u;#7aa2f7;]https://github.com/${username}]
             return generateProjectDetails(project, portfolioData.github.username);
         } else {
             return `\n[[;#f7768e;]Error loading project data. Please refresh the page.]`;
+        }
+    },
+
+    // Theme commands
+    light: function(_, term) {
+        // Check if already in light mode
+        const isLightMode = document.documentElement.classList.contains('light-mode');
+
+        if (isLightMode) {
+            return `\n[[;#9ece6a;]Light mode is already active.]`;
+        } else {
+            // Toggle to light mode
+            document.documentElement.classList.add('light-mode');
+
+            // Save preference to localStorage
+            localStorage.setItem('theme', 'light');
+
+            // Update terminal prompt
+            if (globalTerminal) {
+                // Store current command
+                const currentCommand = globalTerminal.get_command();
+
+                // Update the prompt
+                globalTerminal.set_prompt(globalTerminal.settings().prompt);
+
+                // Restore the command
+                globalTerminal.set_command(currentCommand);
+            }
+
+            // Notify iframes about theme change
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                try {
+                    iframe.contentWindow.postMessage('theme-changed', '*');
+                } catch (e) {
+                    console.error('Error notifying iframe about theme change:', e);
+                }
+            });
+
+            return `\n[[;#9ece6a;]Switched to light mode.]`;
+        }
+    },
+
+    dark: function(_, term) {
+        // Check if already in dark mode
+        const isLightMode = document.documentElement.classList.contains('light-mode');
+
+        if (!isLightMode) {
+            return `\n[[;#9ece6a;]Dark mode is already active.]`;
+        } else {
+            // Toggle to dark mode
+            document.documentElement.classList.remove('light-mode');
+
+            // Save preference to localStorage
+            localStorage.setItem('theme', 'dark');
+
+            // Update terminal prompt
+            if (globalTerminal) {
+                // Store current command
+                const currentCommand = globalTerminal.get_command();
+
+                // Update the prompt
+                globalTerminal.set_prompt(globalTerminal.settings().prompt);
+
+                // Restore the command
+                globalTerminal.set_command(currentCommand);
+            }
+
+            // Notify iframes about theme change
+            const iframes = document.querySelectorAll('iframe');
+            iframes.forEach(iframe => {
+                try {
+                    iframe.contentWindow.postMessage('theme-changed', '*');
+                } catch (e) {
+                    console.error('Error notifying iframe about theme change:', e);
+                }
+            });
+
+            return `\n[[;#9ece6a;]Switched to dark mode.]`;
         }
     }
 };
